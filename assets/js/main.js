@@ -115,13 +115,19 @@ const filtersEl = document.getElementById("filters");
 function faviconFor(domain) {
   return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 }
+// Screenshot live al site-ului, generat gratuit de mShots (WordPress.com)
+function shotFor(url) {
+  return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=800&h=600`;
+}
 
 function renderProjects(filter = "Toate") {
   const list = filter === "Toate" ? PROJECTS : PROJECTS.filter(p => p.cat === filter);
-  grid.innerHTML = list.map(p => `
-    <a class="project reveal" href="${p.url}" target="_blank" rel="noopener" data-cat="${p.cat}">
+  grid.innerHTML = list.map((p, i) => `
+    <a class="project reveal" href="${p.url}" target="_blank" rel="noopener"
+       data-cat="${p.cat}" style="transition-delay:${i * 60}ms">
       <div class="thumb">
-        <img src="${faviconFor(p.domain)}" alt="${p.name} logo" loading="lazy"
+        <img class="shot" src="${shotFor(p.url)}" alt="Screenshot ${p.name}" loading="lazy" />
+        <img class="fav" src="${faviconFor(p.domain)}" alt="" loading="lazy"
              onerror="this.style.display='none'">
       </div>
       <div class="body">
@@ -184,13 +190,6 @@ const form = document.getElementById("contactForm");
 const note = document.getElementById("formNote");
 form.addEventListener("submit", async e => {
   e.preventDefault();
-  // Dacă endpoint-ul Formspree nu a fost încă configurat, trimite prin email client.
-  if (form.action.includes("YOUR_FORM_ID")) {
-    const name = form.name.value, email = form.email.value, msg = form.message.value;
-    window.location.href = `mailto:ai@rt.md?subject=Contact de la ${encodeURIComponent(name)}` +
-      `&body=${encodeURIComponent(msg + "\n\n— " + name + " (" + email + ")")}`;
-    return;
-  }
   note.className = "form-note";
   note.textContent = "Se trimite…";
   try {
@@ -208,7 +207,7 @@ form.addEventListener("submit", async e => {
     }
   } catch {
     note.className = "form-note err";
-    note.textContent = "Ceva n-a mers. Scrie-mi direct la ai@rt.md";
+    note.textContent = "Ceva n-a mers. Scrie-mi direct la pascarusergiu003@gmail.com";
   }
 });
 

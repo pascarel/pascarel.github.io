@@ -15,7 +15,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
@@ -112,7 +112,7 @@
 
         <div class="contact-item">
           <div class="ic">✉️</div>
-          <div><div class="label">Email</div><a class="val" href="mailto:ai@rt.md">ai@rt.md</a></div>
+          <div><div class="label">Email</div><a class="val" href="mailto:pascarusergiu003@gmail.com">pascarusergiu003@gmail.com</a></div>
         </div>
         <div class="contact-item">
           <div class="ic">📍</div>
@@ -124,8 +124,12 @@
         </div>
       </div>
 
-      <!-- Înlocuiește YOUR_FORM_ID cu ID-ul tău de la formspree.io (vezi instrucțiunile) -->
-      <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="reveal">
+      <!-- FormSubmit.co — trimite direct pe email, fără cont. La primul mesaj primești un email de confirmare (o singură dată). -->
+      <form id="contactForm" action="https://formsubmit.co/ajax/pascarusergiu003@gmail.com" method="POST" class="reveal">
+        <input type="hidden" name="_subject" value="Mesaj nou de pe portofoliu" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="text" name="_honey" style="display:none" />
         <div class="field">
           <label for="name">Nume</label>
           <input type="text" id="name" name="name" required placeholder="Numele tău" />
@@ -150,7 +154,7 @@
       <div class="muted">© <span id="year">2026</span> Sergiu Pascaru. Toate drepturile rezervate.</div>
       <div class="social">
         <a href="https://github.com/pascarel" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
-        <a href="mailto:ai@rt.md" aria-label="Email">@</a>
+        <a href="mailto:pascarusergiu003@gmail.com" aria-label="Email">@</a>
       </div>
     </div>
   </footer>
