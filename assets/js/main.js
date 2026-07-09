@@ -151,69 +151,34 @@ navLinks.addEventListener("click", e => { if (e.target.tagName === "A") navLinks
 // ---------- Reveal on scroll (observer defined above) ----------
 observeReveals();
 
-// ---------- Contact form (Web3Forms) ----------
-const form = document.getElementById("contactForm");
-const note = document.getElementById("formNote");
-const formWrap = document.getElementById("formWrap");
-const confettiBox = document.getElementById("confetti");
-const COLORS = ["#4c8dff", "#38bdf8", "#22c55e", "#f59e0b", "#ef4444", "#a78bfa"];
-
-function fireConfetti() {
-  confettiBox.innerHTML = "";
-  for (let i = 0; i < 40; i++) {
-    const s = document.createElement("span");
-    const angle = Math.random() * Math.PI - Math.PI / 2; // -90°..90°
-    const dist = 120 + Math.random() * 160;
-    s.style.left = 50 + (Math.random() * 40 - 20) + "%";
-    s.style.background = COLORS[i % COLORS.length];
-    s.style.setProperty("--dx", Math.sin(angle) * dist + "px");
-    s.style.setProperty("--dy", (60 + Math.random() * dist) + "px");
-    s.style.setProperty("--rot", (Math.random() * 720 - 360) + "deg");
-    s.style.animationDelay = Math.random() * 0.15 + "s";
-    if (i % 2) s.style.borderRadius = "50%";
-    confettiBox.appendChild(s);
+// ---------- Count-up stats ----------
+function animateCount(el) {
+  const target = parseInt(el.dataset.count, 10);
+  const suffix = el.dataset.suffix || "";
+  const dur = 1400;
+  let start = null;
+  function step(ts) {
+    if (start === null) start = ts;
+    const p = Math.min((ts - start) / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+    el.textContent = Math.round(target * eased) + suffix;
+    if (p < 1) requestAnimationFrame(step);
   }
+  requestAnimationFrame(step);
 }
 
-function showThankYou() {
-  formWrap.classList.add("sent");
-  fireConfetti();
-}
-
-form.addEventListener("submit", async e => {
-  e.preventDefault();
-
-  // Local (file://) nu poate trimite — arătăm direct animația (mod demo).
-  if (location.protocol === "file:") {
-    showThankYou();
-    return;
-  }
-
-  note.className = "form-note";
-  note.textContent = "Se trimite…";
-  try {
-    const res = await fetch(form.action, {
-      method: "POST",
-      body: new FormData(form),
-      headers: { Accept: "application/json" }
+const statsEl = document.getElementById("stats");
+if (statsEl) {
+  const statsIO = new IntersectionObserver((entries, obs) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.querySelectorAll("[data-count]").forEach(animateCount);
+        obs.unobserve(en.target);
+      }
     });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok || !data.success) throw new Error(data.message || "fail");
-    form.reset();
-    showThankYou();
-  } catch (err) {
-    note.className = "form-note err";
-    note.textContent = "Ceva n-a mers. Scrie-mi direct la pascarusergiu003@gmail.com";
-    console.error("Form error:", err);
-  }
-});
-
-document.getElementById("sendAnother").addEventListener("click", () => {
-  form.reset();
-  note.textContent = "";
-  note.className = "form-note";
-  formWrap.classList.remove("sent");
-});
+  }, { threshold: 0.4 });
+  statsIO.observe(statsEl);
+}
 
 // ---------- Year ----------
 document.getElementById("year").textContent = new Date().getFullYear();

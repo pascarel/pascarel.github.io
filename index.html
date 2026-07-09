@@ -3,15 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sergiu Pascaru — Web & WordPress Developer</title>
-  <meta name="description" content="Web & WordPress developer din Republica Moldova. Construiesc platforme e-gov, site-uri corporative, magazine online și aplicații web — de la concept la livrare." />
+  <title>Sergiu Pascaru — Web &amp; WordPress Developer din Chișinău</title>
+  <meta name="description" content="Web &amp; WordPress developer din Chișinău, Moldova. Construiesc platforme e-gov, site-uri corporative, magazine online (WooCommerce) și aplicații web — de la concept la livrare." />
   <meta name="author" content="Sergiu Pascaru" />
+  <meta name="keywords" content="web developer Chișinău, WordPress developer Moldova, dezvoltare web, magazine online, WooCommerce, platforme e-gov, PHP, aplicații web, site prezentare" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0b0f17" />
+  <link rel="canonical" href="https://pascarel.github.io/" />
+
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Sergiu Pascaru — Web & WordPress Developer" />
-  <meta property="og:description" content="Platforme e-gov, site-uri corporative, eCommerce și aplicații web." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://pascarel.github.io" />
+  <meta property="og:site_name" content="Sergiu Pascaru" />
+  <meta property="og:locale" content="ro_RO" />
+  <meta property="og:url" content="https://pascarel.github.io/" />
+  <meta property="og:title" content="Sergiu Pascaru — Web &amp; WordPress Developer" />
+  <meta property="og:description" content="Platforme e-gov, site-uri corporative, magazine online și aplicații web — de la concept la livrare." />
+  <meta property="og:image" content="https://pascarel.github.io/assets/img/og-cover.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sergiu Pascaru — Web &amp; WordPress Developer" />
+  <meta name="twitter:description" content="Platforme e-gov, site-uri corporative, magazine online și aplicații web." />
+  <meta name="twitter:image" content="https://pascarel.github.io/assets/img/og-cover.jpg" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sergiu Pascaru",
+    "jobTitle": "Web & WordPress Developer",
+    "url": "https://pascarel.github.io/",
+    "email": "mailto:pascarusergiu003@gmail.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Chișinău", "addressCountry": "MD" },
+    "knowsAbout": ["WordPress", "PHP", "WooCommerce", "JavaScript", "MySQL", "Web Development"],
+    "sameAs": ["https://github.com/pascarel"]
+  }
+  </script>
 
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
 
@@ -50,9 +84,9 @@
         <a href="#projects-section" class="btn primary">Vezi proiectele →</a>
         <a href="#contact" class="btn">Începe un proiect</a>
       </div>
-      <div class="stats reveal">
-        <div class="stat"><div class="num">50+</div><div class="label">Proiecte livrate</div></div>
-        <div class="stat"><div class="num">10+</div><div class="label">Ani experiență</div></div>
+      <div class="stats reveal" id="stats">
+        <div class="stat"><div class="num" data-count="50" data-suffix="+">0</div><div class="label">Proiecte livrate</div></div>
+        <div class="stat"><div class="num" data-count="10" data-suffix="+">0</div><div class="label">Ani experiență</div></div>
         <div class="stat"><div class="num">RO·RU·EN</div><div class="label">Site-uri multilingve</div></div>
       </div>
     </div>
@@ -114,55 +148,33 @@
 
   <!-- ============ CONTACT ============ -->
   <section id="contact">
-    <div class="wrap contact-grid">
-      <div class="contact-info reveal">
+    <div class="wrap">
+      <div class="section-head reveal">
         <span class="eyebrow"><span class="no">№ 03</span> / Contact</span>
         <h2>Hai să facem ceva <span class="accent-i">memorabil.</span></h2>
         <p>Ai un proiect în minte sau doar o idee? Scrie-mi câteva rânduri și revin cu un plan și o estimare în cel mai scurt timp.</p>
-
-        <div class="contact-item">
-          <div class="ic">✉️</div>
-          <div><div class="label">Email</div><a class="val" href="mailto:pascarusergiu003@gmail.com">pascarusergiu003@gmail.com</a></div>
-        </div>
-        <div class="contact-item">
-          <div class="ic">📍</div>
-          <div><div class="label">Locație</div><div class="val">Chișinău, Republica Moldova</div></div>
-        </div>
-        <div class="contact-item">
-          <div class="ic">💻</div>
-          <div><div class="label">GitHub</div><a class="val" href="https://github.com/pascarel" target="_blank" rel="noopener">github.com/pascarel</a></div>
-        </div>
       </div>
 
-      <div class="form-wrap reveal" id="formWrap">
-        <!-- Web3Forms — gratuit, fără cont. Obține access key pe https://web3forms.com și pune-l mai jos. -->
-        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="144db7e8-fe7b-4b18-b8c4-3c22d0593aa8" />
-          <input type="hidden" name="subject" value="Mesaj nou de pe portofoliu" />
-          <input type="hidden" name="from_name" value="Portofoliu Sergiu Pascaru" />
-          <input type="checkbox" name="botcheck" style="display:none" />
-          <div class="field">
-            <label for="name">Nume</label>
-            <input type="text" id="name" name="name" required placeholder="Numele tău" />
+      <div class="contact-grid">
+        <div class="contact-list reveal">
+          <a class="contact-item" href="mailto:pascarusergiu003@gmail.com">
+            <div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></div>
+            <div><div class="label">Email</div><div class="val">pascarusergiu003@gmail.com</div></div>
+          </a>
+          <div class="contact-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><div class="label">Locație</div><div class="val">Chișinău, Republica Moldova</div></div>
           </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="email@exemplu.com" />
-          </div>
-          <div class="field">
-            <label for="message">Mesaj</label>
-            <textarea id="message" name="message" required placeholder="Descrie pe scurt proiectul…"></textarea>
-          </div>
-          <button type="submit" class="btn primary">Trimite mesajul →</button>
-          <div class="form-note" id="formNote"></div>
-        </form>
+          <a class="contact-item" href="https://github.com/pascarel" target="_blank" rel="noopener">
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3-.3 6-1.5 6-6.5a5 5 0 0 0-1.4-3.5 4.6 4.6 0 0 0-.1-3.5s-1.1-.3-3.5 1.3a12 12 0 0 0-6 0C6.6 2 5.5 2.3 5.5 2.3a4.6 4.6 0 0 0-.1 3.5A5 5 0 0 0 4 9.3c0 5 3 6.2 6 6.5a3.4 3.4 0 0 0-1 2.6V22"/></svg></div>
+            <div><div class="label">GitHub</div><div class="val">github.com/pascarel</div></div>
+          </a>
+        </div>
 
-        <div class="thankyou" id="thankyou">
-          <div class="confetti" id="confetti"></div>
-          <div class="check-circle"><svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg></div>
-          <h3>Mulțumesc!</h3>
-          <p>Mesajul tău a ajuns la mine. Îți răspund personal în maxim 24 de ore. 🚀</p>
-          <button class="btn" id="sendAnother">Trimite alt mesaj</button>
+        <div class="contact-cta reveal">
+          <h3>Scrie-mi <span class="accent-i">direct.</span></h3>
+          <p>Fără formulare, fără boți — un email ajunge direct la mine. Răspund de obicei în maxim 24 de ore, cu un plan clar și o estimare onestă.</p>
+          <a class="btn primary" href="mailto:pascarusergiu003@gmail.com?subject=Proiect%20nou">Trimite un email →</a>
         </div>
       </div>
     </div>
