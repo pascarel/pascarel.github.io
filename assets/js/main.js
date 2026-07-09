@@ -151,7 +151,7 @@ navLinks.addEventListener("click", e => { if (e.target.tagName === "A") navLinks
 // ---------- Reveal on scroll (observer defined above) ----------
 observeReveals();
 
-// ---------- Contact form (FormSubmit.co) ----------
+// ---------- Contact form (Web3Forms) ----------
 const form = document.getElementById("contactForm");
 const note = document.getElementById("formNote");
 const formWrap = document.getElementById("formWrap");
@@ -197,12 +197,14 @@ form.addEventListener("submit", async e => {
       body: new FormData(form),
       headers: { Accept: "application/json" }
     });
-    if (!res.ok) throw new Error("fail");
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.success) throw new Error(data.message || "fail");
     form.reset();
     showThankYou();
-  } catch {
+  } catch (err) {
     note.className = "form-note err";
     note.textContent = "Ceva n-a mers. Scrie-mi direct la pascarusergiu003@gmail.com";
+    console.error("Form error:", err);
   }
 });
 

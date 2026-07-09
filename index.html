@@ -135,12 +135,12 @@
       </div>
 
       <div class="form-wrap reveal" id="formWrap">
-        <!-- FormSubmit.co — trimite direct pe email, fără cont. La primul mesaj primești un email de confirmare (o singură dată). -->
-        <form id="contactForm" action="https://formsubmit.co/ajax/pascarusergiu003@gmail.com" method="POST">
-          <input type="hidden" name="_subject" value="Mesaj nou de pe portofoliu" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="text" name="_honey" style="display:none" />
+        <!-- Web3Forms — gratuit, fără cont. Obține access key pe https://web3forms.com și pune-l mai jos. -->
+        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="144db7e8-fe7b-4b18-b8c4-3c22d0593aa8" />
+          <input type="hidden" name="subject" value="Mesaj nou de pe portofoliu" />
+          <input type="hidden" name="from_name" value="Portofoliu Sergiu Pascaru" />
+          <input type="checkbox" name="botcheck" style="display:none" />
           <div class="field">
             <label for="name">Nume</label>
             <input type="text" id="name" name="name" required placeholder="Numele tău" />
