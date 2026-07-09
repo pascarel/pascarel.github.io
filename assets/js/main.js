@@ -77,6 +77,34 @@ const PROJECTS = [
     desc: "Platformă imobiliară din Moldova — apartamente, case, spații comerciale și terenuri, de vânzare și în chirie." }
 ];
 
+// ---------- i18n ----------
+const LANG = (document.documentElement.lang || "ro").toLowerCase().startsWith("en") ? "en" : "ro";
+const T = {
+  ro: { visit: "Vizitează site-ul", more: "Vezi toate proiectele ↓" },
+  en: { visit: "Visit website", more: "View all projects ↓" }
+}[LANG];
+const CAT_EN = {
+  "Guvernare": "Government", "Turism": "Tourism", "ONG": "NGO", "Vin": "Wine",
+  "eCommerce": "eCommerce", "Platformă": "Platform", "SaaS": "SaaS", "Web": "Web"
+};
+const DESC_EN = {
+  appgov: "Portal of the Public Property Agency — administration and privatization of Moldova's state-owned assets.",
+  moldovatravel: "The official tourism portal of Moldova — destinations, wine tourism, culture and rural experiences.",
+  orheiulvechi: "Promotional site for the Orheiul Vechi cultural-natural reserve — history, legends and landscapes.",
+  soros: "Soros Foundation Moldova — an organization supporting democracy, rule of law and socioeconomic resilience.",
+  gradina: "LAG „Grădina Bunătăților” — developing rural communities through partnerships and local initiatives.",
+  vindeautor: "Association of small Moldovan winemakers — 65 producers, 800+ wines and 450 international medals.",
+  cramamingir: "Family winery from the Codru region — author wines produced and sold directly.",
+  interauto: "Car dealership in Chișinău — thousands of vehicles for sale, financing, insurance and maintenance.",
+  unifishing: "Online fishing-gear store — rods, reels, bait and camping accessories.",
+  digitalvet: "Educational digital platform dedicated to the veterinary field.",
+  pyck: "Open-source warehouse management framework (WMS) — fast to implement, no vendor lock-in.",
+  slapstack: "Warehouse intelligence platform — real-time tracking, 3D dimensioning and AI fleet control.",
+  prodrive: "Performance driving school — vehicle control training, racing and corporate driver programs.",
+  evlution: "UK company installing electric-vehicle charging infrastructure — safe and reliable.",
+  ecoimobil: "Moldovan real-estate platform — apartments, houses, commercial spaces and land, for sale and rent."
+};
+
 const VISIBLE = 6; // câte proiecte se arată inițial
 
 // ---------- Render ----------
@@ -86,18 +114,20 @@ let expanded = false;
 
 function cardHTML(p, i) {
   const chips = p.stack.map(s => `<span class="chip">${s}</span>`).join("");
+  const cat = LANG === "en" ? (CAT_EN[p.cat] || p.cat) : p.cat;
+  const desc = LANG === "en" ? (DESC_EN[p.slug] || p.desc) : p.desc;
   return `
     <a class="project reveal" href="${p.url}" target="_blank" rel="noopener"
        data-cat="${p.cat}" style="transition-delay:${(i % VISIBLE) * 60}ms">
       <div class="thumb">
-        <img class="shot" src="assets/img/${p.slug}.jpg" alt="Screenshot ${p.name}" loading="lazy" />
+        <img class="shot" src="/assets/img/${p.slug}.jpg" alt="Screenshot ${p.name}" loading="lazy" />
       </div>
       <div class="body">
-        <span class="cat">${p.cat}</span>
+        <span class="cat">${cat}</span>
         <h3>${p.name}</h3>
-        <p>${p.desc}</p>
+        <p>${desc}</p>
         <div class="chips">${chips}</div>
-        <span class="link">Vizitează site-ul <span class="arw">→</span></span>
+        <span class="link">${T.visit} <span class="arw">→</span></span>
       </div>
     </a>`;
 }
@@ -107,6 +137,8 @@ function render() {
   grid.innerHTML = list.map(cardHTML).join("");
   observeReveals();
 }
+
+moreBtn.textContent = T.more;
 
 // La click: arată toate proiectele și ascunde butonul (fără „ascunde")
 moreBtn.addEventListener("click", () => {
