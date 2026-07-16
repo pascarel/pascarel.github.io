@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produs — Renée · Chișinău</title>
+<meta name="description" content="Detalii produs din magazinul Renée — cafea, dulciuri, brunch box, merch și cadouri.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/shop.css">
+</head>
+<body class="subpage">
+
+<!-- WP: header.php -->
+<header id="header">
+  <a class="logo" href="index.html#top">Renée</a>
+  <button class="burger" id="burger" aria-label="Meniu" aria-expanded="false">Meniu</button>
+  <nav id="nav">
+    <a href="despre.html">Despre</a>
+    <a href="magazin.html">Magazin</a>
+    <a href="evenimente.html">Evenimente</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+    <a class="btn-rez" href="index.html#vizita" data-rez>Rezervări</a>
+    <a class="cart-link" href="cos.html" aria-label="Coș">
+      Coș <span class="cart-count" id="cartCount">0</span>
+    </a>
+    <div class="nav-social">
+      <a href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/renee.brunch" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.tiktok.com/@renee_brunch" target="_blank" rel="noopener">TikTok</a>
+    </div>
+  </nav>
+</header>
+<!-- /WP: header.php -->
+
+<!-- DETALIU PRODUS -->
+<section class="product-detail">
+  <div class="wrap">
+    <div id="productDetail"></div>
+    <div id="relatedWrap"></div>
+  </div>
+</section>
+
+<!-- WP: footer.php -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-col footer-brand">
+        <a href="index.html" class="footer-logo">Renée</a>
+        <p class="footer-tagline">Cafenea &amp; all day breakfast în Chișinău. O nouă emoție, un nou început.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/renee.brunch" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.tiktok.com/@renee_brunch" target="_blank" rel="noopener">TikTok</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Explorează</h4>
+        <nav class="footer-links">
+          <a href="index.html">Acasă</a>
+          <a href="magazin.html">Magazin</a>
+          <a href="despre.html">Despre</a>
+          <a href="evenimente.html">Evenimente</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-col footer-info">
+        <h4>Vino la noi</h4>
+        <p><span class="fi-label">Oasis Mall</span>Chișinău</p>
+        <p><span class="fi-label">A doua locație</span>str. Ismail 33, Chișinău <!-- DRAFT: de confirmat --></p>
+        <p><span class="fi-label">Program</span>Zilnic 08:00 – 22:00 <!-- DRAFT --></p>
+        <a href="tel:+37360000000">+373 60 000 000 <!-- DRAFT: telefon de confirmat --></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-meta">© 2026 Renée · Chișinău</span>
+      <span class="footer-meta">Toate drepturile rezervate</span>
+    </div>
+  </div>
+</footer>
+<!-- /WP: footer.php -->
+
+<script src="data/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/shop.js"></script>
+<script src="js/main.js"></script>
+<script>
+  Shop.renderProductDetail('productDetail');
+  var p = window.getProduct(new URLSearchParams(location.search).get('id'));
+  if (p){
+    var sim = window.getProductsByCategory(p.category).filter(function(x){ return x.id !== p.id; }).slice(0, 3);
+    if (sim.length){
+      var wrap = document.getElementById('relatedWrap');
+      wrap.innerHTML = '<h2 class="related-title reveal">Produse similare</h2><div id="relatedGrid" class="product-grid"></div>';
+      Shop.renderProducts('relatedGrid', sim);
+    }
+  }
+</script>
+</body>
+</html>

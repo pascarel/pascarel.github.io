@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finalizare comandă — Renée · Chișinău</title>
+<meta name="description" content="Finalizează comanda ta Renée: date de contact, livrare sau ridicare din local, metodă de plată.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/shop.css">
+</head>
+<body class="subpage">
+
+<!-- WP: header.php -->
+<header id="header">
+  <a class="logo" href="index.html#top">Renée</a>
+  <button class="burger" id="burger" aria-label="Meniu" aria-expanded="false">Meniu</button>
+  <nav id="nav">
+    <a href="despre.html">Despre</a>
+    <a href="magazin.html">Magazin</a>
+    <a href="evenimente.html">Evenimente</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+    <a class="btn-rez" href="index.html#vizita" data-rez>Rezervări</a>
+    <a class="cart-link" href="cos.html" aria-label="Coș">
+      Coș <span class="cart-count" id="cartCount">0</span>
+    </a>
+    <div class="nav-social">
+      <a href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/renee.brunch" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.tiktok.com/@renee_brunch" target="_blank" rel="noopener">TikTok</a>
+    </div>
+  </nav>
+</header>
+<!-- /WP: header.php -->
+
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow reveal">Comanda ta</p>
+    <h1 class="h2 reveal" style="margin-bottom:40px">Finalizare comandă</h1>
+
+    <div class="cart-empty" id="checkoutEmpty">
+      <p>Coșul tău e gol — adaugă produse înainte de finalizare.</p>
+      <a href="magazin.html">Vezi magazinul</a>
+    </div>
+
+    <div class="checkout-grid">
+      <form id="checkoutForm" novalidate>
+
+        <div class="co-section">
+          <h2>Date de contact</h2>
+          <div class="form-grid">
+            <div class="field">
+              <label for="co-nume">Nume complet</label>
+              <input type="text" id="co-nume" name="nume">
+            </div>
+            <div class="field">
+              <label for="co-tel">Telefon</label>
+              <input type="tel" id="co-tel" name="telefon">
+            </div>
+            <div class="field">
+              <label for="co-email">E-mail</label>
+              <input type="email" id="co-email" name="email">
+            </div>
+          </div>
+        </div>
+
+        <div class="co-section">
+          <h2>Metodă de livrare</h2>
+          <div class="radio-row">
+            <label class="radio-opt"><input type="radio" name="livrare" value="delivery" checked> Livrare la adresă</label>
+            <label class="radio-opt"><input type="radio" name="livrare" value="pickup"> Ridicare din local</label>
+          </div>
+
+          <div id="adresaLivrare" class="form-grid">
+            <div class="field">
+              <label for="co-strada">Stradă și număr</label>
+              <input type="text" id="co-strada" name="strada">
+            </div>
+            <div class="field">
+              <label for="co-bloc">Bloc / apartament</label>
+              <input type="text" id="co-bloc" name="bloc">
+            </div>
+            <div class="field">
+              <label for="co-reper">Reper (opțional)</label>
+              <input type="text" id="co-reper" name="reper">
+            </div>
+          </div>
+
+          <div id="pickupLocatie" class="field" style="display:none;max-width:420px">
+            <label for="co-locatie">Locație ridicare</label>
+            <select id="co-locatie" name="locatie">
+              <option value="">Alege locația</option>
+              <option value="oasis-mall">Renée — Oasis Mall, Chișinău</option>
+              <!-- DRAFT: adresă de confirmat -->
+              <option value="centru">Renée — str. Ismail 33, Chișinău (DRAFT: adresă de confirmat)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="co-section">
+          <h2>Metodă de plată</h2>
+          <!-- DEMO: plata „card online" simulată; WP → gateway maib/paynet -->
+          <div class="pay-options" id="plataOptions"></div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="coSubmit">Plasează comanda</button>
+      </form>
+
+      <aside class="order-summary" id="orderSummary"></aside>
+    </div>
+  </div>
+</section>
+
+<!-- WP: footer.php -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-col footer-brand">
+        <a href="index.html" class="footer-logo">Renée</a>
+        <p class="footer-tagline">Cafenea &amp; all day breakfast în Chișinău. O nouă emoție, un nou început.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/renee.brunch" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.tiktok.com/@renee_brunch" target="_blank" rel="noopener">TikTok</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Explorează</h4>
+        <nav class="footer-links">
+          <a href="index.html">Acasă</a>
+          <a href="magazin.html">Magazin</a>
+          <a href="despre.html">Despre</a>
+          <a href="evenimente.html">Evenimente</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-col footer-info">
+        <h4>Vino la noi</h4>
+        <p><span class="fi-label">Oasis Mall</span>Chișinău</p>
+        <p><span class="fi-label">A doua locație</span>str. Ismail 33, Chișinău <!-- DRAFT: de confirmat --></p>
+        <p><span class="fi-label">Program</span>Zilnic 08:00 – 22:00 <!-- DRAFT --></p>
+        <a href="tel:+37360000000">+373 60 000 000 <!-- DRAFT: telefon de confirmat --></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-meta">© 2026 Renée · Chișinău</span>
+      <span class="footer-meta">Toate drepturile rezervate</span>
+    </div>
+  </div>
+</footer>
+<!-- /WP: footer.php -->
+
+<script src="data/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/shop.js"></script>
+<script src="js/main.js"></script>
+<script src="js/checkout.js"></script>
+<script>
+  Checkout.init();
+</script>
+</body>
+</html>

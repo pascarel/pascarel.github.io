@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renée — Cafenea & All Day Breakfast · Chișinău</title>
+<meta name="description" content="Renée — o nouă emoție, un nou început. Cafenea cu all day breakfast și brunch în Chișinău, Oasis Mall.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/shop.css">
+</head>
+<body>
+
+<!-- WP: header.php -->
+<header id="header">
+  <a class="logo" href="#top">Renée</a>
+  <button class="burger" id="burger" aria-label="Meniu" aria-expanded="false">Meniu</button>
+  <nav id="nav">
+    <a href="despre.html">Despre</a>
+    <a href="magazin.html">Magazin</a>
+    <a href="evenimente.html">Evenimente</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+    <a class="btn-rez" href="index.html#vizita" data-rez>Rezervări</a>
+    <a class="cart-link" href="cos.html" aria-label="Coș">
+      Coș <span class="cart-count" id="cartCount">0</span>
+    </a>
+    <div class="nav-social">
+      <a href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/renee.brunch" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.tiktok.com/@renee_brunch" target="_blank" rel="noopener">TikTok</a>
+    </div>
+  </nav>
+</header>
+<!-- /WP: header.php -->
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata"
+      poster="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600&q=70&auto=format&fit=crop">
+      <source src="https://videos.pexels.com/video-files/6769801/6769801-hd_1920_1080_24fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/855391/855391-hd_1920_1080_25fps.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="wrap">
+    <h1 class="hero-title" id="heroTitle" aria-label="Renée">Renée</h1>
+    <div class="hero-sub">
+      <p class="hero-tag">o nouă emoție, un nou început — <em>renaissance</em></p>
+      <p class="hero-meta">Cafenea · All Day Breakfast · Chișinău</p>
+    </div>
+  </div>
+  <div class="scroll-hint">Descoperă</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>all day breakfast <i>·</i></span>
+    <span>brunch <i>·</i></span>
+    <span>specialty coffee <i>·</i></span>
+    <span>patiserie proaspătă <i>·</i></span>
+    <span>renaissance <i>·</i></span>
+  </div>
+</div>
+
+<!-- USP / TRUST BAR -->
+<div class="usp-bar">
+  <div class="usp-inner">
+    <div class="usp-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l8-4 8 4v6c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg><span><strong>Prăjită artizanal</strong> în loturi mici</span></div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h13v11H1z"/><path d="M14 8h4l3 3v4h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span><strong>Livrare gratuită</strong> peste 500 lei</span></div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span><strong>Ridicare gratuită</strong> din local</span></div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 18.6 6.1 20.8l1.2-6.6L2.5 9l6.6-.9z"/></svg><span><strong>4.8/5</strong> · sute de clienți</span></div>
+  </div>
+</div>
+
+<!-- DESPRE -->
+<section class="section" id="despre">
+  <div class="wrap">
+    <p class="eyebrow reveal">Despre Renée</p>
+    <div class="despre-grid">
+      <div>
+        <p class="manifest reveal">Dimineața nu e o oră.<br>E o <em>stare</em> — și la Renée<br>ea durează toată ziua.</p>
+        <div class="despre-text" style="margin-top:36px">
+          <p class="reveal reveal-d1">Renée s-a născut dintr-o idee simplă: micul dejun este cel mai sincer moment al zilei. Ouă perfecte, pâine caldă, cafea de specialitate și lumină bună — servite fără grabă, de dimineață până seara.</p>
+          <p class="reveal reveal-d2">Numele nostru înseamnă „renăscută". Fiecare vizită e un mic nou început: o masă lângă fereastră, o farfurie frumoasă, o conversație care nu se termină.</p>
+        </div>
+      </div>
+      <div class="despre-photo reveal reveal-d1">
+        <div class="parallax-wrap">
+          <img class="photo parallax" data-speed="0.12" src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1000&q=80&auto=format&fit=crop" alt="Interiorul cafenelei Renée" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POVESTEA -->
+<section class="section poveste" id="poveste" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow reveal">Povestea numelui</p>
+    <h2 class="h2 reveal">De ce <em>Renée</em>?</h2>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <span class="tl-year">Ideea</span>
+        <h3>O dimineață care nu se mai termină</h3>
+        <p>Totul a pornit de la o întrebare simplă: de ce cel mai frumos moment al zilei — micul dejun — durează atât de puțin? Am vrut un loc unde el să nu se termine niciodată.</p>
+      </div>
+      <div class="tl-item reveal">
+        <span class="tl-year">Numele</span>
+        <h3>Renée — „renăscută"</h3>
+        <p>În franceză, Renée înseamnă „cea renăscută". Fiecare cafea bună, fiecare masă cu oameni dragi e un mic nou început. O renaștere de buzunar, în fiecare zi.</p>
+      </div>
+      <div class="tl-item reveal">
+        <span class="tl-year">Astăzi</span>
+        <h3>Chișinău, Oasis Mall</h3>
+        <p>Am deschis ușile cu o promisiune: lumină bună, farfurii frumoase și timp — luat înapoi de la grabă. Te așteptăm să faci parte din poveste.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RITUAL / MOMENTELE ZILEI -->
+<section class="section" id="ritual" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow reveal">Momentele zilei</p>
+    <h2 class="h2 reveal">O zi întreagă<br>de <em>mic dejun</em></h2>
+    <div class="ritual-grid">
+      <div class="ritual-item reveal">
+        <span class="ritual-num">No. 01</span>
+        <h3>Dimineața liniștită</h3>
+        <p>Cafeaua proaspăt măcinată, croissante calde și primele raze prin fereastră. Începutul perfect, fără grabă.</p>
+        <span class="ritual-time">08:00 — 11:00</span>
+      </div>
+      <div class="ritual-item reveal reveal-d1">
+        <span class="ritual-num">No. 02</span>
+        <h3>Brunch-ul leneș</h3>
+        <p>Momentul-vedetă: eggs benedict, pancakes, mimosa. Weekendul se simte cel mai bine la o masă lungă, cu prietenii.</p>
+        <span class="ritual-time">11:00 — 16:00</span>
+      </div>
+      <div class="ritual-item reveal reveal-d2">
+        <span class="ritual-num">No. 03</span>
+        <h3>După-amiaza dulce</h3>
+        <p>Desert, un flat white și o carte bună. Sau doar tu, lumina caldă și liniștea de dinaintea serii.</p>
+        <span class="ritual-time">16:00 — 21:00</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENIU -->
+<section class="section meniu" id="meniu">
+  <div class="wrap">
+    <div class="meniu-head">
+      <div>
+        <p class="eyebrow reveal">Din meniu</p>
+        <h2 class="h2 reveal">Favoritele <em>casei</em></h2>
+      </div>
+      <p class="meniu-note reveal reveal-d1">O selecție scurtă. Meniul complet te așteaptă la masă.</p>
+    </div>
+    <div class="cards">
+      <article class="card reveal">
+        <div class="card-img"><img class="photo" src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=700&q=80&auto=format&fit=crop" alt="Eggs Benedict" loading="lazy"></div>
+        <div class="card-body">
+          <h3>Eggs Benedict <span class="price">125 lei</span></h3>
+          <p>Ouă poșate, sos olandez mătăsos, brioșă caldă și verdeață proaspătă.</p>
+        </div>
+      </article>
+      <article class="card reveal reveal-d1">
+        <div class="card-img"><img class="photo" src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=700&q=80&auto=format&fit=crop" alt="Avocado toast" loading="lazy"></div>
+        <div class="card-body">
+          <h3>Avocado Toast <span class="price">110 lei</span></h3>
+          <p>Pâine cu maia, avocado copt, ou poșat, semințe și ulei de busuioc.</p>
+        </div>
+      </article>
+      <article class="card reveal reveal-d2">
+        <div class="card-img"><img class="photo" src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=700&q=80&auto=format&fit=crop" alt="Pancakes cu fructe" loading="lazy"></div>
+        <div class="card-body">
+          <h3>Pancakes Renée <span class="price">95 lei</span></h3>
+          <p>Pufoase, cu fructe de sezon, mascarpone și sirop de arțar.</p>
+        </div>
+      </article>
+      <article class="card reveal reveal-d3">
+        <div class="card-img"><img class="photo" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=700&q=80&auto=format&fit=crop" alt="Flat white" loading="lazy"></div>
+        <div class="card-body">
+          <h3>Flat White <span class="price">55 lei</span></h3>
+          <p>Espresso dublu, lapte catifelat, boabe prăjite artizanal.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- BESTSELLERS -->
+<section class="section featured-products" id="bestsellers">
+  <div class="wrap">
+    <div class="meniu-head">
+      <div>
+        <p class="eyebrow reveal">Din magazin</p>
+        <h2 class="h2 reveal">Cele mai <em>vândute</em></h2>
+      </div>
+      <p class="meniu-note reveal reveal-d1">Le comanzi online, cu livrare în Chișinău sau ridicare din local.</p>
+    </div>
+    <div id="bestsellersGrid" class="product-grid" style="margin-top:56px"></div>
+    <a class="btn-primary reveal" style="margin-top:44px" href="magazin.html">Vezi tot magazinul</a>
+  </div>
+</section>
+
+<!-- GALERIE -->
+<section class="section" id="galerie">
+  <div class="wrap">
+    <p class="eyebrow reveal">Atmosfera</p>
+    <h2 class="h2 reveal">Lumină, farfurii <em>frumoase</em>,<br>oameni relaxați</h2>
+    <div class="galerie-grid">
+      <div class="g-item g-1 reveal"><img class="photo" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80&auto=format&fit=crop" alt="Sala principală" loading="lazy"></div>
+      <div class="g-item g-2 reveal reveal-d1"><img class="photo" src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=900&q=80&auto=format&fit=crop" alt="Barul de cafea" loading="lazy"></div>
+      <div class="g-item g-3 reveal"><img class="photo" src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=700&q=80&auto=format&fit=crop" alt="Detaliu farfurie de brunch" loading="lazy"></div>
+      <div class="g-item g-4 reveal reveal-d1"><img class="photo" src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=700&q=80&auto=format&fit=crop" alt="French toast cu fructe" loading="lazy"></div>
+      <div class="g-item g-5 reveal reveal-d2"><img class="photo" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=700&q=80&auto=format&fit=crop" alt="Cafea lângă fereastră" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALE -->
+<section class="section testi" id="testimoniale">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="justify-content:center">Spun oaspeții</p>
+    <div class="testi-stage reveal" id="testiStage">
+      <figure class="testi-slide active">
+        <blockquote class="testi-quote">„Cel mai bun brunch din Chișinău. Lumina, farfuriile, cafeaua — totul e <em>impecabil</em>."</blockquote>
+        <figcaption class="testi-autor">Ana · Google Reviews</figcaption>
+      </figure>
+      <figure class="testi-slide">
+        <blockquote class="testi-quote">„Locul unde duminica devine <em>ritual</em>. Eggs benedict de nota zece, atmosferă de revistă."</blockquote>
+        <figcaption class="testi-autor">Mihai · Google Reviews</figcaption>
+      </figure>
+      <figure class="testi-slide">
+        <blockquote class="testi-quote">„Am venit pentru cafea, am rămas pentru <em>tot restul</em>. Personalul e minunat."</blockquote>
+        <figcaption class="testi-autor">Cristina · Instagram</figcaption>
+      </figure>
+    </div>
+    <div class="testi-dots" id="testiDots" role="tablist" aria-label="Testimoniale"></div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="section" id="instagram">
+  <div class="wrap">
+    <div class="insta-head">
+      <div>
+        <p class="eyebrow reveal">Instagram</p>
+        <h2 class="h2 reveal">Zilnic, în <em>feed</em></h2>
+      </div>
+      <a class="link-arrow reveal reveal-d1" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Urmărește @renee_brunch →</a>
+    </div>
+    <div class="insta-grid">
+      <a class="insta-item reveal" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&q=80&auto=format&fit=crop" alt="Cafea la Renée" loading="lazy"></a>
+      <a class="insta-item reveal reveal-d1" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80&auto=format&fit=crop" alt="Prieteni la brunch" loading="lazy"></a>
+      <a class="insta-item reveal reveal-d2" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1533920379810-6bedac961555?w=600&q=80&auto=format&fit=crop" alt="Preparate Renée" loading="lazy"></a>
+      <a class="insta-item reveal reveal-d3" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=600&q=80&auto=format&fit=crop" alt="Atmosferă Renée" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<!-- EVENIMENTE PRIVATE -->
+<section class="section" id="evenimente" style="padding-top:0">
+  <div class="wrap">
+    <div class="event-grid">
+      <div class="event-photo reveal">
+        <img class="photo" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1000&q=80&auto=format&fit=crop" alt="Brunch de grup la Renée" loading="lazy">
+      </div>
+      <div>
+        <p class="eyebrow reveal">Evenimente private</p>
+        <h2 class="h2 reveal">Sărbătorește <em>la Renée</em></h2>
+        <ul class="event-list reveal reveal-d1">
+          <li>Brunch-uri aniversare & baby shower</li>
+          <li>Mic dejun corporate & team breakfast</li>
+          <li>Degustări de cafea cu barista</li>
+          <li>Rezervare exclusivă a salonului</li>
+        </ul>
+        <a class="btn-solid reveal reveal-d2" href="tel:+37378784040">Discută cu noi</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIZITA -->
+<section class="section vizita" id="vizita">
+  <div class="wrap">
+    <p class="eyebrow reveal">Vino la Renée</p>
+    <div class="vizita-grid">
+      <div>
+        <h2 class="h2 reveal">Te așteptăm<br><em>în fiecare zi</em></h2>
+        <a class="tel-big reveal reveal-d1" href="tel:+37378784040">+373 78 784 040</a>
+        <div class="vizita-cta reveal reveal-d2">
+          <button type="button" class="btn-light" data-rez>Rezervă o masă</button>
+        </div>
+      </div>
+      <div class="info-list reveal reveal-d1">
+        <div class="info-row">
+          <span class="lbl">Adresă</span>
+          <span class="val">Oasis Mall, Chișinău</span>
+        </div>
+        <div class="info-row">
+          <span class="lbl">Program</span>
+          <span class="val">Lun – Joi · 08:00 – 21:00<br>Vin – Sâm · 08:00 – 22:00</span>
+        </div>
+        <div class="info-row">
+          <span class="lbl">Rezervări</span>
+          <span class="val">Online, telefonic sau direct în local</span>
+        </div>
+        <div class="info-row">
+          <span class="lbl">Instagram</span>
+          <span class="val"><a href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">@renee_brunch</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-wrap reveal">
+      <iframe src="https://www.google.com/maps?q=Oasis+Mall+Chisinau&output=embed" title="Renée pe hartă — Oasis Mall, Chișinău" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section newsletter" id="newsletter">
+  <div class="wrap newsletter-inner">
+    <p class="eyebrow reveal" style="justify-content:center">Rămâi aproape</p>
+    <h2 class="reveal">Prinde noutățile și <em>10% la prima comandă</em></h2>
+    <p class="reveal reveal-d1">Loturi noi de cafea, evenimente și oferte — direct în inbox. Fără spam.</p>
+    <form class="newsletter-form reveal reveal-d1" id="newsletterForm" novalidate>
+      <input type="email" id="nlEmail" placeholder="adresa ta de email" autocomplete="email" aria-label="Email" required>
+      <button type="submit" class="btn-primary">Abonează-te</button>
+    </form>
+    <p class="newsletter-ok" id="nlOk">Mulțumim! Verifică-ți inboxul pentru codul de 10%. <!-- DEMO: simulat --></p>
+  </div>
+</section>
+
+<!-- WP: footer.php -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-col footer-brand">
+        <a href="index.html" class="footer-logo">Renée</a>
+        <p class="footer-tagline">Cafenea &amp; all day breakfast în Chișinău. O nouă emoție, un nou început.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/renee.brunch" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.tiktok.com/@renee_brunch" target="_blank" rel="noopener">TikTok</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Explorează</h4>
+        <nav class="footer-links">
+          <a href="index.html">Acasă</a>
+          <a href="magazin.html">Magazin</a>
+          <a href="despre.html">Despre</a>
+          <a href="evenimente.html">Evenimente</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-col footer-info">
+        <h4>Vino la noi</h4>
+        <p><span class="fi-label">Oasis Mall</span>Chișinău</p>
+        <p><span class="fi-label">A doua locație</span>str. Ismail 33, Chișinău <!-- DRAFT: de confirmat --></p>
+        <p><span class="fi-label">Program</span>Zilnic 08:00 – 22:00 <!-- DRAFT --></p>
+        <a href="tel:+37360000000">+373 60 000 000 <!-- DRAFT: telefon de confirmat --></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-meta">© 2026 Renée · Chișinău</span>
+      <span class="footer-meta">Toate drepturile rezervate</span>
+    </div>
+  </div>
+</footer>
+<!-- /WP: footer.php -->
+
+<!-- MODAL REZERVARE -->
+<div class="modal" id="rezModal" role="dialog" aria-modal="true" aria-labelledby="rezTitle" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-panel">
+    <button type="button" class="modal-close" id="rezClose" aria-label="Închide">✕</button>
+    <p class="modal-eyebrow">Rezervări</p>
+    <h3 class="modal-title" id="rezTitle">Rezervă o masă</h3>
+    <p class="modal-sub">Completează detaliile și te contactăm pentru confirmare.</p>
+
+    <form id="rezForm" novalidate>
+      <div class="form-grid">
+        <div class="field">
+          <label for="f-nume">Nume</label>
+          <input type="text" id="f-nume" name="nume" placeholder="Numele tău" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-tel">Telefon</label>
+          <input type="tel" id="f-tel" name="telefon" placeholder="+373 ..." autocomplete="tel" required>
+        </div>
+        <div class="field picker" id="pickPers">
+          <label id="lbl-pers">Persoane</label>
+          <button type="button" class="picker-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-pers">
+            <span class="picker-val">2 persoane</span><i class="chev"></i>
+          </button>
+          <input type="hidden" name="persoane" value="2 persoane">
+          <ul class="pop pop-list" role="listbox">
+            <li role="option" aria-selected="true">2 persoane</li>
+            <li role="option" aria-selected="false">3–4 persoane</li>
+            <li role="option" aria-selected="false">5–8 persoane</li>
+            <li role="option" aria-selected="false">Grup mare (9+)</li>
+          </ul>
+        </div>
+        <div class="field picker" id="pickData">
+          <label id="lbl-data">Data</label>
+          <button type="button" class="picker-btn" aria-haspopup="dialog" aria-expanded="false" aria-labelledby="lbl-data">
+            <span class="picker-val val-empty">Alege data</span><i class="chev"></i>
+          </button>
+          <input type="hidden" name="data" value="">
+          <div class="pop pop-cal" role="dialog" aria-label="Calendar">
+            <div class="cal-head">
+              <button type="button" class="cal-nav cal-prev" aria-label="Luna precedentă">←</button>
+              <span class="cal-title"></span>
+              <button type="button" class="cal-nav cal-next" aria-label="Luna următoare">→</button>
+            </div>
+            <div class="cal-week">
+              <span>Lu</span><span>Ma</span><span>Mi</span><span>Jo</span><span>Vi</span><span>Sâ</span><span>Du</span>
+            </div>
+            <div class="cal-grid"></div>
+          </div>
+        </div>
+        <div class="field picker" id="pickOra">
+          <label id="lbl-ora">Ora</label>
+          <button type="button" class="picker-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-ora">
+            <span class="picker-val val-empty">Alege ora</span><i class="chev"></i>
+          </button>
+          <input type="hidden" name="ora" value="">
+          <div class="pop pop-time-wrap">
+            <ul class="pop-list pop-time" role="listbox"></ul>
+            <div class="pop-hint" aria-hidden="true">mai multe ore <span class="hint-arrow">→</span></div>
+          </div>
+        </div>
+        <div class="field field-submit">
+          <button type="submit" class="btn-light">Trimite rezervarea</button>
+        </div>
+      </div>
+      <div class="form-foot">
+        <p class="form-note">Sau sună-ne direct la <a href="tel:+37378784040" style="border-bottom:1px solid var(--caramel)">+373 78 784 040</a> — confirmăm pe loc.</p>
+      </div>
+      <div aria-live="polite">
+        <p class="form-ok" id="formOk">Mulțumim! Am primit cererea ta — te contactăm în cel mai scurt timp pentru confirmare. ☕</p>
+        <p class="form-full" id="formFull">Ne pare rău — pentru data și ora alese nu mai avem locuri libere. Alege alt interval sau sună-ne la <a href="tel:+37378784040">+373 78 784 040</a>.</p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="data/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/shop.js"></script>
+<script src="js/main.js"></script>
+<script>
+  (function(){
+    var best = (window.getBestsellers ? window.getBestsellers() : window.getFeatured()).slice(0, 4);
+    if (best.length) Shop.renderProducts('bestsellersGrid', best);
+
+    var form = document.getElementById('newsletterForm');
+    if (form){
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var email = document.getElementById('nlEmail');
+        if (!email.value || email.value.indexOf('@') < 1){ email.focus(); return; }
+        /* DEMO: trimitere simulată. WP: → integrare Mailchimp/newsletter */
+        document.getElementById('nlOk').classList.add('show');
+        form.reset();
+      });
+    }
+  })();
+</script>
+</body>
+</html>
