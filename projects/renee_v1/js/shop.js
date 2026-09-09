@@ -26,21 +26,7 @@
     return !!(p.variations && p.variations.options && p.variations.options.length);
   }
 
-  /* stele rating (SVG) — full/empty după valoare rotunjită la 0.5 */
-  function starsHTML(rating){
-    var r = Math.round((rating || 0) * 2) / 2, out = '';
-    for (var i = 1; i <= 5; i++){
-      var fill = r >= i ? 'full' : (r >= i - 0.5 ? 'half' : 'empty');
-      out += '<span class="star star-' + fill + '">★</span>';
-    }
-    return '<span class="stars" aria-label="' + (rating || 0) + ' din 5">' + out + '</span>';
-  }
-  function ratingLine(p){
-    if (!p.rating) return '';
-    return '<span class="pc-rating">' + starsHTML(p.rating) +
-      '<span class="pc-rcount">(' + (p.reviewCount || 0) + ')</span></span>';
-  }
-
+  /* iconiță coș, folosită pe butonul de adăugare din card */
   var CART_ICON =
     '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
       '<path d="M4 5h2l1.5 11.5a1.5 1.5 0 0 0 1.5 1.3h7.8a1.5 1.5 0 0 0 1.5-1.2L21 8H7"/>' +
@@ -55,8 +41,22 @@
     } else {
       priceHTML = money(p.price);
     }
-    var badge = p.onSale ? '<span class="badge-sale">Reducere</span>'
-              : (p.bestseller ? '<span class="badge-best">Bestseller</span>' : '');
+    var LABELS = { nou:'Nou', vegan:'Vegan', recomandat:'Recomandat' };
+    var badge = '';
+    if (p.badges && p.badges.length){
+      var bl = '';
+      for (var bi = 0; bi < p.badges.length; bi++){
+        var k = p.badges[bi];
+        bl += '<span class="badge badge--' + k + '">' + (LABELS[k] || k) + '</span>';
+      }
+      badge = '<span class="badges">' + bl + '</span>';
+    }
+    var alerg = p.alergeni
+      ? '<span class="alergeni" tabindex="0" role="button" aria-label="Alergeni pentru ' + p.name + '">' +
+          '<span class="alergeni-i" aria-hidden="true">i</span>' +
+          '<span class="alergeni-pop" role="tooltip">Poate conține: ' + p.alergeni + '</span>' +
+        '</span>'
+      : '';
     var img = (p.images && p.images[0]) || '';
     return (
       '<div class="product-card reveal">' +
@@ -65,8 +65,7 @@
           '<div class="pc-img"><img src="' + img + '" alt="' + p.name + '" loading="lazy"></div>' +
           '<div class="pc-body">' +
             '<h3 class="pc-name">' + p.name + '</h3>' +
-            ratingLine(p) +
-            '<div class="pc-price">' + priceHTML + '</div>' +
+            '<div class="pc-price">' + priceHTML + alerg + '</div>' +
           '</div>' +
         '</a>' +
         '<button type="button" class="pc-add" data-id="' + p.id + '" aria-label="Adaugă în coș" title="Adaugă în coș">' +
@@ -320,30 +319,6 @@
     );
   }
 
-  /* ---------- Recenzii ---------- */
-  function reviewsHTML(p){
-    if (!p.rating) return '';
-    var revs = (window.getReviewsFor ? window.getReviewsFor(p) : []);
-    var list = '';
-    for (var i = 0; i < revs.length; i++){
-      var r = revs[i];
-      list += '<article class="review reveal">' +
-        '<div class="review-head"><span class="review-name">' + r.name + '</span>' +
-        starsHTML(r.rating) + '<span class="review-date">' + r.date + '</span></div>' +
-        '<p class="review-text">' + r.text + '</p></article>';
-    }
-    return (
-      '<section class="pd-reviews" id="pdReviews">' +
-        '<div class="reviews-summary reveal">' +
-          '<div class="rs-score"><span class="rs-num">' + p.rating + '</span>' + starsHTML(p.rating) +
-            '<span class="rs-count">' + (p.reviewCount || 0) + ' recenzii</span></div>' +
-          '<p class="rs-note">Recenzii demonstrative. <!-- DRAFT: recenzii reale la migrarea WooCommerce --></p>' +
-        '</div>' +
-        '<div class="reviews-list">' + list + '</div>' +
-      '</section>'
-    );
-  }
-
   /* ---------- Sticky add-to-cart ---------- */
   function mountStickyBar(p){
     var old = document.getElementById('stickyBar');
@@ -440,8 +415,6 @@
         '<div class="pd-info reveal reveal-d1">' +
           '<p class="eyebrow">' + catName(p.category) + '</p>' +
           '<h1>' + p.name + '</h1>' +
-          (p.rating ? '<a href="#pdReviews" class="pd-rating">' + starsHTML(p.rating) +
-            '<span>' + p.rating + ' · ' + (p.reviewCount || 0) + ' recenzii</span></a>' : '') +
           '<div class="pd-price" id="pdPrice">' + priceHTML + '</div>' +
           '<p class="pd-short">' + p.shortDesc + '</p>' +
           chips +
@@ -459,8 +432,7 @@
           '<div class="pd-accordions">' + productDetails(p) + '</div>' +
         '</div>' +
       '</div>' +
-      bundleHTML(p) +
-      reviewsHTML(p);
+      bundleHTML(p);
 
     /* sticky add-to-cart (apare la scroll) */
     mountStickyBar(p);

@@ -1,13 +1,41 @@
 :root{
-  --cream:#F7F2EA;
-  --cream-2:#F0E8DA;
-  --ink:#2B2118;
-  --ink-soft:#5b4d3f;
-  --terra:#C46A45;
-  --caramel:#B08954;
-  --sage:#8A9B7C;
-  --serif:'Cormorant Garamond', Georgia, serif;
-  --sans:'Outfit', -apple-system, sans-serif;
+  /* ============================================================
+     Brandbook Renée — sursă unică de adevăr.
+     Nu schimba valorile de mai jos fără brandbook.
+     ============================================================ */
+  --tiramisu:#E0D7D1;        /* fundal principal */
+  --crust-brown:#AF7B5C;     /* accent — DECOR ONLY, 2.55 pe Tiramisu */
+  --black-pepper:#242122;    /* text, secțiuni închise */
+  --vin:#561320;             /* accent închis — 9.81 pe Tiramisu ✓ */
+  --verde:#6D816C;           /* accent decorativ — niciodată text */
+
+  /* Derivate (nu sunt în brandbook — aprobate 9 sept. 2026) */
+  --tiramisu-2:#D5CCC6;      /* Tiramisu + 6% Black Pepper — fundal alternativ de secțiune */
+  --ink-soft:#5C5856;        /* Black Pepper 70% pe Tiramisu — text secundar, 4.96 ✓ */
+
+  /* Roluri semantice */
+  --accent-text:var(--vin);          /* accent care TREBUIE citit, pe fundal deschis */
+  --accent-decor:var(--crust-brown); /* linii, borduri, hover, fundaluri */
+  --accent-dark:var(--crust-brown);  /* accent pe fundal închis — doar text mare (4.42) */
+  --accent-fill:var(--vin);          /* fundal plin care poartă text deschis — Tiramisu pe Vin 9.81 ✓ */
+
+  /* ------------------------------------------------------------
+     Fonturi. The Seasons nu are încă licență web (brandbook).
+     Când vine fișierul .woff2, se schimbă DOAR --font-display.
+     ------------------------------------------------------------ */
+  --font-display:'Playfair Display', Georgia, 'Times New Roman', serif; /* PROVIZORIU */
+  --font-body:'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Alias-uri către numele vechi, ca să nu se rupă nimic */
+  --cream:var(--tiramisu);
+  --cream-2:var(--tiramisu-2);
+  --ink:var(--black-pepper);
+  --terra:var(--crust-brown);
+  --caramel:var(--crust-brown);
+  --sage:var(--verde);
+  --serif:var(--font-display);
+  --sans:var(--font-body);
+
   --ease:cubic-bezier(.22,1,.36,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -21,7 +49,7 @@ body{
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
 }
-::selection{background:var(--terra);color:var(--cream)}
+::selection{background:var(--accent-fill);color:var(--cream)}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 
@@ -37,7 +65,7 @@ a{color:inherit;text-decoration:none}
 .eyebrow{
   font-family:var(--sans);
   font-size:11px;letter-spacing:.32em;text-transform:uppercase;
-  color:var(--terra);font-weight:500;
+  color:var(--accent-text);font-weight:500;
   display:flex;align-items:center;gap:14px;
 }
 .eyebrow::before{content:"";width:36px;height:1px;background:var(--terra)}
@@ -50,15 +78,18 @@ header{
   transition:background .4s, box-shadow .4s, padding .4s;
 }
 header.scrolled{
-  background:rgba(247,242,234,.88);
+  background:rgba(224,215,209,.88);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
   padding:14px clamp(20px,5vw,64px);
-  box-shadow:0 1px 0 rgba(43,33,24,.08);
+  box-shadow:0 1px 0 rgba(36,33,34,.08);
 }
-.logo{
-  font-family:var(--serif);font-size:28px;font-weight:500;
-  font-style:italic;letter-spacing:.02em;
+/* logo — SVG inline, culoarea vine prin currentColor de pe <a> */
+.logo{display:inline-flex;align-items:center;color:inherit}
+.logo-svg{height:26px;width:auto;display:block;fill:currentColor}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
 }
 nav{display:flex;gap:34px;align-items:center}
 nav a{
@@ -82,13 +113,13 @@ nav a:hover::after{transform:scaleX(1);transform-origin:left}
 .cart-link{ position:relative; }
 .cart-count{
   display:inline-block; min-width:18px; height:18px; padding:0 5px;
-  border-radius:9px; background:var(--terra); color:#fff;
-  font-family:'Outfit',sans-serif; font-size:11px; line-height:18px;
+  border-radius:9px; background:var(--accent-fill); color:#fff;
+  font-family:var(--font-body); font-size:11px; line-height:18px;
   text-align:center; vertical-align:middle;
 }
 .cart-count.empty{ opacity:.45; }
 .footer-nav{ display:flex; gap:20px; flex-wrap:wrap; margin-bottom:18px; }
-.footer-nav a{ font-family:'Outfit',sans-serif; font-size:14px; color:var(--ink-soft); }
+.footer-nav a{ font-family:var(--font-body); font-size:14px; color:var(--ink-soft); }
 
 /* ---------- hero (video) ---------- */
 .hero{
@@ -107,7 +138,7 @@ nav a:hover::after{transform:scaleX(1);transform-origin:left}
 }
 .hero-bg::after{
   content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg, rgba(26,18,12,.5) 0%, rgba(26,18,12,.42) 45%, rgba(26,18,12,.68) 100%);
+  background:linear-gradient(180deg, rgba(36,33,34,.5) 0%, rgba(36,33,34,.42) 45%, rgba(36,33,34,.68) 100%);
 }
 .hero .wrap{position:relative;z-index:2;width:100%}
 
@@ -138,11 +169,11 @@ body.no-scroll{overflow:hidden}
 .nav-social{display:none}
 nav.open .nav-social{
   display:flex;gap:26px;margin-top:20px;
-  padding-top:28px;border-top:1px solid rgba(43,33,24,.15);
+  padding-top:28px;border-top:1px solid rgba(36,33,34,.15);
 }
 nav.open .nav-social a{
   font-size:11px !important;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--terra) !important;
+  color:var(--accent-text) !important;
 }
 nav.open .nav-social a::after{display:none}
 .hero-title{
@@ -165,22 +196,22 @@ nav.open .nav-social a::after{display:none}
 }
 .hero-tag{
   font-family:var(--serif);font-style:italic;
-  font-size:clamp(22px,3vw,34px);color:rgba(247,242,234,.85);
+  font-size:clamp(22px,3vw,34px);color:rgba(224,215,209,.85);
   opacity:0;animation:fadeUp 1s var(--ease) .9s forwards;
 }
 .hero-meta{
-  font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--caramel);
+  font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:rgba(224,215,209,.9);
   opacity:0;animation:fadeUp 1s var(--ease) 1.15s forwards;
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 .scroll-hint{
   position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;
-  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(247,242,234,.75);
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(224,215,209,.75);
   display:flex;flex-direction:column;align-items:center;gap:10px;
   opacity:0;animation:fadeUp 1s var(--ease) 1.6s forwards;
 }
 .scroll-hint::after{
-  content:"";width:1px;height:44px;background:rgba(247,242,234,.75);
+  content:"";width:1px;height:44px;background:rgba(224,215,209,.75);
   animation:lineDrop 2.2s var(--ease) infinite;
   transform-origin:top;
 }
@@ -193,8 +224,8 @@ nav.open .nav-social a::after{display:none}
 
 /* ---------- marquee ---------- */
 .marquee{
-  border-top:1px solid rgba(43,33,24,.14);
-  border-bottom:1px solid rgba(43,33,24,.14);
+  border-top:1px solid rgba(36,33,34,.14);
+  border-bottom:1px solid rgba(36,33,34,.14);
   overflow:hidden;padding:20px 0;background:var(--cream);
   white-space:nowrap;
 }
@@ -205,9 +236,9 @@ nav.open .nav-social a::after{display:none}
 .marquee span{
   font-family:var(--serif);font-style:italic;
   font-size:clamp(20px,2.4vw,30px);
-  padding:0 34px;color:var(--ink-soft);
+  padding:0;color:var(--ink-soft);
 }
-.marquee span i{font-style:normal;color:var(--terra)}
+.marquee span i{font-style:normal;color:var(--accent-text);margin:0 34px}
 @keyframes scrollX{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ---------- despre ---------- */
@@ -221,7 +252,7 @@ nav.open .nav-social a::after{display:none}
   font-size:clamp(28px,3.4vw,44px);
   line-height:1.3;font-weight:400;
 }
-.manifest em{font-style:italic;color:var(--terra)}
+.manifest em{font-style:italic;color:var(--accent-text)}
 .despre-text p{margin-bottom:20px;color:var(--ink-soft);max-width:46ch}
 .despre-photo{
   position:relative;aspect-ratio:4/5;border-radius:200px 200px 16px 16px;
@@ -232,30 +263,31 @@ nav.open .nav-social a::after{display:none}
 .ph{
   position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
+  /* decorativ — nuanțe derivate din Tiramisu și Crust Brown */
   background:
-    radial-gradient(120% 90% at 20% 15%, #EBD9BE 0%, transparent 55%),
-    radial-gradient(110% 100% at 85% 85%, #C9A87C 0%, transparent 60%),
-    linear-gradient(160deg,#E4D3B8,#B99B72);
+    radial-gradient(120% 90% at 20% 15%, #EBE5E1 0%, transparent 55%),
+    radial-gradient(110% 100% at 85% 85%, #CFB09D 0%, transparent 60%),
+    linear-gradient(160deg,#EBE5E1,#90654B);
 }
 .ph::before{
   content:"";position:absolute;inset:14px;
-  border:1px solid rgba(247,242,234,.55);border-radius:inherit;
+  border:1px solid rgba(224,215,209,.55);border-radius:inherit;
   pointer-events:none;
 }
 .ph span{
   font-family:var(--sans);font-size:10px;letter-spacing:.3em;text-transform:uppercase;
-  color:rgba(43,33,24,.55);text-align:center;padding:0 20px;
+  color:rgba(36,33,34,.55);text-align:center;padding:0 20px;
 }
 .ph--sage{background:
-  radial-gradient(120% 90% at 25% 20%, #D6DCC9 0%, transparent 55%),
-  linear-gradient(165deg,#C3CCB2,#8A9B7C)}
+  radial-gradient(120% 90% at 25% 20%, #AFBAAE 0%, transparent 55%),
+  linear-gradient(165deg,#AFBAAE,#60725F)}
 .ph--terra{background:
-  radial-gradient(110% 90% at 75% 15%, #E8C1A6 0%, transparent 55%),
-  linear-gradient(160deg,#D89B77,#B0653F)}
+  radial-gradient(110% 90% at 75% 15%, #CFB09D 0%, transparent 55%),
+  linear-gradient(160deg,#CFB09D,#90654B)}
 .ph--dark{background:
-  radial-gradient(120% 100% at 30% 20%, #7a6a55 0%, transparent 60%),
-  linear-gradient(160deg,#5b4d3f,#3a2f24)}
-.ph--dark span{color:rgba(247,242,234,.6)}
+  radial-gradient(120% 100% at 30% 20%, #545253 0%, transparent 60%),
+  linear-gradient(160deg,#545253,#1B191A)}
+.ph--dark span{color:rgba(224,215,209,.6)}
 
 .parallax-wrap{overflow:hidden;border-radius:inherit;position:absolute;inset:0}
 .parallax-wrap .photo{position:absolute;inset:-12% 0;height:124%;will-change:transform}
@@ -270,9 +302,9 @@ nav.open .nav-social a::after{display:none}
   display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,60px);
   margin-top:64px;
 }
-.ritual-item{border-top:1px solid rgba(43,33,24,.18);padding-top:26px}
+.ritual-item{border-top:1px solid rgba(36,33,34,.18);padding-top:26px}
 .ritual-num{
-  font-family:var(--serif);font-style:italic;font-size:15px;color:var(--terra);
+  font-family:var(--serif);font-style:italic;font-size:15px;color:var(--accent-text);
   display:block;margin-bottom:14px;
 }
 .ritual-item h3{
@@ -282,7 +314,7 @@ nav.open .nav-social a::after{display:none}
 .ritual-item p{font-size:14.5px;color:var(--ink-soft);max-width:34ch}
 .ritual-time{
   display:inline-block;margin-top:16px;font-size:11px;letter-spacing:.24em;
-  text-transform:uppercase;color:var(--caramel);
+  text-transform:uppercase;color:var(--accent-text);
 }
 
 /* ---------- testimoniale ---------- */
@@ -299,7 +331,7 @@ nav.open .nav-social a::after{display:none}
   font-family:var(--serif);font-weight:400;
   font-size:clamp(24px,3vw,36px);line-height:1.35;
 }
-.testi-quote em{font-style:italic;color:var(--terra)}
+.testi-quote em{font-style:italic;color:var(--accent-text)}
 .testi-autor{
   margin-top:26px;font-size:11px;letter-spacing:.26em;text-transform:uppercase;
   color:var(--ink-soft);
@@ -307,7 +339,7 @@ nav.open .nav-social a::after{display:none}
 .testi-dots{display:flex;justify-content:center;gap:10px;margin-top:34px}
 .testi-dots button{
   width:8px;height:8px;border-radius:50%;border:none;cursor:pointer;
-  background:rgba(43,33,24,.22);transition:background .3s, transform .3s;
+  background:rgba(36,33,34,.22);transition:background .3s, transform .3s;
   padding:0;
 }
 .testi-dots button.active{background:var(--terra);transform:scale(1.35)}
@@ -324,7 +356,7 @@ nav.open .nav-social a::after{display:none}
 .insta-item::after{
   content:"@renee_brunch";
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:rgba(43,33,24,.45);color:var(--cream);
+  background:rgba(36,33,34,.45);color:var(--cream);
   font-size:11px;letter-spacing:.22em;text-transform:uppercase;
   opacity:0;transition:opacity .45s;
 }
@@ -332,7 +364,7 @@ nav.open .nav-social a::after{display:none}
 .insta-item:hover .photo{transform:scale(1.07)}
 .link-arrow{
   font-size:12px;letter-spacing:.2em;text-transform:uppercase;
-  border-bottom:1px solid var(--terra);padding-bottom:4px;color:var(--terra);
+  border-bottom:1px solid var(--terra);padding-bottom:4px;color:var(--accent-text);
   transition:color .3s,border-color .3s;
 }
 .link-arrow:hover{color:var(--ink);border-color:var(--ink)}
@@ -342,7 +374,7 @@ nav.open .nav-social a::after{display:none}
 .timeline{max-width:760px;margin:64px auto 0;position:relative;padding-left:40px}
 .timeline::before{
   content:"";position:absolute;left:6px;top:6px;bottom:6px;width:1px;
-  background:rgba(43,33,24,.2);
+  background:rgba(36,33,34,.2);
 }
 .tl-item{position:relative;padding-bottom:52px}
 .tl-item:last-child{padding-bottom:0}
@@ -352,7 +384,7 @@ nav.open .nav-social a::after{display:none}
 }
 .tl-item.reveal.in::before{background:var(--terra)}
 .tl-year{
-  font-family:var(--serif);font-style:italic;font-size:15px;color:var(--terra);
+  font-family:var(--serif);font-style:italic;font-size:15px;color:var(--accent-text);
   display:block;margin-bottom:10px;
 }
 .tl-item h3{font-family:var(--serif);font-weight:500;font-size:clamp(22px,2.2vw,30px);margin-bottom:10px}
@@ -366,22 +398,22 @@ nav.open .nav-social a::after{display:none}
 .event-photo{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden}
 .event-list{display:grid;gap:0;margin:28px 0 36px}
 .event-list li{
-  list-style:none;padding:16px 0;border-bottom:1px solid rgba(43,33,24,.14);
+  list-style:none;padding:16px 0;border-bottom:1px solid rgba(36,33,34,.14);
   font-size:15px;display:flex;align-items:baseline;gap:14px;
 }
-.event-list li::before{content:"—";color:var(--terra)}
+.event-list li::before{content:"—";color:var(--accent-text)}
 .btn-solid{
   display:inline-block;background:var(--ink);color:var(--cream);
   border-radius:999px;padding:15px 34px;
   font-size:12px;letter-spacing:.2em;text-transform:uppercase;
   transition:background .35s,transform .35s;
 }
-.btn-solid:hover{background:var(--terra);transform:translateY(-2px)}
+.btn-solid:hover{background:var(--accent-fill);transform:translateY(-2px)}
 
 /* ---------- harta ---------- */
 .map-wrap{
   margin-top:64px;border-radius:16px;overflow:hidden;
-  border:1px solid rgba(247,242,234,.16);
+  border:1px solid rgba(224,215,209,.16);
 }
 .map-wrap iframe{
   display:block;width:100%;height:380px;border:0;
@@ -396,29 +428,108 @@ nav.open .nav-social a::after{display:none}
   font-size:clamp(44px,6vw,84px);line-height:1.02;letter-spacing:-.015em;
   margin-top:18px;
 }
-.h2 em{font-style:italic;color:var(--terra)}
+.h2 em{font-style:italic;color:var(--accent-text)}
 .meniu-note{font-size:13px;color:var(--ink-soft);letter-spacing:.06em;max-width:30ch}
 .cards{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:22px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:26px;
 }
 .card{
   background:var(--cream);border-radius:14px;overflow:hidden;
+  /* coloană flex: (i) și butonul stau mereu jos, indiferent cât e de lungă descrierea */
+  display:flex;flex-direction:column;
   transition:transform .55s var(--ease), box-shadow .55s var(--ease);
 }
-.card:hover{transform:translateY(-10px);box-shadow:0 30px 50px -24px rgba(43,33,24,.35)}
-.card-img{position:relative;aspect-ratio:1/1;overflow:hidden}
+.card:hover{transform:translateY(-10px);box-shadow:0 30px 50px -24px rgba(36,33,34,.35)}
+.card-img{position:relative;aspect-ratio:4/3;overflow:hidden;flex:none}
+.card-link{display:block;position:relative;overflow:hidden}
+.card-img .photo{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.card:hover .card-img .photo{transform:scale(1.05)}
+.card-title-link{transition:color .3s}
+.card-title-link:hover{color:var(--accent-text)}
 .card-img .ph{transition:transform .8s var(--ease)}
 .card:hover .card-img .ph{transform:scale(1.06)}
-.card-body{padding:24px 24px 28px}
+.card-body{padding:24px 24px 28px;display:flex;flex-direction:column;flex:1}
 .card-body h3{
   font-family:var(--serif);font-weight:500;font-size:24px;margin-bottom:6px;
   display:flex;justify-content:space-between;align-items:baseline;gap:12px;
 }
 .card-body h3 .price{
-  font-family:var(--sans);font-size:13px;font-weight:400;color:var(--terra);
+  font-family:var(--sans);font-size:13px;font-weight:400;color:var(--accent-text);
   letter-spacing:.08em;white-space:nowrap;
 }
 .card-body p{font-size:13.5px;color:var(--ink-soft);line-height:1.55}
+
+/* ---------- badge-uri pe card (nou / vegan / recomandat) ----------
+   Text mic → doar fundaluri care trec pragul de contrast.
+   Verde e folosit decorativ (bulină), niciodată ca text — regulă de brandbook. */
+.badges{position:absolute;top:14px;left:14px;z-index:2;display:flex;gap:6px;flex-wrap:wrap}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  border-radius:999px;padding:6px 13px;
+  font-family:var(--sans);font-size:10.5px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;
+}
+.badge--nou{background:var(--vin);color:var(--tiramisu)}                 /* 9.81  ✓ */
+.badge--recomandat{background:var(--black-pepper);color:var(--tiramisu)} /* 11.26 ✓ */
+.badge--vegan{background:var(--tiramisu-2);color:var(--black-pepper)}    /* 10.10 ✓ */
+.badge--vegan::before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--verde);flex:none;
+}
+
+/* ---------- subsolul cardului: alergeni + adaugă în coș ---------- */
+/* ---------- bandă decorativă cu pattern-ul de brandbook ----------
+   SVG inline cu <pattern> în index.html, nu mask-image: mask-image nu picta nimic.
+   Culoarea vine prin currentColor, deci se schimbă de aici. */
+.poveste{position:relative;overflow:hidden}
+.patern-banda{
+  position:absolute;top:0;bottom:0;right:0;
+  width:clamp(84px,10vw,148px);height:100%;
+  color:var(--crust-brown);   /* paths-urile folosesc currentColor */
+  opacity:.7;
+  pointer-events:none;
+}
+@media(max-width:960px){ .patern-banda{display:none} }
+
+.card-gramaj{
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-soft);opacity:.75;margin-top:10px;
+}
+.card-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:auto;padding-top:18px;   /* margin-top:auto → împinge subsolul la baza cardului */
+}
+.alergeni{position:relative;display:inline-flex;flex:none;cursor:help;outline:none}
+.alergeni-i{
+  width:22px;height:22px;border-radius:50%;
+  border:1px solid rgba(36,33,34,.35);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-style:italic;font-size:13px;line-height:1;
+  color:var(--ink-soft);transition:border-color .3s,color .3s;
+}
+.alergeni:hover .alergeni-i,
+.alergeni:focus-visible .alergeni-i{border-color:var(--accent-text);color:var(--accent-text)}
+.alergeni-pop{
+  position:absolute;bottom:calc(100% + 10px);left:0;z-index:5;
+  width:max-content;max-width:220px;
+  background:var(--black-pepper);color:var(--tiramisu);
+  border-radius:10px;padding:10px 14px;
+  font-size:12px;line-height:1.5;letter-spacing:.01em;text-transform:none;
+  box-shadow:0 18px 34px -16px rgba(36,33,34,.6);
+  opacity:0;transform:translateY(6px);pointer-events:none;
+  transition:opacity .28s var(--ease), transform .28s var(--ease);
+}
+.alergeni:hover .alergeni-pop,
+.alergeni:focus-visible .alergeni-pop{opacity:1;transform:none}
+.card-add{
+  background:transparent;border:1px solid var(--ink);color:var(--ink);
+  border-radius:999px;padding:9px 20px;cursor:pointer;
+  font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  transition:background .35s,color .35s,border-color .35s;
+}
+.card-add:hover{background:var(--ink);color:var(--cream)}
+.card-add.done{background:var(--verde);border-color:var(--verde);color:var(--black-pepper)}
+.card-add.done::after{content:" ✓"}
 
 /* ---------- galerie ---------- */
 .galerie-grid{
@@ -434,62 +545,120 @@ nav.open .nav-social a::after{display:none}
 
 /* ---------- vizita ---------- */
 .vizita{background:var(--ink);color:var(--cream)}
-.vizita .eyebrow{color:var(--caramel)}
-.vizita .eyebrow::before{background:var(--caramel)}
+.vizita .eyebrow{color:var(--tiramisu)}
+.vizita .eyebrow::before{background:var(--accent-dark)}
+.vizita-head{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:30px;
+  flex-wrap:wrap;margin-top:26px;
+}
+.vizita .h2{color:var(--cream)}
+.vizita .h2 em{color:var(--accent-dark)}
+.info-list{display:grid;gap:0;margin-top:8px}
+.info-row{
+  display:flex;justify-content:space-between;gap:24px;
+  padding:22px 0;border-bottom:1px solid rgba(224,215,209,.16);
+  font-size:15px;
+}
+.info-row:first-child{border-top:1px solid rgba(224,215,209,.16)}
+.info-row .lbl{letter-spacing:.2em;text-transform:uppercase;font-size:11px;color:rgba(224,215,209,.55);padding-top:3px}
+.info-row .val{text-align:right;line-height:1.7}
+.vizita-cta{flex:none}
+
+/* folosite încă în contact.html, despre.html, evenimente.html */
 .vizita-grid{
   display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(40px,6vw,90px);
   margin-top:56px;align-items:start;
 }
-.vizita .h2{color:var(--cream)}
-.vizita .h2 em{color:var(--caramel)}
-.info-list{display:grid;gap:0;margin-top:8px}
-.info-row{
-  display:flex;justify-content:space-between;gap:24px;
-  padding:22px 0;border-bottom:1px solid rgba(247,242,234,.16);
-  font-size:15px;
-}
-.info-row:first-child{border-top:1px solid rgba(247,242,234,.16)}
-.info-row .lbl{letter-spacing:.2em;text-transform:uppercase;font-size:11px;color:rgba(247,242,234,.55);padding-top:3px}
-.info-row .val{text-align:right;line-height:1.7}
 .tel-big{
   display:inline-block;margin-top:36px;
   font-family:var(--serif);font-size:clamp(30px,3.6vw,46px);font-weight:400;
-  border-bottom:1px solid var(--caramel);padding-bottom:4px;
+  border-bottom:1px solid var(--accent-dark);padding-bottom:4px;
   transition:color .35s;
 }
-.tel-big:hover{color:var(--caramel)}
-.vizita-cta{margin-top:34px}
+.tel-big:hover{color:var(--accent-dark)}
+
+/* ---------- locații: taburi + panouri ---------- */
+.loc{margin-top:48px}
+.loc-tabs{
+  display:flex;flex-wrap:wrap;gap:10px;
+  border-bottom:1px solid rgba(224,215,209,.16);padding-bottom:16px;margin-bottom:8px;
+}
+.loc-tab{
+  background:transparent;border:1px solid rgba(224,215,209,.3);
+  color:rgba(224,215,209,.7);cursor:pointer;
+  border-radius:999px;padding:11px 24px;
+  font-family:var(--sans);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  transition:background .35s,color .35s,border-color .35s;
+}
+.loc-tab:hover{color:var(--tiramisu);border-color:rgba(224,215,209,.6)}
+.loc-tab.is-active{
+  background:var(--tiramisu);border-color:var(--tiramisu);color:var(--black-pepper);
+}
+.loc-panel{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,70px);
+  align-items:start;padding-top:26px;
+  animation:locIn .45s var(--ease) both;
+}
+/* display:grid bate [hidden]{display:none} din UA — panoul ascuns trebuie forțat */
+.loc-panel[hidden]{display:none}
+@keyframes locIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.loc-panel .map-wrap{margin-top:0}
+
+/* Scut peste hartă: până la activare, scroll-ul trece prin ea (nu face zoom).
+   La un clic pe „Activează harta" scutul dispare și harta devine interactivă. */
+.map-shield{position:relative;width:100%;height:100%}
+.map-shield::after{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:transparent;cursor:pointer;
+}
+.map-shield.is-active::after{display:none}
+.map-unlock{
+  position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:2;
+  background:var(--black-pepper);color:var(--tiramisu);
+  border:none;border-radius:999px;padding:11px 24px;cursor:pointer;
+  font-family:var(--font-body);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  box-shadow:0 12px 26px -12px rgba(36,33,34,.7);
+  transition:background .3s,opacity .3s;
+}
+.map-unlock:hover{background:var(--accent-fill)}
+.map-shield.is-active .map-unlock{display:none}
+.vizita-insta{
+  margin-top:40px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(224,215,209,.55);
+}
+.vizita-insta a{color:var(--accent-dark)}
 
 /* ---------- footer (3 coloane) ---------- */
 footer{background:var(--ink);color:var(--cream)}
 footer a{transition:color .3s}
-footer a:hover{color:var(--caramel)}
+footer a:hover{color:var(--accent-dark)}
 .footer-top{
   display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:clamp(30px,5vw,70px);
   padding:clamp(56px,8vh,84px) 0 clamp(40px,6vh,56px);
 }
-.footer-logo{font-family:var(--serif);font-style:italic;font-size:30px;display:inline-block;margin-bottom:16px}
-.footer-tagline{font-size:14px;line-height:1.7;color:rgba(247,242,234,.6);max-width:34ch;margin-bottom:22px}
+.footer-logo{display:inline-flex;align-items:center;margin-bottom:16px;color:var(--tiramisu)}
+.footer-logo-svg{height:46px;width:auto;display:block;fill:currentColor}
+.footer-tagline{font-size:14px;line-height:1.7;color:rgba(224,215,209,.6);max-width:34ch;margin-bottom:22px}
 .footer-social{display:flex;gap:18px;flex-wrap:wrap}
-.footer-social a{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,242,234,.7)}
+.footer-social a{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(224,215,209,.7)}
 .footer-col h4{
   font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--caramel);margin-bottom:20px;
+  text-transform:uppercase;color:var(--tiramisu);margin-bottom:20px;
 }
 .footer-col .footer-links{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left}
 .footer-col .footer-links a{
-  font-size:14px;line-height:1.4;color:rgba(247,242,234,.75);
+  font-size:14px;line-height:1.4;color:rgba(224,215,209,.75);
   text-transform:none;letter-spacing:normal;
 }
 .footer-col .footer-links a::after{display:none}
-.footer-info p{font-size:14px;line-height:1.5;color:rgba(247,242,234,.75);margin-bottom:12px}
-.footer-info .fi-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,242,234,.45);display:block;margin-bottom:3px}
-.footer-info a{font-size:14px;color:rgba(247,242,234,.75)}
+.footer-info p{font-size:14px;line-height:1.5;color:rgba(224,215,209,.75);margin-bottom:12px}
+.footer-info .fi-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(224,215,209,.45);display:block;margin-bottom:3px}
+.footer-info a{font-size:14px;color:rgba(224,215,209,.75)}
 .footer-bottom{
   display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;
-  padding:22px 0 clamp(28px,4vh,40px);border-top:1px solid rgba(247,242,234,.12);
+  padding:22px 0 clamp(28px,4vh,40px);border-top:1px solid rgba(224,215,209,.12);
 }
-.footer-meta{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,242,234,.45)}
+.footer-meta{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(224,215,209,.45)}
 
 /* ---------- modal rezervare ---------- */
 .modal{
@@ -501,7 +670,7 @@ footer a:hover{color:var(--caramel)}
 .modal.open{display:flex}
 .modal-backdrop{
   position:absolute;inset:0;
-  background:rgba(26,18,12,.6);
+  background:rgba(36,33,34,.6);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
   animation:modalFade .4s var(--ease) both;
@@ -513,7 +682,7 @@ footer a:hover{color:var(--caramel)}
      iar dacă e mai înalt decât ecranul, scrollează tot modalul */
   margin:auto;
   background:var(--ink);color:var(--cream);
-  border:1px solid rgba(247,242,234,.14);
+  border:1px solid rgba(224,215,209,.14);
   border-radius:22px;
   padding:clamp(30px,5vw,54px);
   animation:modalRise .55s var(--ease) both;
@@ -523,22 +692,22 @@ footer a:hover{color:var(--caramel)}
 .modal-close{
   position:absolute;top:20px;right:20px;
   width:40px;height:40px;border-radius:50%;
-  background:transparent;border:1px solid rgba(247,242,234,.3);
+  background:transparent;border:1px solid rgba(224,215,209,.3);
   color:var(--cream);font-size:16px;line-height:1;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   transition:background .3s,border-color .3s,transform .3s;
 }
-.modal-close:hover{background:var(--terra);border-color:var(--terra);transform:rotate(90deg)}
+.modal-close:hover{background:var(--accent-fill);border-color:var(--accent-decor);transform:rotate(90deg)}
 .modal-eyebrow{
   font-size:10px;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--caramel);font-weight:500;margin-bottom:10px;
+  color:var(--accent-text);font-weight:500;margin-bottom:10px;
 }
 .modal-title{
   font-family:var(--serif);font-weight:400;font-style:italic;
   font-size:clamp(28px,4vw,40px);line-height:1.1;
   margin-bottom:6px;
 }
-.modal-sub{font-size:13.5px;color:rgba(247,242,234,.55);margin-bottom:34px;max-width:42ch}
+.modal-sub{font-size:13.5px;color:rgba(224,215,209,.55);margin-bottom:34px;max-width:42ch}
 
 /* ---------- formular rezervare (în modal) ---------- */
 .form-grid{
@@ -547,21 +716,21 @@ footer a:hover{color:var(--caramel)}
 .field{display:flex;flex-direction:column;gap:9px;position:relative}
 .field label{
   font-size:10px;letter-spacing:.26em;text-transform:uppercase;
-  color:rgba(247,242,234,.55);
+  color:rgba(224,215,209,.55);
 }
 .field input[type="text"],
 .field input[type="tel"]{
-  background:transparent;border:none;border-bottom:1px solid rgba(247,242,234,.3);
+  background:transparent;border:none;border-bottom:1px solid rgba(224,215,209,.3);
   padding:11px 2px;color:var(--cream);font-family:var(--sans);font-size:15px;
   border-radius:0;outline:none;transition:border-color .3s;
   -webkit-appearance:none;appearance:none;
 }
-.field input:focus{border-color:var(--caramel)}
-.field input::placeholder{color:rgba(247,242,234,.35)}
+.field input:focus{border-color:var(--accent-decor)}
+.field input::placeholder{color:rgba(224,215,209,.35)}
 .field.err .picker-btn,
-.field.err input{border-color:var(--terra)}
+.field.err input{border-color:var(--accent-decor)}
 .field-msg{
-  font-size:11.5px;color:var(--terra);letter-spacing:.02em;
+  font-size:11.5px;color:var(--accent-text);letter-spacing:.02em;
   animation:msgIn .3s var(--ease) both;
 }
 @keyframes msgIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
@@ -574,15 +743,15 @@ footer a:hover{color:var(--caramel)}
   font-family:var(--sans);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
   transition:background .35s,transform .35s;
 }
-.btn-light:hover{background:var(--caramel);color:var(--cream);transform:translateY(-2px)}
-.form-note{font-size:12.5px;color:rgba(247,242,234,.5)}
+.btn-light:hover{background:var(--accent-fill);color:var(--cream);transform:translateY(-2px)}
+.form-note{font-size:12.5px;color:rgba(224,215,209,.5)}
 .form-ok,.form-full{
   display:none;margin-top:26px;padding:18px 24px;
   border-radius:10px;font-size:14px;
   animation:msgIn .4s var(--ease) both;
 }
-.form-ok{border:1px solid var(--caramel);color:var(--caramel)}
-.form-full{border:1px solid var(--terra);color:var(--terra)}
+.form-ok{border:1px solid var(--verde);color:var(--ink)}
+.form-full{border:1px solid var(--terra);color:var(--accent-text)}
 .form-full a{border-bottom:1px solid var(--terra);white-space:nowrap}
 .form-ok.show,.form-full.show{display:block}
 .btn-light:disabled{opacity:.7;cursor:default;transform:none}
@@ -591,17 +760,17 @@ footer a:hover{color:var(--caramel)}
 .picker-btn{
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   width:100%;background:transparent;cursor:pointer;text-align:left;
-  border:none;border-bottom:1px solid rgba(247,242,234,.3);
+  border:none;border-bottom:1px solid rgba(224,215,209,.3);
   padding:11px 2px;color:var(--cream);
   font-family:var(--sans);font-size:15px;font-weight:300;
   border-radius:0;outline:none;transition:border-color .3s;
 }
-.picker-btn:focus-visible{border-color:var(--caramel)}
-.picker.open .picker-btn{border-color:var(--caramel)}
-.picker-btn .val-empty{color:rgba(247,242,234,.35)}
+.picker-btn:focus-visible{border-color:var(--accent-decor)}
+.picker.open .picker-btn{border-color:var(--accent-decor)}
+.picker-btn .val-empty{color:rgba(224,215,209,.35)}
 .picker-btn .chev{
   flex:none;width:9px;height:9px;
-  border-right:1px solid var(--caramel);border-bottom:1px solid var(--caramel);
+  border-right:1px solid var(--accent-decor);border-bottom:1px solid var(--accent-decor);
   transform:rotate(45deg) translateY(-2px);
   transition:transform .35s var(--ease);
 }
@@ -612,7 +781,7 @@ footer a:hover{color:var(--caramel)}
   min-width:100%;
   background:var(--cream);color:var(--ink);
   border-radius:14px;
-  box-shadow:0 30px 60px -18px rgba(20,13,8,.55), 0 0 0 1px rgba(43,33,24,.06);
+  box-shadow:0 30px 60px -18px rgba(36,33,34,.55), 0 0 0 1px rgba(36,33,34,.06);
   opacity:0;transform:translateY(8px) scale(.98);pointer-events:none;
   transition:opacity .3s var(--ease), transform .3s var(--ease);
 }
@@ -623,13 +792,13 @@ footer a:hover{color:var(--caramel)}
 .pop-list{
   list-style:none;margin:0;padding:8px;
   max-height:236px;overflow-y:auto;
-  scrollbar-width:thin;scrollbar-color:rgba(43,33,24,.3) transparent;
+  scrollbar-width:thin;scrollbar-color:rgba(36,33,34,.3) transparent;
 }
 /* scrollbar mereu vizibil (overlay-ul de pe macOS e invizibil până nu dai scroll) */
 .pop-list::-webkit-scrollbar{width:10px}
 .pop-list::-webkit-scrollbar-track{background:transparent}
 .pop-list::-webkit-scrollbar-thumb{
-  background:rgba(43,33,24,.3);border-radius:5px;
+  background:rgba(36,33,34,.3);border-radius:5px;
   border:3px solid var(--cream);background-clip:padding-box;
 }
 .pop-list li{
@@ -639,7 +808,7 @@ footer a:hover{color:var(--caramel)}
 }
 .pop-list li:hover{background:var(--cream-2)}
 .pop-list li[aria-selected="true"]{
-  background:var(--terra);color:var(--cream);
+  background:var(--accent-fill);color:var(--cream);
 }
 /* lista de ore — grid pe coloane, scroll orizontal */
 .pop-time-wrap{padding:8px 0 0}
@@ -648,12 +817,12 @@ footer a:hover{color:var(--caramel)}
   gap:2px 10px;
   max-height:none;overflow-x:auto;overflow-y:hidden;
   padding:8px 14px 4px;
-  scrollbar-width:thin;scrollbar-color:rgba(43,33,24,.3) transparent;
+  scrollbar-width:thin;scrollbar-color:rgba(36,33,34,.3) transparent;
 }
 .pop-time li{text-align:center;padding:10px 18px}
 .pop-time::-webkit-scrollbar{height:8px;width:auto}
 .pop-time::-webkit-scrollbar-thumb{
-  background:rgba(43,33,24,.3);border-radius:4px;
+  background:rgba(36,33,34,.3);border-radius:4px;
   border:2px solid var(--cream);background-clip:padding-box;
 }
 .pop-hint{
@@ -666,7 +835,7 @@ footer a:hover{color:var(--caramel)}
 .pop-hint.hide{opacity:0}
 .pop-hint.gone{display:none}
 .hint-arrow{
-  display:inline-block;color:var(--terra);font-size:13px;
+  display:inline-block;color:var(--accent-text);font-size:13px;
   animation:hintSlide 1.2s var(--ease) infinite;
 }
 @keyframes hintSlide{
@@ -686,7 +855,7 @@ footer a:hover{color:var(--caramel)}
 }
 .cal-nav{
   width:32px;height:32px;border-radius:50%;flex:none;
-  background:transparent;border:1px solid rgba(43,33,24,.2);
+  background:transparent;border:1px solid rgba(36,33,34,.2);
   color:var(--ink);cursor:pointer;font-size:13px;line-height:1;
   display:flex;align-items:center;justify-content:center;
   transition:background .25s,color .25s,border-color .25s;
@@ -706,9 +875,9 @@ footer a:hover{color:var(--caramel)}
   cursor:pointer;transition:background .2s,color .2s;
 }
 .cal-grid button:hover:not(:disabled){background:var(--cream-2)}
-.cal-grid button:disabled{color:rgba(43,33,24,.25);cursor:default}
-.cal-grid button.today{box-shadow:inset 0 0 0 1px var(--caramel)}
-.cal-grid button.sel{background:var(--terra);color:var(--cream)}
+.cal-grid button:disabled{color:rgba(36,33,34,.25);cursor:default}
+.cal-grid button.today{box-shadow:inset 0 0 0 1px var(--accent-decor)}
+.cal-grid button.sel{background:var(--accent-fill);color:var(--cream)}
 
 /* ---------- responsive ---------- */
 @media(max-width:960px){
@@ -716,7 +885,7 @@ footer a:hover{color:var(--caramel)}
   .ritual-grid{grid-template-columns:1fr;gap:34px}
   .insta-grid{grid-template-columns:repeat(2,1fr)}
   .event-grid{grid-template-columns:1fr}
-  .despre-grid,.vizita-grid{grid-template-columns:1fr}
+  .despre-grid,.vizita-grid,.loc-panel{grid-template-columns:1fr}
   .despre-photo{max-width:480px}
   .g-1{grid-column:span 12}
   .g-2{grid-column:span 12;aspect-ratio:16/9}
@@ -740,6 +909,7 @@ footer a:hover{color:var(--caramel)}
     z-index:99;
   }
   nav.open a{font-size:16px}
+  .logo-svg{height:22px}
   .cards{grid-template-columns:1fr}
   .g-3,.g-4,.g-5{grid-column:span 12;aspect-ratio:4/3}
   .info-row{flex-direction:column;gap:6px}
@@ -767,9 +937,9 @@ body > footer{margin-top:auto}
 /* #4 Subpagini (fără hero întunecat) — header mereu solid, nav vizibil */
 body.subpage{padding-top:72px}
 body.subpage header{
-  background:rgba(247,242,234,.9);
+  background:rgba(224,215,209,.9);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  box-shadow:0 1px 0 rgba(43,33,24,.08);
+  box-shadow:0 1px 0 rgba(36,33,34,.08);
 }
 body.subpage header .logo,
 body.subpage header nav:not(.open) a{color:var(--ink)}
@@ -778,8 +948,14 @@ body.subpage header .btn-rez{border-color:var(--ink)}
 body.subpage header .btn-rez:hover{background:var(--ink);color:var(--cream)}
 body.subpage header .burger{border-color:var(--ink);color:var(--ink)}
 
-/* Delimitare secțiuni: bestsellers pe fundal secundar (bandă distinctă) */
-.featured-products{background:var(--cream-2)}
+/* Delimitare secțiuni pe fundal secundar (bandă distinctă) */
+.featured-products,.blog-home{background:var(--cream-2)}
+
+/* blogul de pe home: 4 articole pe un rând, miniaturi landscape (nu pătrate) */
+.blog-home .product-grid{grid-template-columns:repeat(4,1fr)}
+.blog-home .product-card .pc-img{aspect-ratio:4/3}
+@media(max-width:960px){ .blog-home .product-grid{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:560px){ .blog-home .product-grid{grid-template-columns:1fr} }
 
 /* Footer responsive — 3 coloane → 1 pe mobil */
 @media(max-width:760px){

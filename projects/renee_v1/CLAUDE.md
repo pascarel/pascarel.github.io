@@ -73,6 +73,25 @@ projects/rvg/          — proiect separat
 | Locația codului | **Repo separat, nou** (nume încă nestabilit) |
 | Scope sesiune curentă | Temă + template-uri + importer de produse. Fără gateway de plată în această etapă. |
 | Design | Se **refac** după brandbook-ul clientului, nu se păstrează paleta veche. |
+| Ce se vinde | **Preparate**, nu produse retail (cafea boabe, merch). Decis 9 sept. 2026. |
+| WooCommerce la lansare | **Doar prezentare** — coșul rămâne vizibil în UI, dar nu se vinde online inițial. ⏳ Rămâne de analizat ce se dezactivează concret (checkout, prețuri, gateway-uri, stoc). |
+
+### Sursa de meniu real — API eat-me.online
+
+```
+https://reneebrunch.eat-me.online/api/v1/menu?language=ro&storeId=14189
+```
+
+Meniul **real și complet** al localului: 17 categorii, ~240 de preparate cu nume, descriere, preț per magazin, gramaj, valori nutriționale și imagini pe CDN. Snapshot salvat în `data/menu-eatme-snapshot.json` (9 sept. 2026, ~567 KB).
+
+**Pentru migrarea WooCommerce** — maparea evidentă:
+`itemCategories[]` → `product_cat` · `items[]` → CPT `product` · `itemSizes[].prices[]` filtrat pe `storeId` → preț ·
+`itemSizes[].buttonImage.src` → imagine produs · `slug` → post_name · `portionWeightGrams` → atribut/weight ·
+`nutritionPerHundredGrams` → câmpuri ACF.
+
+⚠️ Câmpurile `allergens` și `labels` există în schemă, dar sunt **goale pentru toate preparatele**. Alergenii afișați acum pe site sunt DRAFT puși de mână. Dacă localul le completează în eat-me, se pot prelua automat.
+
+⚠️ `storeId=14189` e una din cele două locații (în prețuri apare și `storeId=10794`). De clarificat care e Oasis Mall și care Renée Urban — prețurile pot diferi.
 
 ### Ghid tehnic existent
 `projects/renee_v1/MIGRARE-WP.md` — 254 linii, tabel de mapare pagină → WP/Woo, model de date produs, shipping zones. **De consultat înainte de a scrie cod.** Rămâne referință, dar precede brandbook-ul, deci partea de design e depășită.
@@ -102,7 +121,14 @@ Nu există PHP/MySQL/WordPress în containerele cloud. Testarea reală (checkout
 **Mapare peste tokens-urile vechi din `css/main.css`:**
 `--cream` `#F7F2EA` → `#E0D7D1` · `--ink` `#2B2118` → `#242122` · `--terra` `#C46A45` → `#AF7B5C` · `--sage` `#8A9B7C` → `#6D816C`
 
-⚠️ `--cream-2` (`#F0E8DA`) și `--caramel` (`#B08954`) **nu au corespondent în brandbook**. Nedecis: se derivă din Tiramisu/Crust Brown sau se elimină. **Nu inventa valori.**
+✅ **Rezolvat 9 sept. 2026** (aprobat de Sergiu):
+- `--cream-2` → **`#D5CCC6`** (Tiramisu + 6% Black Pepper), fundal alternativ de secțiune
+- `--caramel` → eliminat; pe fundal închis se folosește Crust Brown
+- `--ink-soft` → **`#5C5856`** (Black Pepper 70% pe Tiramisu, contrast 4.96 ✓)
+
+Rolurile semantice sunt definite în `css/main.css` `:root` și **acolo se schimbă**, nu prin căutare-înlocuire:
+`--accent-text` (Vin, text pe deschis) · `--accent-decor` (Crust Brown, linii/borduri/hover) ·
+`--accent-dark` (Crust Brown, text MARE pe închis) · `--accent-fill` (Vin, fundal plin sub text deschis).
 
 ### Reguli de contrast (WCAG, calculate)
 
@@ -125,7 +151,9 @@ Crust Brown pe Tiramisu apare în brandbook ca variantă de logo. E acceptabil p
 
 ⏳ **Blocant:** The Seasons e font comercial, nu e pe Google Fonts. Necesită licență webfont + găzduire locală (`.woff2` + `@font-face`). Se așteaptă răspuns de la compania de brandbook.
 
-Până atunci, CSS-ul se scrie cu variabile `--font-display` / `--font-body` și fallback serif, ca schimbarea să se facă într-un singur loc. Alternative gratuite dacă licența nu vine: Playfair Display, Prata — **decizie de client, nu a ta**.
+✅ **Rezolvat 9 sept. 2026:** `--font-display` = **Playfair Display** (provizoriu), `--font-body` = **Open Sans**.
+Playfair a fost ales pentru că are italic real — designul folosește italic masiv (hero, marquee, `em` din titluri), iar Prata nu are.
+Când vine `.woff2` pentru The Seasons, **se schimbă doar `--font-display`** în `:root`.
 
 ### Reguli logo (brandbook 2.6)
 
@@ -147,13 +175,13 @@ Logo-ul poate sta peste fotografii, cu condiția să rămână clar lizibil și 
 ## 6. Ce lipsește — de obținut înainte de implementare
 
 - [ ] **Licență web The Seasons** — se așteaptă răspuns de la compania de brandbook
-- [ ] **Logo SVG** — există local, dar **nu e commit-uit în repo**; de urcat în `projects/renee_v1/img/`
+- [x] **Logo SVG** — prezent în `img/` (`logo.svg`, `logo_simple.svg`, `logo_symbol.svg`). Inline în toate cele 11 pagini, colorate prin `currentColor`.
 - [ ] **Pictograme SVG** — după primirea brandbook-ului complet
-- [ ] **Pattern SVG**
+- [x] **Pattern SVG** — `img/patern.svg` prezent (16 repetiții). ⏳ De extras un singur motiv tileabil pentru CSS.
 - [ ] **Restul brandbook-ului** — spațiere, dimensiuni minime logo, ton de voce, aplicații
 - [ ] **Numele repo-ului nou** pentru temă
-- [ ] **Decizie** `--cream-2` și `--caramel`
-- [ ] Clarificat dacă `renee_v2` intră în discuție ca sursă
+- [x] **Decizie** `--cream-2` și `--caramel` — vezi §5
+- [x] `renee_v2` — **se ignoră complet**, nu intră în producție (9 sept. 2026)
 
 ---
 
@@ -169,6 +197,10 @@ Nimic din conținutul actual nu e real. La migrare, **niciun text sau dată de c
 - **Testimoniale** — fictive. **Blog și „Povestea"** — draft AI.
 - **Facebook și TikTok** — conturi presupuse; doar Instagram e confirmat.
 - **Prețuri meniu** — orientative.
+
+- **Alergenii** — `data/products.js` și cardurile de preparate din `index.html` conțin valori **DRAFT random**, puse doar pentru prezentare. Informație reglementată (UE, 14 alergeni declarabili). **De confirmat cu bucătăria înainte de lansare.**
+- **Coordonata Renée Urban** — `47.0287072, 28.8256740` e nr. 115 pe bd. Ștefan cel Mare (OSM îl dă ca Muzeul Național de Artă). Corpul **115/1** nu e localizabil în OSM. De înlocuit cu poziția exactă.
+- **Program și telefon pe locații** — aceleași valori pe ambele taburi, marcate DRAFT. Probabil diferă.
 
 ### Lipsesc complet, obligatorii pentru un magazin
 Termeni și condiții · Politică de confidențialitate (GDPR) · Politică de retur · Politică cookies.

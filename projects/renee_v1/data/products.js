@@ -1,6 +1,8 @@
 /* Renée — catalog DRAFT. WP: → CPT product + product_cat. Imagini/prețuri de înlocuit. */
 /* DRAFT: de înlocuit */
 window.RENEE_CATEGORIES = [
+  /* REAL — preluat din API-ul eat-me.online (vezi CLAUDE.md §4) */
+  { id:'preparate', name:'Preparate', image:"https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/6911/c8447192-7fd8-4754-89a3-2672c40b2212-752x552x100.webp", description:'Preparate din meniul localului.' },
   { id:'cafea',    name:'Cafea',              image:'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=800&q=70&auto=format&fit=crop', description:'Boabe proaspăt prăjite, măcinate la comandă.' },
   { id:'dulciuri', name:'Dulciuri & Patiserie', image:'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&q=70&auto=format&fit=crop', description:'Prăjituri și patiserie de casă.' },
   { id:'brunch',   name:'Brunch Box',         image:'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=800&q=70&auto=format&fit=crop', description:'Mic dejun complet, livrat la tine.' },
@@ -9,6 +11,66 @@ window.RENEE_CATEGORIES = [
 ];
 
 window.RENEE_PRODUCTS = [
+  /* ============================================================
+     REAL — 6 preparate din meniul localului (API eat-me.online, storeId 14189).
+     Nume, descriere, preț, gramaj și imagine sunt autentice.
+     Alergenii sunt DRAFT: câmpul `allergens` din API e gol pentru toate preparatele.
+     ============================================================ */
+  {
+    id:"oua-cu-tocanita-de-legume-shakshuka", name:"Ouă cu tocăniță de legume (shakshuka)", category:'preparate',
+    price:135, onSale:false, salePrice:null,
+    images:["https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/6911/c8447192-7fd8-4754-89a3-2672c40b2212-752x552x100.webp"],
+    shortDesc:"Tocăniță din legume (ardei grași,roșii,ceapă), ouă de găină, brînză de oi, ulei, ceapă verde,pă",
+    description:"Tocăniță din legume (ardei grași,roșii,ceapă), ouă de găină, brînză de oi, ulei, ceapă verde,pătrunjel,mărar",
+    gramaj:400, alergeni:"ouă, lactate", badgesFixe:["recomandat"],
+    stock:'instock', featured:true
+  },
+  {
+    id:"toast-cu-bacon-guacamole-si-gorgonzola", name:"Toast cu bacon, guacamole și gorgonzola", category:'preparate',
+    price:190, onSale:false, salePrice:null,
+    images:["https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/6911/66f86afc-7a65-43c6-ac4b-6cbdf78d78d7-752x552x100.webp"],
+    shortDesc:"Felie de pâine cu cereale prăjită, servită cu guacamole cremos și ouă gătite delicat, completat",
+    description:"Felie de pâine cu cereale prăjită, servită cu guacamole cremos și ouă gătite delicat, completată de bacon crocant și cremă intensă de gorgonzola, finisat cu sos Olandez.",
+    gramaj:300, alergeni:"gluten, ouă, lactate", badgesFixe:[],
+    stock:'instock', featured:false
+  },
+  {
+    id:"bowl-fresh-cu-somon-si-mango", name:"Bowl fresh cu somon și mango", category:'preparate',
+    price:195, onSale:false, salePrice:null,
+    images:["https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/6911/2e52ae6c-72a0-4858-9103-4f8b6e1ba77c-752x552x100.webp"],
+    shortDesc:"Salată cu somon – combinație echilibrată și proaspătă, cu somon fraged, orez negru aromatizat c",
+    description:"Salată cu somon – combinație echilibrată și proaspătă, cu somon fraged, orez negru aromatizat cu dressing asiatic și de mango, mix de salate crocante, mango dulce și avocado cremos. Preparatul este completat de tofu fin, roșii cherry și castravete proaspăt. O salată nutritivă, cu gust rafinat și aspect elegant.",
+    gramaj:320, alergeni:"pește, soia, susan", badgesFixe:["nou"],
+    stock:'instock', featured:false
+  },
+  {
+    id:"risotto-cu-ragut-de-ciuperci-si-crema-de-trufe", name:"Risotto cu ragut de ciuperci si cremă de trufe", category:'preparate',
+    price:210, onSale:false, salePrice:null,
+    images:["https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/6911/d2aec086-2d21-4eac-8f30-061f98b65d23-752x552x100.webp"],
+    shortDesc:"Risotto cremos, îmbogățit cu ragu de ciuperci și ciuperci păstrăv fragede. Preparatul este fini",
+    description:"Risotto cremos, îmbogățit cu ragu de ciuperci și ciuperci păstrăv fragede. Preparatul este finisat cu unt 82% și brânză Duro Nostrale. Crema de trufe adaugă o notă elegantă și rafinată.",
+    gramaj:340, alergeni:"lactate", badgesFixe:["recomandat"],
+    stock:'instock', featured:true
+  },
+  {
+    id:"terci-din-ovaz-cu-lapte-vegan", name:"Terci din ovăz cu lapte vegan", category:'preparate',
+    price:135, onSale:false, salePrice:null,
+    images:["https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/6911/42dae493-586a-4f83-a4b0-115c11a444c0-752x552x100.webp"],
+    shortDesc:"Terci cremos din fulgi de ovăz și lapte de cocos, servit cu zmeură proaspetă, alune de pădure ș",
+    description:"Terci cremos din fulgi de ovăz și lapte de cocos, servit cu zmeură proaspetă, alune de pădure și coulis de zmeură cu semințe de chia.",
+    gramaj:300, alergeni:"gluten, fructe cu coajă lemnoasă", badgesFixe:["vegan"],
+    stock:'instock', featured:false
+  },
+  {
+    id:"pavlova-renee", name:"Pavlova Renée", category:'preparate',
+    price:70, onSale:false, salePrice:null,
+    images:["https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/6911/6189897f-b949-4e27-9f7b-d89e6d5d3442-752x552x100.webp"],
+    shortDesc:"Bezea fină, ganaj din ciocolată albă și lime, insert din fructe de pădure, decorată cu bezea și",
+    description:"Bezea fină, ganaj din ciocolată albă și lime, insert din fructe de pădure, decorată cu bezea și fructe proaspete de sezon.",
+    gramaj:100, alergeni:"ouă, lactate, soia", badgesFixe:["nou"],
+    stock:'instock', featured:false
+  },
+
   /* ---------- CAFEA (5, cu variații gramaj) ---------- */
   {
     id:'cafea-house-blend', name:'House Blend', category:'cafea',
@@ -240,36 +302,32 @@ window.getFeatured = function(){
 };
 
 /* ============================================================
-   DRAFT: rating, recenzii și bestseller (demonstrativ).
-   WP: → recenzii reale WooCommerce / plugin (Loox/Judge.me).
+   Badge-uri de prezentare (DRAFT — atribuite la alegere, de validat).
+   WP: → taxonomie proprie sau câmpuri ACF pe preparat.
+   Rating-ul și recenziile au fost scoase din proiect (9 sept. 2026).
    ============================================================ */
 (function(){
   function hash(s){ var h=0; for (var i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; } return h; }
-  window.RENEE_PRODUCTS.forEach(function(p){
-    var h = hash(p.id);
-    p.rating = +(4.3 + (h % 7) / 10).toFixed(1);   /* 4.3 – 4.9 */
-    p.reviewCount = 8 + (h % 120);                  /* 8 – 127 */
-    p.bestseller = p.featured || (h % 4 === 0);     /* subset de bestsellers */
-  });
 
-  /* recenzii demonstrative (DRAFT) — la WP vin reale, per produs */
-  window.RENEE_REVIEWS = [
-    { name:'Ana M.', rating:5, date:'iunie 2026', text:'Cea mai bună cafea comandată online în Chișinău. Prospețimea se simte de la prima ceașcă.' },
-    { name:'Victor P.', rating:5, date:'mai 2026', text:'Livrare rapidă, ambalaj superb. A devenit comanda mea lunară.' },
-    { name:'Diana C.', rating:4, date:'mai 2026', text:'Foarte bună, aromată. Mi-aș fi dorit doar un gramaj mai mare disponibil.' },
-    { name:'Sergiu R.', rating:5, date:'aprilie 2026', text:'Calitate de specialty adevărată. Recomand cu drag pentru cadou.' },
-    { name:'Elena T.', rating:5, date:'aprilie 2026', text:'Gust curat, echilibrat. Se simte că e prăjită proaspăt.' },
-    { name:'Mihai B.', rating:4, date:'martie 2026', text:'Produs de calitate, exact ca în descriere. Voi reveni.' }
+  /* DRAFT: alergeni demonstrativi. NU sunt reali — de confirmat cu bucătăria
+     înainte de lansare. Informație reglementată (UE, 14 alergeni declarabili). */
+  var ALERGENI_DRAFT = [
+    'gluten, ouă, lactate', 'lactate', 'gluten, susan', 'fructe cu coajă lemnoasă',
+    'gluten, ouă', 'soia, gluten', 'lactate, fructe cu coajă lemnoasă', 'niciun alergen declarat'
   ];
 
-  /* întoarce 2–3 recenzii demonstrative pentru un produs (rotire deterministă) */
-  window.getReviewsFor = function(p){
-    var revs = window.RENEE_REVIEWS, out = [], n = revs.length;
-    var start = hash(p.id) % n;
-    var count = 2 + (hash(p.id) % 2); /* 2 sau 3 */
-    for (var i=0;i<count;i++){ out.push(revs[(start+i) % n]); }
-    return out;
-  };
+  window.RENEE_PRODUCTS.forEach(function(p){
+    var h = hash(p.id);
+    p.bestseller = p.featured || (h % 4 === 0);
+
+    /* DRAFT: badge-uri atribuite determinist, de validat cu clientul */
+    p.badges = (p.badgesFixe || []).slice();
+    if (!p.badgesFixe && p.featured) p.badges.push('recomandat');
+    if (!p.badgesFixe && h % 5 === 0) p.badges.push('nou');
+    if (!p.badgesFixe && (p.category === 'cafea' || p.category === 'merch') && h % 3 === 0) p.badges.push('vegan');
+
+    if (!p.alergeni) p.alergeni = ALERGENI_DRAFT[h % ALERGENI_DRAFT.length]; /* DRAFT */
+  });
 
   window.getBestsellers = function(){
     return window.RENEE_PRODUCTS.filter(function(p){ return p.bestseller; });

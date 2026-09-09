@@ -18,6 +18,37 @@
     title.appendChild(word);
   }
 
+  /* Hărți — scut anti-zoom: harta devine interactivă doar după un clic explicit.
+     La schimbarea tabului sau la ieșirea mouse-ului, se re-blochează. */
+  document.querySelectorAll('.map-shield').forEach(function(shield){
+    function unlock(){ shield.classList.add('is-active'); }
+    function lock(){ shield.classList.remove('is-active'); }
+    shield.addEventListener('click', function(e){
+      if (!shield.classList.contains('is-active')) { e.preventDefault(); unlock(); }
+    });
+    shield.addEventListener('mouseleave', lock);
+    document.addEventListener('mapsrelock', lock);
+  });
+
+  /* Locații — comutare între taburi (Oasis Mall / Renée Urban) */
+  var locTabs = document.querySelectorAll('.loc-tab');
+  if (locTabs.length){
+    locTabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var target = tab.getAttribute('aria-controls');
+        locTabs.forEach(function(t){
+          var on = (t === tab);
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        document.querySelectorAll('.loc-panel').forEach(function(panel){
+          panel.hidden = (panel.id !== target);
+        });
+        document.dispatchEvent(new Event('mapsrelock'));
+      });
+    });
+  }
+
   /* Marquee — umple minim 2x lățimea ecranului, apoi dublează pentru buclă perfectă */
   var track = document.getElementById('marqueeTrack');
   if (track) {
