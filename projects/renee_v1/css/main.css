@@ -581,7 +581,7 @@ nav.open .nav-social a::after{display:none}
 .loc{margin-top:48px}
 .loc-tabs{
   display:flex;flex-wrap:wrap;gap:10px;
-  border-bottom:1px solid rgba(224,215,209,.16);padding-bottom:16px;margin-bottom:8px;
+  margin-bottom:8px;
 }
 .loc-tab{
   background:transparent;border:1px solid rgba(224,215,209,.3);

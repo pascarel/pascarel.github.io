@@ -34,6 +34,48 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 ## Intrări
 
+## 2026-09-10 · OFICIU · analiză fonturi + timeline 2 locații
+
+**Făcut (analiză, fără modificări de cod — Sergiu a aplicat singur):**
+- **Auditate fișierele din `fonts/`.** Vezi mai jos, e cel mai important lucru din sesiune.
+- Pregătit conținutul pentru timeline-ul „De ce Renée?", extins de la 3 la 4 puncte pentru cele două locații. Aplicat de Sergiu în `56d7296 timeline update`. Structura finală: `Ideea` → `Numele` → `2025` → `2026`. **Zero modificări CSS** — `.timeline` e o listă verticală, al patrulea `.tl-item` se adaugă fără să atingi stilurile.
+- Confirmat că `4c2aeb1 removed the font` a șters cele 6 fișiere demo The Seasons.
+
+### 🔴 The Seasons — fișierele primite erau DEMO, inutilizabile
+
+Cele 6 `.otf` din `9925671` aveau numele intern **`FSP DEMO - The Seasons`**:
+
+| Constatare | Detaliu |
+|---|---|
+| 95 de glife în loc de ~250 | doar ASCII: `A-Z a-z 0-9` + punctuație |
+| **0 caractere non-ASCII** | verificat cu fontTools |
+| Lipsesc toate diacriticele RO | ă â î ș ț Ă Â Î Ș Ț |
+| **Lipsește `é`** | numele brandului „Renée" nu se putea scrie cu el |
+| Format | `.otf` desktop, fără licență webfont |
+
+Fișierele au fost șterse. **Ce trebuie cerut clientului:** licență **webfont**, fișiere **`.woff2`**, cu **latin-extended (diacritice RO) și `é`**, grosimile Light/Regular/Bold + italice. Cele trei condiții sunt separate — verifică-le pe toate la recepție, nu doar formatul.
+
+### ✅ Open Sans — verificat, e în regulă
+
+Cele 6 `.ttf` (Light, Regular, Medium + italicele) au **1010 glife fiecare**, toate diacriticele RO prezente. Se pot folosi.
+
+**Nu am putut:**
+- `push` din OFICIU dă **403**. Tot ce scriu aici ajunge la Sergiu doar prin copiere manuală. Nu conta pe mine pentru git.
+- Nicio verificare vizuală — nu am browser. Timeline-ul cu 4 puncte **nu a fost văzut randat de nimeni încă**; de confirmat pe mobil, unde titlurile de 3–5 cuvinte pot trece pe două rânduri.
+
+**Pentru cealaltă sesiune (ACASĂ):**
+1. **Open Sans e încă încărcat de pe Google Fonts**, deși fișierele sunt în repo. De făcut la runda curată, împreună cu The Seasons: conversie `.ttf` → `.woff2` (~130 KB → ~35 KB fiecare), `@font-face` cu `font-display:swap`, scos `<link>`-ul Google din **13 pagini**, `preload` pe Regular. Motive pentru self-hosting: GDPR (IP-ul vizitatorului ajunge la Google fără consimțământ), cache-ul partiționat a anulat vechiul avantaj, iar The Seasons va fi local oricum. Licența Apache 2.0 permite.
+2. Se cere de la Google și grosimea **600, nefolosită nicăieri** în CSS (apar doar 500, 400, 300). Fișier descărcat degeaba.
+3. Rămân valabile din intrarea precedentă: auditul de contrast pe `main.css` și XSS-ul din `shop.js`/`checkout.js`.
+
+**Întrebări deschise pentru Sergiu:**
+- Licența webfont The Seasons — **blocant** pentru tipografia titlurilor.
+- Pictogramele SVG (brandbook §5.1) — încă neprimite.
+- `--cream-2` și `--caramel` — fără corespondent în brandbook. Se derivă sau se elimină?
+- Numele primei locații: restul site-ului o numește **„Renée"** (Oasis Mall, str. Bogdan-Voievod 1), nu „Renée Oasis". Dacă brandul folosește oficial „Renée Oasis", trebuie schimbat în toate cele 13 pagini — altfel sunt două denumiri pentru același local.
+
+---
+
 ## 2026-09-10 · OFICIU
 
 **Făcut:**
