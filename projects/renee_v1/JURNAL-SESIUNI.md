@@ -34,7 +34,7 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 ## Intrări
 
-## 2026-09-10 · OFICIU · analiză fonturi + timeline 2 locații
+## 2026-09-10 · OFICIU · fonturi multilingv (RO/RU/EN) + timeline 2 locații
 
 **Făcut (analiză, fără modificări de cod — Sergiu a aplicat singur):**
 - **Auditate fișierele din `fonts/`.** Vezi mai jos, e cel mai important lucru din sesiune.
@@ -59,6 +59,43 @@ Fișierele au fost șterse. **Ce trebuie cerut clientului:** licență **webfont
 
 Cele 6 `.ttf` (Light, Regular, Medium + italicele) au **1010 glife fiecare**, toate diacriticele RO prezente. Se pot folosi.
 
+### 🌐 Site-ul va fi în 3 limbi: RO / RU / EN — schimbă complet criteriile pentru font
+
+Informație primită de la Sergiu pe 10 sept. **The Seasons nu suportă chirilice.** Clientul a fost deja informat; folosea și el varianta demo. **Decizia finală de font îi aparține lui Sergiu — o ia de acasă. Cerința: ceva asemănător cu The Seasons.**
+
+**Open Sans e acoperit** — verificat în `fonts/OpenSans-Regular.ttf`: 1010 glife, toate chirilicele prezente. Fontul de corp e rezolvat pentru toate trei limbile.
+
+Problema e doar la titluri (`--font-display`).
+
+#### Capcana: „are chirilice" ≠ „merge pe română"
+
+Multe fonturi cu chirilice **pică la ș/ț cu virgulă dedesubt** (U+0219/U+021B), având doar varianta cu sedilă sau niciuna. Testat cu fontTools direct pe fișiere, nu presupus:
+
+| Font | RO | RU | Notă |
+|---|---|---|---|
+| **Prata** | ❌ `ș ț Ș Ț` | ✓ | **cel mai apropiat estetic de The Seasons**, dar pică |
+| **Oranienbaum** | ❌ `ț Ț` | ✓ | didone rusesc, elegant |
+| **Philosopher** | ❌ `ș ț Ș Ț` | ✓ | |
+| **Alice** | ❌ `ă ș ț` | ✓ | |
+| Bodoni Moda, Marcellus, Italiana | — | ❌ | fără chirilice deloc |
+
+#### Candidați validați ✓ RO + RU + EN
+
+| Font | Glife | Caracter |
+|---|---|---|
+| **Cormorant Garamond** | 974 | serif delicat, contrast ridicat, aer editorial — **cel mai aproape de The Seasons dintre cele care chiar funcționează**. Chirilicele sunt desenate de aceeași echipă, nu adăugate ulterior. Are italice reale (CSS-ul folosește `font-style:italic` în ~10 locuri). Era fontul original din v1. |
+| **Playfair Display** | 659 | didone cu contrast puternic, mai apăsat. E deja fallback-ul din CSS → trecere cu zero muncă. Minus: foarte răspândit. |
+| **EB Garamond** | 2091 | clasic, cald, foarte lizibil la corp mic. Mai puțin „display". |
+| Literata / Spectral / Lora / Noto Serif Display | 1163 / 878 / 778 / 2840 | alternative solide |
+
+#### Trei căi posibile — decizia lui Sergiu
+
+1. **Înlocuire completă** cu Cormorant Garamond (recomandarea mea). Gratuit, self-hostabil, acoperă tot, fără dependență de furnizorul de brandbook.
+2. **Pereche de fonturi** — The Seasons pentru latină + un font chirilic asortat pentru RU, separate prin `unicode-range` în `@font-face`; browserul alege automat. Păstrează brandbook-ul, dar sunt două fonturi de întreținut și o potrivire vizuală de făcut manual. Necesită oricum licența webfont pentru The Seasons.
+3. **Prata + completare glife.** Prata e sub licență **OFL, care permite modificarea** — cele 4 glife lipsă (`ș ț Ș Ț`) se pot construi din `s`/`t` + virgula existentă. E cel mai apropiat estetic de The Seasons. Necesită lucru în editor de fonturi și redenumirea familiei, conform OFL. De evaluat dacă merită efortul.
+
+**Nu s-a decis nimic. Nu aplica niciun font fără confirmarea lui Sergiu.**
+
 **Nu am putut:**
 - `push` din OFICIU dă **403**. Tot ce scriu aici ajunge la Sergiu doar prin copiere manuală. Nu conta pe mine pentru git.
 - Nicio verificare vizuală — nu am browser. Timeline-ul cu 4 puncte **nu a fost văzut randat de nimeni încă**; de confirmat pe mobil, unde titlurile de 3–5 cuvinte pot trece pe două rânduri.
@@ -69,8 +106,9 @@ Cele 6 `.ttf` (Light, Regular, Medium + italicele) au **1010 glife fiecare**, to
 3. Rămân valabile din intrarea precedentă: auditul de contrast pe `main.css` și XSS-ul din `shop.js`/`checkout.js`.
 
 **Întrebări deschise pentru Sergiu:**
-- Licența webfont The Seasons — **blocant** pentru tipografia titlurilor.
+- **Fontul de titluri — decizia se ia de acasă.** Cele trei căi sunt în secțiunea 🌐 de mai sus. Până atunci `--font-display` rămâne pe Playfair Display, marcat `PROVIZORIU`. **Blocant** pentru tipografie.
 - Pictogramele SVG (brandbook §5.1) — încă neprimite.
+- Structura multilingvă ro/ru/en — nediscutată încă. Afectează arhitectura de fișiere (13 pagini × 3 limbi) și e o decizie de luat **înainte** de migrarea pe WordPress, nu după.
 - `--cream-2` și `--caramel` — fără corespondent în brandbook. Se derivă sau se elimină?
 - Numele primei locații: restul site-ului o numește **„Renée"** (Oasis Mall, str. Bogdan-Voievod 1), nu „Renée Oasis". Dacă brandul folosește oficial „Renée Oasis", trebuie schimbat în toate cele 13 pagini — altfel sunt două denumiri pentru același local.
 
