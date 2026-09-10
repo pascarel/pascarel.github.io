@@ -26,6 +26,22 @@ Două contexte, anunțate explicit de mine la începutul sesiunii:
 
 **Important:** sesiunile Claude Code din browser/cloud rulează întotdeauna pe un clone proaspăt din GitHub, indiferent unde sunt eu fizic. Un fișier care există doar pe laptop și nu e pushed **nu e vizibil** în acea sesiune. Dacă ai nevoie de el, ceri să fie commit-uit și pushed, sau atașat în chat.
 
+### 1.1 Două sesiuni paralele — identifică-te corect
+
+Proiectul e dezvoltat de **două sesiuni Claude separate**, care nu se văd una pe alta și nu au memorie comună:
+
+| Sesiune | Rulează | Poate |
+|---|---|---|
+| **OFICIU** | container cloud, Linux, clone din GitHub | citește repo-ul, analizează, scrie fișiere local în container. **Nu poate face `push`** (403) și nu vede laptopul. |
+| **ACASĂ** | laptop, macOS, `~/Documents/GitHub/pascarel.github.io` | modifică fișierele reale, deschide paginile în browser. Push-ul îl face utilizatorul din GitHub Desktop. |
+
+**Prima acțiune în orice sesiune:** rulează `pwd && uname -s`.
+`/home/user/…` + `Linux` → ești **OFICIU**. `/Users/…` + `Darwin` → ești **ACASĂ**.
+
+Locul de execuție se fixează la pornirea sesiunii și **nu se schimbă** după. O sesiune pornită din browser rămâne în cloud chiar dacă e deschisă ulterior din aplicația de pe laptop — aplicația e doar fereastra, nu locul unde rulează codul.
+
+**Comunicarea între sesiuni se face exclusiv prin repo**, în [`JURNAL-SESIUNI.md`](JURNAL-SESIUNI.md). Citește-l la început și scrie în el la final. Nu presupune ce a făcut cealaltă sesiune — verifică `git log`.
+
 ### Verificarea sincronizării
 Pe laptop, în Terminal:
 ```bash
