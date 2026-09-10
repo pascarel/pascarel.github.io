@@ -59,19 +59,24 @@
       : '';
     var img = (p.images && p.images[0]) || '';
     return (
-      '<div class="product-card reveal">' +
-        badge +
-        '<a class="pc-link" href="produs.html?id=' + encodeURIComponent(p.id) + '">' +
-          '<div class="pc-img"><img src="' + img + '" alt="' + p.name + '" loading="lazy"></div>' +
-          '<div class="pc-body">' +
-            '<h3 class="pc-name">' + p.name + '</h3>' +
-            '<div class="pc-price">' + priceHTML + alerg + '</div>' +
+      '<article class="card reveal">' +
+        '<a class="card-link" href="produs.html?id=' + encodeURIComponent(p.id) + '">' +
+          '<div class="card-img">' +
+            '<img class="photo" src="' + img + '" alt="' + p.name + '" loading="lazy">' +
+            badge +
           '</div>' +
         '</a>' +
-        '<button type="button" class="pc-add" data-id="' + p.id + '" aria-label="Adaugă în coș" title="Adaugă în coș">' +
-          CART_ICON + '<span class="pc-add-done">✓</span>' +
-        '</button>' +
-      '</div>'
+        '<div class="card-body">' +
+          '<h3><a class="card-title-link" href="produs.html?id=' + encodeURIComponent(p.id) + '">' + p.name + '</a>' +
+            '<span class="price">' + priceHTML + '</span></h3>' +
+          '<p>' + (p.shortDesc || '') + '</p>' +
+          (p.gramaj ? '<p class="card-gramaj">' + p.gramaj + ' g</p>' : '') +
+          '<div class="card-foot">' +
+            alerg +
+            '<button type="button" class="card-add" data-id="' + p.id + '">Adaugă în coș</button>' +
+          '</div>' +
+        '</div>' +
+      '</article>'
     );
   }
 
@@ -89,7 +94,7 @@
 
   function bindCardAdds(container){
     if (!container) return;
-    container.querySelectorAll('.pc-add').forEach(function(btn){
+    container.querySelectorAll('.card-add[data-id]').forEach(function(btn){
       btn.addEventListener('click', function(e){
         e.preventDefault();
         e.stopPropagation();
@@ -128,7 +133,7 @@
     var products = window.getProductsByCategory(catId || 'all');
     var html = '';
     for (var i = 0; i < products.length; i++){ html += productCardHTML(products[i]); }
-    el.innerHTML = html || '<p style="color:var(--ink-soft)">Niciun produs momentan.</p>';
+    el.innerHTML = html || '<p style="color:var(--ink-soft)">Niciun preparat momentan.</p>';
     bindCardAdds(el);
     revealIn(el);
   }
@@ -185,7 +190,7 @@
 
   /* ---------- Controller magazin: filtre + sortare + paginare ---------- */
   function mountShop(opts){
-    var state = { cat: 'all', sort: 'recomandate', page: 1, pageSize: opts.pageSize || 8 };
+    var state = { cat: 'all', sort: 'recomandate', page: 1, pageSize: opts.pageSize || 12 };
     var gridEl = document.getElementById(opts.gridId);
     if (!gridEl) return;
 
@@ -198,13 +203,13 @@
 
       var html = '';
       for (var i = 0; i < pageItems.length; i++){ html += productCardHTML(pageItems[i]); }
-      gridEl.innerHTML = html || '<p style="color:var(--ink-soft)">Niciun produs în această categorie.</p>';
+      gridEl.innerHTML = html || '<p style="color:var(--ink-soft)">Niciun preparat în această categorie.</p>';
       bindCardAdds(gridEl);
       revealIn(gridEl);
 
       if (opts.countId){
         var c = document.getElementById(opts.countId);
-        if (c) c.textContent = list.length + (list.length === 1 ? ' produs' : ' produse');
+        if (c) c.textContent = list.length + (list.length === 1 ? ' preparat' : ' preparate');
       }
       if (opts.paginationId){
         renderPagination(document.getElementById(opts.paginationId), totalPages, state.page, function(g){
@@ -225,31 +230,8 @@
     draw();
   }
 
-  /* ---------- Detalii / declarație nutrițională (DRAFT) ---------- */
-  var DRAFT_NUTRITION = {
-    cafea: [
-      { label: 'Valoare energetică', value: '2 kcal' },
-      { label: 'Grăsimi', value: '0 g' },
-      { label: 'Glucide', value: '0 g' },
-      { label: 'Proteine', value: '0,3 g' },
-      { label: 'Cafeină', value: '~40 mg / ceașcă' }
-    ],
-    dulciuri: [
-      { label: 'Valoare energetică', value: '385 kcal' },
-      { label: 'Grăsimi', value: '18 g' },
-      { label: '– din care saturate', value: '9 g' },
-      { label: 'Glucide', value: '48 g' },
-      { label: '– din care zaharuri', value: '30 g' },
-      { label: 'Proteine', value: '6 g' }
-    ],
-    brunch: [
-      { label: 'Valoare energetică', value: '210 kcal' },
-      { label: 'Grăsimi', value: '12 g' },
-      { label: 'Glucide', value: '16 g' },
-      { label: 'Proteine', value: '11 g' },
-      { label: 'Sare', value: '1,1 g' }
-    ]
-  };
+  /* Valorile nutriționale reale vin acum din data/products.js (câmpul `nutritie`,
+     extras din API-ul eat-me.online). Tabelul DRAFT pe categorii vechi a fost eliminat. */
 
   function accordion(title, body, open){
     return '<details class="pd-acc"' + (open ? ' open' : '') + '><summary>' + title + '</summary>' +
@@ -257,33 +239,41 @@
   }
 
   function productDetails(p){
-    var isFood = p.category === 'cafea' || p.category === 'dulciuri' || p.category === 'brunch';
     var out = '';
 
-    if (isFood){
-      var nut = p.nutrition || DRAFT_NUTRITION[p.category] || DRAFT_NUTRITION.dulciuri;
-      var table = '<table class="pd-nutri"><thead><tr><th>La 100g / porție</th><th>Valoare</th></tr></thead><tbody>';
-      for (var i = 0; i < nut.length; i++){
-        table += '<tr><td>' + nut[i].label + '</td><td>' + nut[i].value + '</td></tr>';
-      }
-      table += '</tbody></table>';
-      out += accordion('Declarație nutrițională', table +
-        '<p class="pd-note">Valori medii orientative. <!-- DRAFT: de confirmat cu producătorul --></p>', true);
-      out += accordion('Ingrediente & alergeni',
-        '<p>' + (p.ingredients || 'Ingrediente naturale, selectate cu grijă, fără aditivi artificiali.') + '</p>' +
-        '<p class="pd-note">Poate conține urme de gluten, lactoză și fructe cu coajă lemnoasă. <!-- DRAFT --></p>', false);
-    } else {
-      out += accordion('Detalii produs',
-        '<p>' + (p.material || 'Material premium cu imprimeu Renée. Ediție limitată, realizată local.') + '</p>' +
-        '<p class="pd-note">Specificații complete de confirmat. <!-- DRAFT --></p>', true);
+    if (p.nutritie){
+      var n = p.nutritie;
+      out += accordion('Declarație nutrițională',
+        '<table class="pd-nutri"><thead><tr><th>La 100 g</th><th>Valoare</th></tr></thead><tbody>' +
+          '<tr><td>Valoare energetică</td><td>' + n.kcal + ' kcal</td></tr>' +
+          '<tr><td>Proteine</td><td>' + n.proteine + ' g</td></tr>' +
+          '<tr><td>Grăsimi</td><td>' + n.grasimi + ' g</td></tr>' +
+          '<tr><td>Glucide</td><td>' + n.glucide + ' g</td></tr>' +
+          (p.gramaj ? '<tr><td>Gramaj porție</td><td>' + p.gramaj + ' g</td></tr>' : '') +
+        '</tbody></table>', true);
     }
+
+    /* Fără descriere aici — apare deja sus, în .pd-short. */
+    if (p.alergeni){
+      out += accordion('Alergeni',
+        '<p class="pd-alerg-linie"><strong>Poate conține:</strong> ' + p.alergeni + '</p>' +
+        '<p class="pd-note">Deduși din lista de ingrediente. Nu sunt o declarație oficială — ' +
+        'confirmă cu personalul dacă ai o alergie. ' +
+        '<!-- DRAFT: câmpul `allergens` din API e gol; de completat de local --></p>', false);
+    }
+
+    /* Livrarea rămâne dezactivată până pornesc vânzările online.
+       WP: se reactivează odată cu checkout-ul, împreună cu pragul de 500 lei. */
+    /*
     out += accordion('Livrare & ridicare',
       '<p>Livrare în Chișinău — 40 lei, <strong>gratuită la comenzi peste 500 lei</strong>. ' +
       'Ridicare gratuită din oricare locație Renée.</p>', false);
+    */
+
     return out;
   }
 
-  /* ---------- „Se cumpără des împreună" (bundle dinamic) ---------- */
+  /* ---------- „Se comandă des împreună" (bundle dinamic) ---------- */
   function bundleItems(p){
     /* produsul curent + 2 complementare din alte categorii (bestsellers) */
     var others = window.RENEE_PRODUCTS.filter(function(x){
@@ -307,7 +297,7 @@
     var label = 'Adaugă toate — ' + money(deal);
     return (
       '<section class="pd-bundle reveal">' +
-        '<h2>Se cumpără des <em>împreună</em></h2>' +
+        '<h2>Se comandă des <em>împreună</em></h2>' +
         '<div class="bundle-row">' + thumbs + '</div>' +
         '<div class="bundle-cta">' +
           '<div class="bundle-price"><span class="bundle-old">' + money(total) + '</span>' +
@@ -360,8 +350,8 @@
       el.innerHTML =
         '<div class="pd-notfound">' +
           '<h1>Produsul nu a fost găsit</h1>' +
-          '<p style="color:var(--ink-soft);margin-bottom:26px">Ne pare rău, produsul căutat nu există sau a fost retras din magazin.</p>' +
-          '<a class="btn-primary" href="magazin.html">Înapoi la magazin</a>' +
+          '<p style="color:var(--ink-soft);margin-bottom:26px">Ne pare rău, preparatul căutat nu există sau a fost retras din meniu.</p>' +
+          '<a class="btn-primary" href="meniu.html">Înapoi la meniu</a>' +
         '</div>';
       return;
     }
@@ -399,25 +389,29 @@
       variationHTML += '</select></div>';
     }
 
-    var chips = '<div class="pd-chips">' +
-      '<span class="pd-chip">' + catName(p.category) + '</span>' +
-      (p.stock === 'instock' || !p.stock ? '<span class="pd-chip pd-chip-ok">În stoc</span>' : '<span class="pd-chip">Stoc epuizat</span>') +
-      '<span class="pd-chip">Livrare gratuită peste 500 lei</span>' +
-    '</div>';
+    var variationHTML = '';
+    if (withVar){
+      variationHTML += '<div class="pd-variation"><label for="pdVariation">' + p.variations.label + '</label>';
+      variationHTML += '<select id="pdVariation">';
+      for (var v = 0; v < p.variations.options.length; v++){
+        var opt = p.variations.options[v];
+        variationHTML += '<option value="' + opt.name + '" data-price="' + opt.price + '">' + opt.name + ' — ' + money(opt.price) + '</option>';
+      }
+      variationHTML += '</select></div>';
+    }
 
     el.innerHTML =
-      '<nav class="pd-crumb"><a href="magazin.html">Magazin</a><span>/</span><a href="magazin.html">' + catName(p.category) + '</a><span>/</span><em>' + p.name + '</em></nav>' +
+      '<nav class="pd-crumb"><a href="meniu.html">Meniu</a><span>/</span><a href="meniu.html">' + catName(p.category) + '</a><span>/</span><em>' + p.name + '</em></nav>' +
       '<div class="pd-grid">' +
         '<div class="pd-gallery reveal">' +
           '<div class="pd-main"><img id="pdMainImg" src="' + mainImg + '" alt="' + p.name + '"></div>' +
           thumbsHTML +
         '</div>' +
         '<div class="pd-info reveal reveal-d1">' +
-          '<p class="eyebrow">' + catName(p.category) + '</p>' +
           '<h1>' + p.name + '</h1>' +
-          '<div class="pd-price" id="pdPrice">' + priceHTML + '</div>' +
-          '<p class="pd-short">' + p.shortDesc + '</p>' +
-          chips +
+          '<div class="pd-price" id="pdPrice">' + priceHTML +
+            (p.gramaj ? '<span class="pd-gramaj">' + p.gramaj + ' g</span>' : '') + '</div>' +
+          '<p class="pd-short">' + p.description + '</p>' +
           variationHTML +
           '<div class="pd-row">' +
             '<div class="qty-stepper">' +
@@ -428,7 +422,6 @@
             '<button type="button" class="btn-add" id="pdAdd">Adaugă în coș</button>' +
           '</div>' +
           '<span class="pd-added" id="pdAdded">Adăugat în coș ✓</span>' +
-          '<div class="pd-desc"><p>' + p.description + '</p></div>' +
           '<div class="pd-accordions">' + productDetails(p) + '</div>' +
         '</div>' +
       '</div>' +
@@ -439,7 +432,7 @@
 
     revealIn(el);
 
-    /* --- bundle „se cumpără des împreună" --- */
+    /* --- bundle „se comandă des împreună" --- */
     var bundleBtn = document.getElementById('bundleAdd');
     if (bundleBtn){
       bundleBtn.addEventListener('click', function(){
@@ -585,7 +578,7 @@
       tableEl.innerHTML =
         '<div class="cart-empty">' +
           '<p>Coșul tău e gol momentan.</p>' +
-          '<a href="magazin.html" class="btn-primary">Vezi magazinul</a>' +
+          '<a href="meniu.html" class="btn-primary">Vezi meniul</a>' +
         '</div>';
       if (summaryEl) summaryEl.innerHTML = '';
       var toCheckout = document.getElementById('toCheckout');

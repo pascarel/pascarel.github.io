@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Evenimente private — Renée · Chișinău</title>
 <meta name="description" content="Organizează brunch-uri aniversare, team breakfast sau degustări de cafea la Renée. Descoperă tipurile de evenimente și serviciile noastre.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/cormorant-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/opensans-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body class="subpage">
@@ -18,7 +18,7 @@
   <button class="burger" id="burger" aria-label="Meniu" aria-expanded="false">Meniu</button>
   <nav id="nav">
     <a href="despre.html">Despre</a>
-    <a href="magazin.html">Magazin</a>
+    <a href="meniu.html">Meniu</a>
     <a href="evenimente.html">Evenimente</a>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
@@ -54,6 +54,7 @@
 
 <!-- TIPURI DE EVENIMENTE -->
 <section class="section poveste" id="tipuri" style="padding-top:0">
+  <svg class="patern-banda" aria-hidden="true" focusable="false"><defs><pattern id="patRenee" patternUnits="userSpaceOnUse" width="271.771" height="104.38" patternTransform="scale(0.294)"><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor" transform="translate(0 104.38)"/><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor"/><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor" transform="translate(0 -104.38)"/><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor" transform="translate(0 -208.76)"/></pattern></defs><rect width="100%" height="100%" fill="url(#patRenee)"/></svg>
   <div class="wrap">
     <p class="eyebrow reveal">Ce sărbătorim</p>
     <h2 class="h2 reveal">Tipuri de <em>evenimente</em></h2>
@@ -112,11 +113,11 @@
     <p class="eyebrow reveal">Momente de la evenimente</p>
     <h2 class="h2 reveal">Cum arată <em>o zi specială</em></h2>
     <div class="galerie-grid">
-      <div class="g-item g-1 reveal"><img class="photo" src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=80&auto=format&fit=crop" alt="Masă festivă la Renée" loading="lazy"></div>
-      <div class="g-item g-2 reveal reveal-d1"><img class="photo" src="https://images.unsplash.com/photo-1541542684-4a936a9e5e5b?w=900&q=80&auto=format&fit=crop" alt="Grup la brunch aniversar" loading="lazy"></div>
-      <div class="g-item g-3 reveal"><img class="photo" src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=700&q=80&auto=format&fit=crop" alt="Detaliu decor masă" loading="lazy"></div>
-      <div class="g-item g-4 reveal reveal-d1"><img class="photo" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80&auto=format&fit=crop" alt="Cafea servită la eveniment" loading="lazy"></div>
-      <div class="g-item g-5 reveal reveal-d2"><img class="photo" src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=700&q=80&auto=format&fit=crop" alt="Toast la brunch" loading="lazy"></div>
+      <button type="button" class="g-item g-1 reveal" data-lightbox aria-label="Mărește: Masă festivă la Renée"><img class="photo" src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=80&auto=format&fit=crop" alt="Masă festivă la Renée" loading="lazy"><span class="g-veil" aria-hidden="true"><span class="g-zoom"></span></span></button>
+      <button type="button" class="g-item g-2 reveal reveal-d1" data-lightbox aria-label="Mărește: Grup la brunch aniversar"><img class="photo" src="https://images.unsplash.com/photo-1541542684-4a936a9e5e5b?w=900&q=80&auto=format&fit=crop" alt="Grup la brunch aniversar" loading="lazy"><span class="g-veil" aria-hidden="true"><span class="g-zoom"></span></span></button>
+      <button type="button" class="g-item g-3 reveal" data-lightbox aria-label="Mărește: Detaliu decor masă"><img class="photo" src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=700&q=80&auto=format&fit=crop" alt="Detaliu decor masă" loading="lazy"><span class="g-veil" aria-hidden="true"><span class="g-zoom"></span></span></button>
+      <button type="button" class="g-item g-4 reveal reveal-d1" data-lightbox aria-label="Mărește: Cafea servită la eveniment"><img class="photo" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80&auto=format&fit=crop" alt="Cafea servită la eveniment" loading="lazy"><span class="g-veil" aria-hidden="true"><span class="g-zoom"></span></span></button>
+      <button type="button" class="g-item g-5 reveal reveal-d2" data-lightbox aria-label="Mărește: Toast la brunch"><img class="photo" src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=700&q=80&auto=format&fit=crop" alt="Toast la brunch" loading="lazy"><span class="g-veil" aria-hidden="true"><span class="g-zoom"></span></span></button>
     </div>
   </div>
 </section>
@@ -124,6 +125,7 @@
 <!-- CTA -->
 <section class="section vizita" id="cta-eveniment">
   <div class="wrap" style="text-align:center">
+    <svg class="hero-icon" aria-hidden="true" focusable="false"  viewBox="0 0 411 726" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M256.241 1.08441C248.747 3.56716 241.956 6.13384 237.038 8.09919C178.889 31.3491 180.004 74.7852 179.162 170.206C178.251 265.912 184.597 307.757 155.142 333.299C154.574 333.512 147.345 336.116 137.622 337.575V0H118.622V338.197C111.907 337.495 105.196 335.63 99.4079 331.787C99.3761 331.767 99.3443 331.747 99.3036 331.728C71.8789 306.024 77.9721 263.955 77.0899 170.206C76.2394 74.7852 77.3542 31.3491 19.2047 8.09919C14.2875 6.13384 7.49275 3.56716 0 1.08441V80.5362C0.43731 97.4477 0.476629 118.355 0.448662 144.423C0.316452 252.447 2.55517 291.543 78.0725 332.314L95.5738 339.312C96.3353 339.613 97.1451 339.939 97.9879 340.274L107.093 343.914L107.245 343.549C110.639 344.575 114.421 345.466 118.622 346.034V725.153H137.622V345.963C141.212 345.453 145.003 344.635 148.978 343.479L149.151 343.914L178.167 332.314C253.697 291.543 255.936 252.447 255.806 144.423C255.774 118.355 255.806 97.4477 256.241 80.5362V1.08441Z" fill="currentColor"/> <path d="M381.19 12.2604C327.116 54.0769 298.585 146.009 298.585 246.641C299.82 385.803 298.188 449.143 382.996 483.058C385.642 484.124 388.672 485.3 391.988 486.547V725.154H411V493.29V377.408V115.885V59.8445V0.00299072C411 0.00299072 393.336 2.87092 381.19 12.2604Z" fill="currentColor"/> </svg>
     <p class="eyebrow reveal" style="justify-content:center">Hai să vorbim</p>
     <h2 class="h2 reveal">Planifică-ți <em>evenimentul</em></h2>
     <a class="tel-big reveal reveal-d1" href="tel:+37378784040">+373 78 784 040</a>
@@ -132,6 +134,37 @@
     </div>
   </div>
 </section>
+
+<!-- INSTAGRAM -->
+<section class="section" id="instagram">
+  <div class="wrap">
+    <div class="insta-head">
+      <div>
+        <p class="eyebrow reveal">Instagram</p>
+        <h2 class="h2 reveal">Zilnic, în <em>feed</em></h2>
+      </div>
+      <a class="link-arrow reveal reveal-d1" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Urmărește @renee_brunch →</a>
+    </div>
+    <div class="insta-grid">
+      <a class="insta-item reveal" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&q=80&auto=format&fit=crop" alt="Cafea la Renée" loading="lazy"></a>
+      <a class="insta-item reveal reveal-d1" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80&auto=format&fit=crop" alt="Prieteni la brunch" loading="lazy"></a>
+      <a class="insta-item reveal reveal-d2" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1533920379810-6bedac961555?w=600&q=80&auto=format&fit=crop" alt="Preparate Renée" loading="lazy"></a>
+      <a class="insta-item reveal reveal-d3" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=600&q=80&auto=format&fit=crop" alt="Atmosferă Renée" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX GALERIE -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Galerie foto" hidden>
+  <button type="button" class="lb-close" aria-label="Închide">✕</button>
+  <button type="button" class="lb-nav lb-prev" aria-label="Imaginea precedentă">‹</button>
+  <figure class="lb-stage">
+    <img class="lb-img" src="" alt="">
+    <figcaption class="lb-cap"></figcaption>
+  </figure>
+  <button type="button" class="lb-nav lb-next" aria-label="Imaginea următoare">›</button>
+  <div class="lb-count" aria-hidden="true"></div>
+</div>
 
 <!-- WP: footer.php -->
 <footer>
@@ -150,13 +183,11 @@
         <h4>Explorează</h4>
         <nav class="footer-links">
           <a href="index.html">Acasă</a>
-          <a href="magazin.html">Magazin</a>
+          <a href="meniu.html">Meniu</a>
           <a href="despre.html">Despre</a>
           <a href="evenimente.html">Evenimente</a>
           <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
-          <a href="termeni.html">Termeni și condiții</a>
-          <a href="confidentialitate.html">Politică de confidențialitate</a>
         </nav>
       </div>
       <div class="footer-col footer-info">
@@ -169,6 +200,11 @@
     </div>
     <div class="footer-bottom">
       <span class="footer-meta">© 2026 Renée · Chișinău</span>
+      <div class="footer-meta">
+        <a href="termeni.html">Termeni și condiții</a>
+        |
+        <a href="confidentialitate.html">Politică de confidențialitate</a>
+      </div>
       <span class="footer-meta">Toate drepturile rezervate</span>
     </div>
   </div>
@@ -176,6 +212,7 @@
 <!-- /WP: footer.php -->
 
 <script src="js/cart.js"></script>
+<script src="js/rez-modal.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

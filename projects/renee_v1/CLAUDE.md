@@ -91,6 +91,10 @@ projects/rvg/          — proiect separat
 | Design | Se **refac** după brandbook-ul clientului, nu se păstrează paleta veche. |
 | Ce se vinde | **Preparate**, nu produse retail (cafea boabe, merch). Decis 9 sept. 2026. |
 | WooCommerce la lansare | **Doar prezentare** — coșul rămâne vizibil în UI, dar nu se vinde online inițial. ⏳ Rămâne de analizat ce se dezactivează concret (checkout, prețuri, gateway-uri, stoc). |
+| Pagini de categorie | **Nu există.** O singură pagină de listare — Meniu, cu filtrare în pagină prin JS. Toate arhivele `product_cat` generate de Woo se redirecționează 301 către `/meniu/` și primesc `noindex`. Detalii în `MIGRARE-WP.md` §2.1. |
+| Livrare & ridicare | **Dezactivat** pe pagina de preparat până pornesc vânzările online. Acordeonul „Livrare & ridicare" din `js/shop.js` `productDetails()` e **comentat, nu șters** — se reactivează odată cu checkout-ul, împreună cu pragul de 500 lei. |
+| Denumirea paginii | `magazin.html` → **`meniu.html`**, iar eticheta din meniu „Magazin" → **„Meniu"** (11 sept. 2026). Un local are meniu, nu magazin; cuvântul funcționează identic în RO/RU/EN și nu promite comerț care încă nu există. |
+| Catalog | **Real**, generat din API-ul eat-me.online: 73 de preparate, 7 categorii de bucătărie. Fără băuturi, fără adaosuri. Cele 23 de produse retail draft au fost eliminate. |
 
 ### Sursa de meniu real — API eat-me.online
 
@@ -160,16 +164,42 @@ Crust Brown pe Tiramisu apare în brandbook ca variantă de logo. E acceptabil p
 
 ### Fonturi
 
-| Rol | Font |
-|---|---|
-| Titluri / text evidențiat | **The Seasons** |
-| Text simplu | **Open Sans** (gratuit, Google Fonts) |
+| Rol | Font | Stare |
+|---|---|---|
+| Titluri / text evidențiat (`--font-display`) | **Cormorant Garamond** | ✅ self-hostat |
+| Text simplu (`--font-body`) | **Open Sans** | ✅ self-hostat |
 
-⏳ **Blocant:** The Seasons e font comercial, nu e pe Google Fonts. Necesită licență webfont + găzduire locală (`.woff2` + `@font-face`). Se așteaptă răspuns de la compania de brandbook.
+#### ❌ The Seasons — abandonat (10 sept. 2026)
 
-✅ **Rezolvat 9 sept. 2026:** `--font-display` = **Playfair Display** (provizoriu), `--font-body` = **Open Sans**.
-Playfair a fost ales pentru că are italic real — designul folosește italic masiv (hero, marquee, `em` din titluri), iar Prata nu are.
-Când vine `.woff2` pentru The Seasons, **se schimbă doar `--font-display`** în `:root`.
+Fontul din brandbook **nu se mai folosește**. Trei motive, toate blocante:
+
+1. Fișierele primite erau **demo** (`FSP DEMO - The Seasons`): 95 de glife în loc de ~250, zero caractere non-ASCII, fără diacritice RO și **fără `é`** — nu se putea scrie nici măcar „Renée".
+2. Nu exista licență webfont, doar `.otf` desktop.
+3. **Site-ul va fi RO / RU / EN**, iar The Seasons nu are chirilice deloc.
+
+Fișierele au fost șterse din repo. Nu le readuce.
+
+#### ✅ Cormorant Garamond — decis de Sergiu, 10 sept. 2026
+
+Ales dintre variantele care acoperă **toate trei limbile**. Capcana evitată: multe fonturi cu chirilice pică la `ș`/`ț` **cu virgulă dedesubt** (U+0219/U+021B), având doar sedila. Prata — cel mai apropiat estetic de The Seasons — pică exact aici și nu are deloc subsetul `latin-ext`.
+
+Verificat în browser pe 10 sept.: toate diacriticele RO, `é` și chirilicele redau în fontul propriu, fără fallback.
+
+#### Cum sunt servite
+
+`css/fonts.css` — **28 de reguli `@font-face`**, fișiere `.woff2` în `fonts/`, servite de pe domeniul propriu.
+
+- Grosimi: **300, 400, 500** — singurele folosite în CSS. Nu adăuga 600, nu e folosită nicăieri.
+- Italic **doar pe Cormorant** — toate regulile `font-style:italic` din proiect sunt în contexte `var(--serif)`.
+- Subseturi: `latin`, `latin-ext`, `cyrillic`, `cyrillic-ext`, separate prin `unicode-range` → un vizitator român **nu descarcă niciodată** fișierele chirilice.
+- `font-display:swap` peste tot, `preload` pe cele două fișiere critice.
+- Greutate: **427 KB** pentru un vizitator român pe `index.html`; +373 KB doar dacă apare text rusesc.
+
+**Zero cereri către Google** din toate cele 13 pagini — rezolvă și expunerea GDPR (altfel IP-ul fiecărui vizitator ajunge la Google fără consimțământ).
+
+Licențe: Cormorant Garamond — OFL 1.1 · Open Sans — Apache 2.0. Ambele permit găzduirea proprie.
+
+**Ca să schimbi fontul de titluri**, modifici `--font-display` în `:root` din `css/main.css` **și** regulile din `css/fonts.css`.
 
 ### Reguli logo (brandbook 2.6)
 
@@ -190,10 +220,11 @@ Logo-ul poate sta peste fotografii, cu condiția să rămână clar lizibil și 
 
 ## 6. Ce lipsește — de obținut înainte de implementare
 
-- [ ] **Licență web The Seasons** — se așteaptă răspuns de la compania de brandbook
-- [x] **Logo SVG** — prezent în `img/` (`logo.svg`, `logo_simple.svg`, `logo_symbol.svg`). Inline în toate cele 11 pagini, colorate prin `currentColor`.
-- [ ] **Pictograme SVG** — după primirea brandbook-ului complet
-- [x] **Pattern SVG** — `img/patern.svg` prezent (16 repetiții). ⏳ De extras un singur motiv tileabil pentru CSS.
+- [x] ~~Licență web The Seasons~~ — **abandonat**, înlocuit cu Cormorant Garamond (vezi §5)
+- [x] **Logo SVG** — prezent în `img/` (`logo.svg`, `logo_simple.svg`, `logo_symbol.svg`). Inline în toate cele 13 pagini, colorate prin `currentColor`.
+- [ ] **Pictograme SVG** (brandbook §5.1) — încă neprimite
+- [ ] **Structura multilingvă RO/RU/EN** — nediscutată. Afectează arhitectura (13 pagini × 3 limbi); de decis **înainte** de migrarea pe WordPress, nu după.
+- [x] **Pattern SVG** — motivul extras și tileabil. Folosit ca SVG inline cu `<pattern>` în secțiunea „De ce Renée?" din `index.html`.
 - [ ] **Restul brandbook-ului** — spațiere, dimensiuni minime logo, ton de voce, aplicații
 - [ ] **Numele repo-ului nou** pentru temă
 - [x] **Decizie** `--cream-2` și `--caramel` — vezi §5
@@ -203,23 +234,29 @@ Logo-ul poate sta peste fotografii, cu condiția să rămână clar lizibil și 
 
 ## 7. Conținut draft în `renee_v1` — de înlocuit obligatoriu
 
-Nimic din conținutul actual nu e real. La migrare, **niciun text sau dată de contact nu se preia ca atare**.
+O parte din conținut e acum **real**. Verifică în ce categorie intră ce atingi.
 
-- **Adresa „str. Ismail 33"** — complet inventată. Apare în footer-ul tuturor celor 11 pagini.
-- **Telefon `+373 60 000 000`** — placeholder, în footer peste tot.
+### ✅ Real, preluat din API-ul eat-me.online
+Numele, descrierile, prețurile, gramajele, imaginile și valorile nutriționale ale celor 73 de preparate. Adresele celor două locații.
+
+### ⚠️ Derivat automat — plauzibil, dar neconfirmat
+- **Alergenii** — **deduși din lista de ingrediente** din descriere (`mascarpone` → lactate, `pâine` → gluten, `somon` → pește). Acoperă 72 din 73 de preparate. Câmpul `allergens` din API e gol pentru toate. Sunt afișați cu avertisment pe pagina de preparat, dar **nu sunt o declarație oficială** — de confirmat cu bucătăria. Informație reglementată (UE, 14 alergeni declarabili).
+- **Badge-urile** `nou` / `vegan` / `recomandat` — atribuite determinist. `vegan` doar unde numele preparatului o spune explicit.
+
+### ❌ Încă inventat, de înlocuit obligatoriu
+- **Telefon `+373 60 000 000`** — placeholder, în footer-ul tuturor celor 13 pagini. Restul site-ului folosește `+373 78 784 040`.
 - **`hello@renee.md` / `centru@renee.md`** — de confirmat că domeniul și căsuțele există.
-- **25 de produse** din `data/products.js` — nume, prețuri, descrieri, variații: toate exemple.
-- **Imagini** — 73 de hotlink-uri Unsplash. **Video hero** — hotlink Pexels.
+- **Imagini de atmosferă, galerie, blog, Instagram** — hotlink-uri Unsplash. **Video hero** — hotlink Pexels. (Imaginile de preparate sunt reale, de pe CDN-ul Syrve.)
 - **Testimoniale** — fictive. **Blog și „Povestea"** — draft AI.
 - **Facebook și TikTok** — conturi presupuse; doar Instagram e confirmat.
-- **Prețuri meniu** — orientative.
+- **Program și telefon pe locații** — aceleași valori peste tot, marcate DRAFT. Probabil diferă între Oasis și Urban.
+- **Coordonata Renée Urban** — `47.0287072, 28.8256740` e nr. 115 pe bd. Ștefan cel Mare (OSM îl dă ca Muzeul Național de Artă). Corpul **115/1** nu e localizabil în OSM.
+- **Textul juridic** din `termeni.html` și `confidentialitate.html` — schelet cu capitole, fără conținut redactat.
 
-- **Alergenii** — `data/products.js` și cardurile de preparate din `index.html` conțin valori **DRAFT random**, puse doar pentru prezentare. Informație reglementată (UE, 14 alergeni declarabili). **De confirmat cu bucătăria înainte de lansare.**
-- **Coordonata Renée Urban** — `47.0287072, 28.8256740` e nr. 115 pe bd. Ștefan cel Mare (OSM îl dă ca Muzeul Național de Artă). Corpul **115/1** nu e localizabil în OSM. De înlocuit cu poziția exactă.
-- **Program și telefon pe locații** — aceleași valori pe ambele taburi, marcate DRAFT. Probabil diferă.
+⚠️ **Denumirea primei locații e inconsecventă**, în trei variante: „Renée Oasis" (despre, index), „Renée Oasis Mall" (tabul din index), „Renée — Oasis Mall, Chișinău" (contact, checkout, comanda-confirmată). De unificat.
 
-### Lipsesc complet, obligatorii pentru un magazin
-Termeni și condiții · Politică de confidențialitate (GDPR) · Politică de retur · Politică cookies.
+### Lipsesc complet
+Politică de retur · Politică cookies. (Termeni și confidențialitate există ca schelet, fără text.)
 
 ---
 

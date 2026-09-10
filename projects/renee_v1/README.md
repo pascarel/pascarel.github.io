@@ -3,7 +3,7 @@
 Site multi-pagină pentru **Renée** (cafenea & all day breakfast, Oasis Mall, Chișinău): landing de prezentare + magazin online demonstrativ (catalog, coș, checkout, livrare), fără backend.
 Fără build, fără dependențe (doar fonturi Google + imagini/video externe):
 
-- `index.html`, `magazin.html`, `produs.html`, `cos.html`, `checkout.html`, `comanda-confirmata.html`, `despre.html`, `contact.html`, `evenimente.html`, `blog.html`, `articol.html` — markup pagini
+- `index.html`, `meniu.html`, `produs.html`, `cos.html`, `checkout.html`, `comanda-confirmata.html`, `despre.html`, `contact.html`, `evenimente.html`, `blog.html`, `articol.html` — markup pagini
 - `css/main.css` — stilurile paginii de prezentare · `css/shop.css` — stilurile magazin/coș/checkout
 - `js/main.js` — JS landing (hero, reveal, parallax, testimoniale, modal rezervare) · `js/cart.js` — modul coș (`localStorage`) · `js/shop.js` — catalog, filtre, pagină produs, coș · `js/checkout.js` — validare + trimitere simulată checkout · `js/contact.js` — formular contact
 - `data/products.js` — catalog produse draft (structură pregătită pentru WooCommerce)
@@ -37,7 +37,7 @@ Fără build, fără dependențe (doar fonturi Google + imagini/video externe):
 
 | Pagină | Rol |
 |---|---|
-| `magazin.html` | Catalog complet, filtre pe categorii (pills), grid produse |
+| `meniu.html` | Catalog complet, filtre pe categorii (pills), grid produse |
 | `produs.html` | Pagină detaliu produs — galerie, variații (gramaj/mărime), stepper cantitate, „Adaugă în coș”, produse similare. Citește `?id=` din URL |
 | `cos.html` | Coșul curent — linii editabile (cantitate/ștergere), sumar cu subtotal/livrare/total |
 | `checkout.html` | Formular finalizare comandă — date contact, metodă livrare (curier/pickup), metodă plată, sumar sticky |

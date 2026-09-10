@@ -135,7 +135,6 @@
   font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);
   border:1px solid rgba(36,33,34,.16);border-radius:999px;padding:7px 15px;
 }
-.pd-chip-ok{color:var(--ink);border-color:rgba(109,129,108,.55)}
 /* acordeoane detalii/nutriție */
 .pd-accordions{margin-top:30px;border-top:1px solid rgba(36,33,34,.14)}
 .pd-acc{border-bottom:1px solid rgba(36,33,34,.14)}
@@ -181,10 +180,12 @@
 }
 .pd-row{display:flex;align-items:center;gap:18px;margin-top:26px;flex-wrap:wrap}
 .pd-added{
-  display:block;font-size:13px;color:var(--sage);
+  display:block;font-size:13px;color:var(--ink);
   height:0;overflow:hidden;opacity:0;transition:opacity .3s,height .3s,margin .3s;
 }
-.pd-added.show{opacity:1;height:auto;margin-top:14px}
+.pd-added.show{opacity:1;height:auto;margin-top:14px;display:flex;align-items:center;gap:8px}
+/* Verde nu se foloseşte ca text (brandbook) — rămâne doar ca bulină de semnal */
+.pd-added::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--verde);flex:none}
 .pd-notfound{padding:clamp(150px,20vh,210px) 0 100px;text-align:center}
 .pd-notfound h1{font-family:var(--serif);font-size:clamp(28px,3.6vw,40px);margin-bottom:18px}
 
@@ -218,10 +219,19 @@
 .btn-add:disabled{opacity:.6;cursor:default;transform:none}
 
 /* ---------- related ---------- */
+/* preparate similare — bandă proprie pe fundal secundar, ca să se vadă cardurile */
+.similare{background:var(--cream-2);padding:clamp(50px,7vh,80px) 0 clamp(60px,8vh,90px)}
+.similare:empty{display:none}
 .related-title{
   font-family:var(--serif);font-weight:500;font-size:clamp(24px,2.6vw,32px);
-  margin:clamp(60px,8vh,90px) 0 30px;
+  margin:0 0 30px;
 }
+
+.pd-gramaj{
+  font-family:var(--font-body);font-size:14px;font-weight:300;
+  color:var(--ink-soft);margin-left:12px;letter-spacing:.04em;
+}
+.pd-alerg-linie{margin-top:12px;font-size:14px}
 
 /* ---------- coș ---------- */
 .cart-layout{
@@ -264,7 +274,11 @@
   font-size:18px;font-weight:500;color:var(--ink);
   border-top:1px solid rgba(36,33,34,.16);padding-top:14px;margin-top:4px;
 }
-.cs-note{font-size:11.5px;color:var(--sage)}
+.cs-note{
+  font-size:11.5px;color:var(--ink);
+  display:inline-flex;align-items:center;gap:7px;
+}
+.cs-note::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--verde);flex:none}
 
 /* ---------- checkout ---------- */
 .checkout-grid{
@@ -301,10 +315,16 @@
   max-width:640px;margin:0 auto;text-align:center;
   padding:clamp(150px,20vh,210px) 0 clamp(60px,8vh,100px);
 }
-.confirm-check{
-  width:64px;height:64px;border-radius:50%;background:var(--sage);color:#fff;
-  display:flex;align-items:center;justify-content:center;font-size:28px;
-  margin:0 auto 24px;
+/* simbolul din logo, în locul bifei — aceeaşi soluţie ca la confirmarea rezervării */
+.confirm-simbol{
+  display:block;margin:0 auto 26px;
+  width:auto;height:clamp(58px,7vw,78px);
+  color:var(--crust-brown);fill:currentColor;
+  animation:confirmSimbol .7s var(--ease) .1s both;
+}
+@keyframes confirmSimbol{
+  from{opacity:0;transform:translateY(14px) scale(.9)}
+  to{opacity:1;transform:none}
 }
 .confirm-box h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.6vw,38px);margin-bottom:14px}
 #orderRecap{
@@ -448,7 +468,7 @@
 .ship-fill{height:100%;background:var(--terra);border-radius:99px;transition:width .5s var(--ease)}
 .ship-bar-done .ship-fill{background:var(--sage)}
 
-/* bundle „se cumpără des împreună" */
+/* bundle „se comandă des împreună" */
 .pd-bundle{margin:clamp(50px,8vh,90px) 0 0;padding-top:clamp(40px,6vh,60px);border-top:1px solid rgba(36,33,34,.12)}
 .pd-bundle h2{font-family:var(--serif);font-weight:500;font-size:clamp(22px,2.6vw,30px);margin-bottom:26px}
 .pd-bundle h2 em{color:var(--accent-text);font-style:italic}
@@ -461,7 +481,7 @@
 .bundle-price{display:flex;flex-direction:column;gap:2px}
 .bundle-old{text-decoration:line-through;color:var(--ink-soft);font-size:14px}
 .bundle-new{font-size:22px;font-family:var(--serif)}
-.bundle-save{font-size:12px;color:var(--sage)}
+.bundle-save{font-size:12px;color:var(--ink);font-weight:500}
 
 
 /* sticky add-to-cart */
@@ -484,8 +504,8 @@
 }
 
 /* upsell coș */
-.cart-upsell{margin-top:28px;padding-top:24px;border-top:1px solid rgba(36,33,34,.12)}
-.cart-upsell h3{font-family:var(--serif);font-weight:500;font-size:18px;margin-bottom:16px}
+.cart-upsell{margin-top:28px;}
+.cart-upsell h3{font-family:var(--serif);font-weight:500;font-size:24px;margin-bottom:16px}
 .upsell-list{display:flex;flex-direction:column;gap:12px}
 .upsell-item{display:flex;align-items:center;gap:14px}
 .upsell-item img{width:52px;height:52px;object-fit:cover;border-radius:9px}
@@ -499,26 +519,6 @@
 }
 .upsell-add:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
 
-/* newsletter */
-.newsletter{background:var(--cream-2)}
-.newsletter-inner{max-width:640px;margin:0 auto;text-align:center}
-.newsletter h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.4vw,38px);margin-bottom:12px}
-.newsletter h2 em{color:var(--accent-text);font-style:italic}
-.newsletter p{color:var(--ink-soft);font-size:15px;margin-bottom:26px}
-.newsletter-form{display:flex;gap:12px;max-width:460px;margin:0 auto;flex-wrap:wrap}
-.newsletter-form input{
-  flex:1;min-width:200px;padding:15px 18px;border-radius:999px;border:1px solid rgba(36,33,34,.22);
-  background:var(--cream);font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;
-}
-.newsletter-form input:focus{border-color:var(--accent-decor)}
-.newsletter-form button{flex:none}
-.newsletter-ok{margin-top:16px;color:var(--sage);font-size:13.5px;display:none}
-.newsletter-ok.show{display:block}
-.newsletter-mini{margin:0 0 30px}
-.newsletter-mini form{display:flex;gap:8px;max-width:340px}
-.newsletter-mini input{flex:1;padding:11px 14px;border-radius:8px;border:1px solid rgba(224,215,209,.25);background:transparent;color:var(--cream);font-family:var(--sans);font-size:13px}
-.newsletter-mini input::placeholder{color:rgba(224,215,209,.5)}
-.newsletter-mini button{padding:11px 18px;border-radius:8px;border:none;background:var(--accent-fill);color:var(--cream);font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
 
 @media(max-width:640px){
   .usp-inner{gap:14px 24px}

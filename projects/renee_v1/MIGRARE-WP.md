@@ -11,7 +11,7 @@ Context: site-ul actual e 100% front-end (HTML/CSS/JS vanilla, fără build), f�
 | Fișier static | Devine în WP | Tip |
 |---|---|---|
 | `index.html` | `front-page.php` (temă) | Template |
-| `magazin.html` | Arhivă Woo `shop` (`archive-product.php` sau `page-magazin.php` cu shortcode `[products]`) | Template/CPT listing |
+| `meniu.html` | Arhivă Woo `shop` (`archive-product.php` sau `page-magazin.php` cu shortcode `[products]`) | Template/CPT listing |
 | `produs.html` | `single-product.php` (Woo) | Template CPT `product` |
 | `cos.html` | Pagină Woo „Coș” (`[woocommerce_cart]`) | Pagină + shortcode nativ |
 | `checkout.html` | Pagină Woo „Finalizare comandă” (`[woocommerce_checkout]`) | Pagină + shortcode nativ |
@@ -32,7 +32,7 @@ Context: site-ul actual e 100% front-end (HTML/CSS/JS vanilla, fără build), f�
 
 ## 2. Pagini noi — ce devin în WP, ce câmpuri ACF
 
-### `magazin.html`
+### `meniu.html`
 - **WP**: pagina de shop Woo standard (`archive-product.php`), sau pagină custom cu shortcode `[products limit="..." columns="..."]` dacă vrem control total pe layout (grid + filtre categorii identice cu design-ul actual).
 - Filtrele de categorie (`.cat-filters`) → shortcode `[product_categories]` custom sau widget „Filter Products by Category” (Woo Blocks), stilizat cu clasele existente din `css/shop.css`.
 - **ACF**: nu e nevoie de câmpuri custom — Woo gestionează produsele/categoriile nativ. Eventual un câmp „Hero magazin” (titlu + subtitlu) pe pagina de opțiuni, pentru `.shop-hero`.
@@ -89,6 +89,44 @@ Context: site-ul actual e 100% front-end (HTML/CSS/JS vanilla, fără build), f�
 
 ---
 
+## 2.1 Fără pagini de categorie — totul intră pe `/meniu/`
+
+**Decis 10 sept. 2026 de Sergiu.** Site-ul are **o singură pagină de listare**: Meniu. Filtrarea pe categorii se face în pagină, prin JS, fără reîncărcare și fără URL separat — exact cum funcționează acum în `meniu.html`.
+
+WooCommerce generează însă automat câte o arhivă pentru fiecare termen `product_cat`:
+
+```
+/product-category/mic-dejun/
+/product-category/deserturi/
+…
+```
+
+Astea **nu trebuie să existe public**. Sunt pagini pe care nimeni nu le-a proiectat, cu layout implicit de temă, care ar apărea în Google și ar concura cu pagina de Meniu.
+
+**De făcut la migrare:**
+
+1. **Redirect 301** al tuturor arhivelor `product_cat` către pagina de Meniu.
+2. `noindex` pe ele, ca măsură suplimentară până se propagă redirectul.
+3. Exclude-le din sitemap (Yoast/RankMath: „Show Product categories in search results" → Nu).
+4. Verifică că `woocommerce_related_products()` şi breadcrumb-urile nu generează linkuri către ele — breadcrumb-ul actual afișează categoria ca text, nu ca link către arhivă.
+
+Schiță de implementare, în `functions.php`:
+
+```php
+add_action('template_redirect', function () {
+    if (is_tax('product_cat')) {
+        wp_safe_redirect(get_permalink(get_page_by_path('meniu')), 301);
+        exit;
+    }
+});
+```
+
+Același tratament pentru `product_tag`, dacă ajung să fie folosite.
+
+**Atenție la ordinea de operații:** redirectul trebuie pus **înainte** ca site-ul să fie indexat. Dacă arhivele apucă să intre în Google, redirectul le scoate, dar durează.
+
+---
+
 ## 3. Modelul de date produs — `data/products.js` → CPT `product` + `product_cat`
 
 Fiecare obiect din `window.RENEE_PRODUCTS` (vezi `data/products.js`) mapează câmp cu câmp pe Woo:
@@ -114,7 +152,7 @@ Fiecare obiect din `window.RENEE_PRODUCTS` (vezi `data/products.js`) mapează c�
 
 `window.RENEE_CATEGORIES` (`id`, `name`, `image`, `description`) → termenii taxonomiei `product_cat`, cu `image` ca imagine de categorie (`thumbnail_id` meta Woo) și `description` ca descriere termen nativă.
 
-**Import**: la migrare, catalogul din `data/products.js` (25 produse, 5 categorii) se importă printr-un script one-off (WP-CLI `wp wc product create` sau import CSV Woo) direct din acest fișier JS, nu manual — păstrează `id`-urile ca slug-uri pentru continuitate URL.
+**Import**: la migrare, catalogul din `data/products.js` (73 preparate, 7 categorii, generat din API-ul eat-me.online) se importă printr-un script one-off (WP-CLI `wp wc product create` sau import CSV Woo) direct din acest fișier JS, nu manual — păstrează `id`-urile ca slug-uri pentru continuitate URL.
 
 ---
 
@@ -215,7 +253,7 @@ Elemente adăugate pe baza cercetării de design & vânzări (Baymard, NN/g, Sho
 | **Strip „Cele mai vândute”** (`index.html` `#bestsellers`, `getBestsellers()`) | Shortcode Woo `[products best_selling="true" limit="4"]` sau `[featured_products]` — bazat pe `total_sales` real, nu pe flag draft |
 | **Star ratings pe carduri + PDP** (`js/shop.js` `starsHTML`/`ratingLine`) | Native Woo — `wc_get_rating_html()` afișează stelele din recenzii reale, atât pe arhivă cât și pe `single-product.php` |
 | **Secțiune recenzii pe PDP** (`js/shop.js` `reviewsHTML`) | Tab-ul nativ „Recenzii” din `single-product.php` (`woocommerce_output_product_data_tabs`) sau plugin UGC (Judge.me/Loox) pentru poze de la clienți (P2 #14) |
-| **„Se cumpără des împreună” / bundle** (`js/shop.js` `bundleHTML`/`bundleItems`, -10%) | Plugin de tip „Frequently Bought Together” (ex. WPC, YITH) sau **Woo Product Bundles** pentru preț de pachet real cu discount. Logica actuală (produs + 2 complementare) devine configurabilă per produs |
+| **„Se comandă des împreună” / bundle** (`js/shop.js` `bundleHTML`/`bundleItems`, -10%) | Plugin de tip „Frequently Bought Together” (ex. WPC, YITH) sau **Woo Product Bundles** pentru preț de pachet real cu discount. Logica actuală (produs + 2 complementare) devine configurabilă per produs |
 | **Upsell „Completează comanda”** (`js/shop.js` `cartUpsellHTML`, în coș) | Cross-sell nativ Woo (`woocommerce_cross_sell_display()` pe pagina de coș) — produsele cross-sell se setează per produs în admin |
 | **Sticky add-to-cart** (`js/shop.js` `mountStickyBar`, pe PDP) | Plugin „sticky add to cart bar” (multe gratuite pentru Woo) sau păstrat ca JS custom în temă peste butonul nativ Woo |
 | **Newsletter** (`index.html` `#newsletterForm`, trimitere simulată) | Integrare reală Mailchimp / MailPoet / Klaviyo (form embed sau API + `wp_ajax_*`). Oferta „10% la prima comandă” → cupon Woo generat la abonare |

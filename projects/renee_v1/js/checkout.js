@@ -19,7 +19,7 @@
           var summaryEl = document.getElementById('orderSummary');
           if (summaryEl) summaryEl.style.display = 'none';
         } else {
-          location.href = 'magazin.html';
+          location.href = 'meniu.html';
         }
         return;
       }

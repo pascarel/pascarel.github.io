@@ -18,6 +18,96 @@
     title.appendChild(word);
   }
 
+  /* ================= ELEMENT ACTIV ÎN MENIU =================
+     Marcat din JS, nu manual în cele 13 pagini — altfel se dezsincronizează
+     la fiecare pagină nouă. Subpaginile moştenesc părintele:
+     produs → Meniu, articol → Blog. */
+  (function(){
+    var PARINTE = {
+      'produs.html':  'meniu.html',
+      'articol.html': 'blog.html',
+      'cos.html':     'meniu.html',
+      'checkout.html':'meniu.html',
+      'comanda-confirmata.html': 'meniu.html'
+    };
+    var fisier = location.pathname.split('/').pop() || 'index.html';
+    var activ = PARINTE[fisier] || fisier;
+
+    /* doar linkurile de pagină: fără butonul Rezervări (care are href
+       index.html#vizita şi s-ar activa pe home), fără Coş, fără social */
+    document.querySelectorAll('#nav > a:not(.btn-rez):not(.cart-link)').forEach(function(a){
+      var href = (a.getAttribute('href') || '').split('#')[0].split('/').pop();
+      if (!href) return;
+      if (href === activ) {
+        a.classList.add('is-current');
+        a.setAttribute('aria-current', 'page');
+      }
+    });
+  })();
+
+  /* ================= LIGHTBOX GALERIE ================= */
+  (function(){
+    var lb = document.getElementById('lightbox');
+    if (!lb) return;
+    var itemi = Array.prototype.slice.call(document.querySelectorAll('[data-lightbox]'));
+    if (!itemi.length) return;
+
+    var imgEl   = lb.querySelector('.lb-img');
+    var capEl   = lb.querySelector('.lb-cap');
+    var contEl  = lb.querySelector('.lb-count');
+    var btnClose= lb.querySelector('.lb-close');
+    var btnPrev = lb.querySelector('.lb-prev');
+    var btnNext = lb.querySelector('.lb-next');
+    var idx = 0, declansator = null;
+
+    function arata(i){
+      idx = (i + itemi.length) % itemi.length;
+      var src = itemi[idx].querySelector('img');
+      imgEl.src = src.src;
+      imgEl.alt = src.alt || '';
+      capEl.textContent = src.alt || '';
+      contEl.textContent = (idx + 1) + ' / ' + itemi.length;
+      /* re-pornește animația de intrare la fiecare schimbare */
+      imgEl.style.animation = 'none'; imgEl.offsetHeight; imgEl.style.animation = '';
+    }
+    function deschide(i, el){
+      declansator = el || null;
+      lb.hidden = false; lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      arata(i);
+      btnClose.focus();
+    }
+    function inchide(){
+      lb.classList.remove('open'); lb.hidden = true;
+      document.body.style.overflow = '';
+      if (declansator) declansator.focus();
+    }
+
+    itemi.forEach(function(el, i){
+      el.addEventListener('click', function(){ deschide(i, el); });
+    });
+    btnClose.addEventListener('click', inchide);
+    btnPrev.addEventListener('click', function(){ arata(idx - 1); });
+    btnNext.addEventListener('click', function(){ arata(idx + 1); });
+    lb.addEventListener('click', function(e){
+      /* clic pe fundal, nu pe imagine sau butoane */
+      if (e.target === lb) inchide();
+    });
+    document.addEventListener('keydown', function(e){
+      if (lb.hidden) return;
+      if (e.key === 'Escape') inchide();
+      else if (e.key === 'ArrowLeft') arata(idx - 1);
+      else if (e.key === 'ArrowRight') arata(idx + 1);
+      else if (e.key === 'Tab') {
+        /* ținem focusul în lightbox */
+        var f = [btnClose, btnPrev, btnNext];
+        var poz = f.indexOf(document.activeElement);
+        e.preventDefault();
+        f[(poz + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+      }
+    });
+  })();
+
   /* Hărți — scut anti-zoom: harta devine interactivă doar după un clic explicit.
      La schimbarea tabului sau la ieșirea mouse-ului, se re-blochează. */
   document.querySelectorAll('.map-shield').forEach(function(shield){
@@ -184,6 +274,15 @@
 
   function openModal(){
     lastFocus = document.activeElement;
+    /* dacă s-a trimis deja o rezervare, ecranul de confirmare ar rămâne peste
+       formular la redeschidere — îl scoatem şi reactivăm butonul */
+    var ok = document.getElementById('formOk');
+    var full = document.getElementById('formFull');
+    if (ok) ok.classList.remove('show');
+    if (full) full.classList.remove('show');
+    var sb = modal.querySelector('#rezForm .btn-light');
+    if (sb) { sb.disabled = false; sb.textContent = 'Trimite rezervarea'; }
+
     modal.hidden = false;
     modal.classList.add('open');
     document.body.classList.add('no-scroll');
@@ -205,6 +304,9 @@
     });
   });
   document.getElementById('rezClose').addEventListener('click', closeModal);
+  modal.querySelectorAll('[data-rez-close]').forEach(function(b){
+    b.addEventListener('click', closeModal);
+  });
   modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
   document.addEventListener('keydown', function(e){
     if (e.key !== 'Escape' || modal.hidden) return;
@@ -269,91 +371,102 @@
   var pickPers = document.getElementById('pickPers');
   initList(pickPers);
 
-  /* --- ore: 08:00 – 21:30, pas de 30 min --- */
-  var pickOra = document.getElementById('pickOra');
-  (function(){
-    var list = pickOra.querySelector('.pop-list');
-    for (var h = 8; h <= 21; h++) {
-      for (var m = 0; m < 60; m += 30) {
-        if (h === 21 && m > 30) break;
-        var t = (h < 10 ? '0' : '') + h + ':' + (m === 0 ? '00' : m);
-        var li = document.createElement('li');
-        li.setAttribute('role', 'option');
-        li.setAttribute('aria-selected', 'false');
-        li.textContent = t;
-        list.appendChild(li);
-      }
-    }
-    initList(pickOra);
-    /* indiciul „mai multe ore →" apare doar dacă există scroll orizontal
-       și dispare când ajungi la capăt */
-    var hint = pickOra.querySelector('.pop-hint');
-    function updateHint(){
-      var noScroll = list.scrollWidth <= list.clientWidth + 8;
-      var atEnd = list.scrollLeft + list.clientWidth >= list.scrollWidth - 8;
-      hint.classList.toggle('gone', noScroll);
-      hint.classList.toggle('hide', atEnd);
-    }
-    list.addEventListener('scroll', updateHint, {passive:true});
-    pickOra.querySelector('.picker-btn').addEventListener('click', updateHint);
-    window.addEventListener('resize', updateHint);
-  })();
+  var pickLoc = document.getElementById('pickLoc');
+  initList(pickLoc);
 
-  /* --- calendar dată --- */
-  var pickData = document.getElementById('pickData');
+  /* --- dată + oră într-un singur picker --- */
+  var pickCand = document.getElementById('pickCand');
   (function(){
     var MONTHS = ['ianuarie','februarie','martie','aprilie','mai','iunie','iulie','august','septembrie','octombrie','noiembrie','decembrie'];
-    var titleEl = pickData.querySelector('.cal-title');
-    var grid = pickData.querySelector('.cal-grid');
-    var prevBtn = pickData.querySelector('.cal-prev');
-    var nextBtn = pickData.querySelector('.cal-next');
+    var SCURT  = ['ian.','feb.','mar.','apr.','mai','iun.','iul.','aug.','sept.','oct.','nov.','dec.'];
+    var titleEl = pickCand.querySelector('.cal-title');
+    var grid    = pickCand.querySelector('.cal-grid');
+    var prevBtn = pickCand.querySelector('.cal-prev');
+    var nextBtn = pickCand.querySelector('.cal-next');
+    var timeBox = pickCand.querySelector('.when-time');
+    var slots   = pickCand.querySelector('.when-slots');
+    var inData  = pickCand.querySelector('input[name="data"]');
+    var inOra   = pickCand.querySelector('input[name="ora"]');
+
     var today = new Date(); today.setHours(0,0,0,0);
     var view = new Date(today.getFullYear(), today.getMonth(), 1);
-    var selected = null;
+    var selData = null, selOra = null;
 
     function iso(d){
-      return d.getFullYear() + '-' +
-        ('0' + (d.getMonth()+1)).slice(-2) + '-' +
-        ('0' + d.getDate()).slice(-2);
+      return d.getFullYear() + '-' + ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2);
     }
+    function eticheta(){
+      if (!selData) return null;
+      var zi = selData.getDate() + ' ' + SCURT[selData.getMonth()] + ' ' + selData.getFullYear();
+      return selOra ? zi + ' · ' + selOra : zi + ' — alege ora';
+    }
+    function actualizeaza(){
+      var span = pickCand.querySelector('.picker-val');
+      var txt = eticheta();
+      if (txt){ span.textContent = txt; span.classList.remove('val-empty'); }
+      inData.value = selData ? iso(selData) : '';
+      inOra.value  = selOra || '';
+      if (selData && selOra) clearErr(pickCand);
+    }
+
+    /* orele se construiesc o singură dată; se re-marchează la fiecare zi aleasă */
+    (function(){
+      for (var h = 8; h <= 21; h++){
+        for (var m = 0; m < 60; m += 30){
+          var t = (h < 10 ? '0' : '') + h + ':' + (m === 0 ? '00' : m);
+          var li = document.createElement('li');
+          li.setAttribute('role','option');
+          li.setAttribute('aria-selected','false');
+          li.textContent = t;
+          slots.appendChild(li);
+        }
+      }
+    })();
+    slots.addEventListener('click', function(e){
+      var li = e.target.closest('li');
+      if (!li) return;
+      slots.querySelectorAll('li').forEach(function(o){ o.setAttribute('aria-selected','false'); });
+      li.setAttribute('aria-selected','true');
+      selOra = li.textContent;
+      actualizeaza();
+      closeAllPickers();          /* ora e ultimul pas → închidem */
+    });
+
     function render(){
       titleEl.textContent = MONTHS[view.getMonth()] + ' ' + view.getFullYear();
       grid.innerHTML = '';
-      /* prima zi a lunii, luni = 0 */
       var firstDow = (new Date(view.getFullYear(), view.getMonth(), 1).getDay() + 6) % 7;
       var daysIn = new Date(view.getFullYear(), view.getMonth()+1, 0).getDate();
-      for (var i = 0; i < firstDow; i++) {
-        grid.appendChild(document.createElement('span'));
-      }
-      for (var d = 1; d <= daysIn; d++) {
+      for (var i = 0; i < firstDow; i++) grid.appendChild(document.createElement('span'));
+      for (var d = 1; d <= daysIn; d++){
         var date = new Date(view.getFullYear(), view.getMonth(), d);
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.textContent = d;
-        if (date < today) b.disabled = true;
-        if (date.getTime() === today.getTime()) b.classList.add('today');
-        if (selected && date.getTime() === selected.getTime()) b.classList.add('sel');
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = d;
+        if (date < today) btn.disabled = true;
+        if (date.getTime() === today.getTime()) btn.classList.add('today');
+        if (selData && date.getTime() === selData.getTime()) btn.classList.add('sel');
         (function(date){
-          b.addEventListener('click', function(){
-            selected = date;
-            setPickerValue(pickData,
-              date.getDate() + ' ' + MONTHS[date.getMonth()] + ' ' + date.getFullYear(),
-              iso(date));
-            closeAllPickers();
+          btn.addEventListener('click', function(e){
+            /* render() detaşează butonul din DOM; fără asta, listenerul global
+               de pe document vede e.target orfan, crede că s-a dat clic în afara
+               pickerului şi închide popover-ul înainte de alegerea orei. */
+            e.stopPropagation();
+            selData = date;
+            selOra = null;                 /* ziua nouă → ora se re-alege */
+            slots.querySelectorAll('li').forEach(function(o){ o.setAttribute('aria-selected','false'); });
+            timeBox.classList.add('gata'); /* popover-ul RĂMÂNE deschis */
+            actualizeaza();
             render();
+            slots.scrollTop = 0;
           });
         })(date);
-        grid.appendChild(b);
+        grid.appendChild(btn);
       }
-      /* nu naviga în trecut */
       prevBtn.disabled = view.getFullYear() === today.getFullYear() && view.getMonth() === today.getMonth();
     }
-    prevBtn.addEventListener('click', function(){
-      view = new Date(view.getFullYear(), view.getMonth()-1, 1); render();
-    });
-    nextBtn.addEventListener('click', function(){
-      view = new Date(view.getFullYear(), view.getMonth()+1, 1); render();
-    });
+    prevBtn.addEventListener('click', function(){ view = new Date(view.getFullYear(), view.getMonth()-1, 1); render(); });
+    nextBtn.addEventListener('click', function(){ view = new Date(view.getFullYear(), view.getMonth()+1, 1); render(); });
     render();
   })();
 
@@ -361,7 +474,7 @@
   var form = document.getElementById('rezForm');
   var okMsg = document.getElementById('formOk');
   var fullMsg = document.getElementById('formFull');
-  var submitBtn = form.querySelector('.btn-light');
+  var submitBtn = form.querySelector('.field-submit .btn-light');
   var inputNume = document.getElementById('f-nume');
   var inputTel = document.getElementById('f-tel');
   /* DEMO: la orele de mai jos serverul „răspunde" că nu mai sunt locuri —
@@ -407,12 +520,17 @@
       setErr(pickPers, 'Alege numărul de persoane');
       valid = false;
     }
-    if (!pickData.querySelector('input[type="hidden"]').value) {
-      setErr(pickData, 'Alege data rezervării');
+    if (!pickLoc.querySelector('input[type="hidden"]').value) {
+      setErr(pickLoc, 'Alege locația');
       valid = false;
     }
-    if (!pickOra.querySelector('input[type="hidden"]').value) {
-      setErr(pickOra, 'Alege ora rezervării');
+    var vData = pickCand.querySelector('input[name="data"]').value;
+    var vOra  = pickCand.querySelector('input[name="ora"]').value;
+    if (!vData) {
+      setErr(pickCand, 'Alege data rezervării');
+      valid = false;
+    } else if (!vOra) {
+      setErr(pickCand, 'Alege și ora');
       valid = false;
     }
     return valid;
@@ -432,7 +550,7 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Se trimite…';
     setTimeout(function(){
-      var ora = pickOra.querySelector('input[type="hidden"]').value;
+      var ora = pickCand.querySelector('input[name="ora"]').value;
       if (DEMO_FULL_TIMES.indexOf(ora) !== -1) {
         fullMsg.classList.add('show');
         submitBtn.disabled = false;

@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Despre Renée — Cafenea & All Day Breakfast · Chișinău</title>
 <meta name="description" content="Povestea Renée, valorile care ne ghidează și cele două locații din Chișinău — Oasis Mall și Renée Urban.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/cormorant-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/opensans-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body class="subpage">
@@ -18,7 +18,7 @@
   <button class="burger" id="burger" aria-label="Meniu" aria-expanded="false">Meniu</button>
   <nav id="nav">
     <a href="despre.html">Despre</a>
-    <a href="magazin.html">Magazin</a>
+    <a href="meniu.html">Meniu</a>
     <a href="evenimente.html">Evenimente</a>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
@@ -46,12 +46,12 @@
         <div class="despre-text" style="margin-top:36px">
           <p class="reveal reveal-d1"><!-- DRAFT: de înlocuit -->Renée s-a născut dintr-o idee simplă: micul dejun este cel mai sincer moment al zilei. Ouă perfecte, pâine caldă, cafea de specialitate și lumină bună — servite fără grabă, de dimineață până seara.</p>
           <p class="reveal reveal-d2"><!-- DRAFT: de înlocuit -->Numele nostru înseamnă „renăscută". Fiecare vizită e un mic nou început: o masă lângă fereastră, o farfurie frumoasă, o conversație care nu se termină. Am pornit de la o singură locație în Oasis Mall și am crescut pentru că oamenii au avut nevoie de mai mult timp bun, în mai multe colțuri ale orașului.</p>
-          <p class="reveal reveal-d3"><!-- DRAFT: de înlocuit -->Astăzi Renée înseamnă două locații, o echipă care tratează fiecare farfurie ca pe prima zi și un magazin unde poți lua acasă puțin din atmosfera noastră.</p>
+          <p class="reveal reveal-d3"><!-- DRAFT: de înlocuit -->Astăzi Renée înseamnă două locații, o echipă care tratează fiecare farfurie ca pe prima zi și un meniu în care poți lua acasă puțin din atmosfera noastră.</p>
         </div>
       </div>
       <div class="despre-photo reveal reveal-d1">
         <div class="parallax-wrap">
-          <img class="photo parallax" data-speed="0.12" src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1000&q=80&auto=format&fit=crop" alt="Interiorul cafenelei Renée" loading="lazy">
+          <img class="photo parallax" data-speed="0.12" src="img/interior.webp" alt="Interiorul cafenelei Renée" loading="lazy">
         </div>
       </div>
     </div>
@@ -60,6 +60,7 @@
 
 <!-- VALORI -->
 <section class="section poveste" id="valori" style="padding-top:0">
+  <svg class="patern-banda" aria-hidden="true" focusable="false"><defs><pattern id="patRenee" patternUnits="userSpaceOnUse" width="271.771" height="104.38" patternTransform="scale(0.294)"><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor" transform="translate(0 104.38)"/><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor"/><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor" transform="translate(0 -104.38)"/><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor" transform="translate(0 -208.76)"/></pattern></defs><rect width="100%" height="100%" fill="url(#patRenee)"/></svg>
   <div class="wrap">
     <p class="eyebrow reveal">Ce ne ghidează</p>
     <h2 class="h2 reveal">Valorile <em>Renée</em></h2>
@@ -88,35 +89,33 @@
   <div class="wrap">
     <p class="eyebrow reveal">Vino la Renée</p>
     <h2 class="h2 reveal">Două locații,<br>aceeași <em>stare</em></h2>
-    <div class="vizita-grid" style="margin-top:56px">
+    <div class="vizita-grid egale" style="margin-top:56px">
       <div class="info-list reveal">
         <div class="info-row">
-          <span class="lbl">Locație 1</span>
-          <span class="val">Renée — Oasis Mall, Chișinău</span>
+          <span class="lbl">Renée Oasis</span>
+          <span class="val">str. Bogdan-Voievod 1, Chișinău</span>
         </div>
         <div class="info-row">
           <span class="lbl">Program</span>
-          <span class="val">Lun – Joi · 08:00 – 21:00<br>Vin – Sâm · 08:00 – 22:00</span>
+          <span class="val">Lun – Joi · 08:00 – 21:00<br>Vin – Dum · 08:00 – 22:00 <!-- DRAFT: program de confirmat --></span>
         </div>
         <div class="info-row">
           <span class="lbl">Telefon</span>
-          <span class="val"><a href="tel:+37378784040">+373 78 784 040</a></span>
+          <span class="val"><a href="tel:+37378784040">+373 78 784 040</a> <!-- DRAFT: telefon de confirmat --></span>
         </div>
       </div>
       <div class="info-list reveal reveal-d1">
         <div class="info-row">
-          <!-- DRAFT: adresă de confirmat -->
-          <span class="lbl">Locație 2</span>
-          <span class="val">Renée Urban — bd. Ștefan cel Mare și Sfânt 115/1, Chișinău</span>
+          <span class="lbl">Renée Urban</span>
+          <span class="val">bd. Ștefan cel Mare și Sfânt 115/1, Chișinău</span>
         </div>
         <div class="info-row">
           <span class="lbl">Program</span>
-          <span class="val">Lun – Dum · 08:00 – 22:00<!-- DRAFT: de înlocuit --></span>
+          <span class="val">Lun – Joi · 08:00 – 21:00<br>Vin – Dum · 08:00 – 22:00 <!-- DRAFT: identic cu Oasis; dacă diferă, se schimbă în WordPress --></span>
         </div>
         <div class="info-row">
           <span class="lbl">Telefon</span>
-          <!-- DRAFT: de înlocuit -->
-          <span class="val"><a href="tel:+37378784041">+373 78 784 041</a></span>
+          <span class="val"><a href="tel:+37378784041">+373 78 784 041</a> <!-- DRAFT: telefon de confirmat --></span>
         </div>
       </div>
     </div>
@@ -129,14 +128,45 @@
     <p class="eyebrow reveal">Atmosfera</p>
     <h2 class="h2 reveal">Lumină, farfurii <em>frumoase</em>,<br>oameni relaxați</h2>
     <div class="galerie-grid">
-      <div class="g-item g-1 reveal"><img class="photo" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80&auto=format&fit=crop" alt="Sala principală Renée" loading="lazy"></div>
-      <div class="g-item g-2 reveal reveal-d1"><img class="photo" src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=900&q=80&auto=format&fit=crop" alt="Barul de cafea" loading="lazy"></div>
-      <div class="g-item g-3 reveal"><img class="photo" src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=700&q=80&auto=format&fit=crop" alt="Detaliu farfurie de brunch" loading="lazy"></div>
-      <div class="g-item g-4 reveal reveal-d1"><img class="photo" src="https://images.unsplash.com/photo-1481833761820-0509d3217039?w=700&q=80&auto=format&fit=crop" alt="A doua locație Renée" loading="lazy"></div>
-      <div class="g-item g-5 reveal reveal-d2"><img class="photo" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=700&q=80&auto=format&fit=crop" alt="Cafea lângă fereastră" loading="lazy"></div>
+      <button type="button" class="g-item g-1 reveal" data-lightbox aria-label="Mărește: Sala principală Renée"><img class="photo" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80&auto=format&fit=crop" alt="Sala principală Renée" loading="lazy"><span class="g-veil" aria-hidden="true"><span class="g-zoom"></span></span></button>
+      <button type="button" class="g-item g-2 reveal reveal-d1" data-lightbox aria-label="Mărește: Barul de cafea"><img class="photo" src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=900&q=80&auto=format&fit=crop" alt="Barul de cafea" loading="lazy"><span class="g-veil" aria-hidden="true"><span class="g-zoom"></span></span></button>
+      <button type="button" class="g-item g-3 reveal" data-lightbox aria-label="Mărește: Detaliu farfurie de brunch"><img class="photo" src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=700&q=80&auto=format&fit=crop" alt="Detaliu farfurie de brunch" loading="lazy"><span class="g-veil" aria-hidden="true"><span class="g-zoom"></span></span></button>
+      <button type="button" class="g-item g-4 reveal reveal-d1" data-lightbox aria-label="Mărește: A doua locație Renée"><img class="photo" src="https://images.unsplash.com/photo-1481833761820-0509d3217039?w=700&q=80&auto=format&fit=crop" alt="A doua locație Renée" loading="lazy"><span class="g-veil" aria-hidden="true"><span class="g-zoom"></span></span></button>
+      <button type="button" class="g-item g-5 reveal reveal-d2" data-lightbox aria-label="Mărește: Cafea lângă fereastră"><img class="photo" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=700&q=80&auto=format&fit=crop" alt="Cafea lângă fereastră" loading="lazy"><span class="g-veil" aria-hidden="true"><span class="g-zoom"></span></span></button>
     </div>
   </div>
 </section>
+
+<!-- INSTAGRAM -->
+<section class="section" id="instagram">
+  <div class="wrap">
+    <div class="insta-head">
+      <div>
+        <p class="eyebrow reveal">Instagram</p>
+        <h2 class="h2 reveal">Zilnic, în <em>feed</em></h2>
+      </div>
+      <a class="link-arrow reveal reveal-d1" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Urmărește @renee_brunch →</a>
+    </div>
+    <div class="insta-grid">
+      <a class="insta-item reveal" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&q=80&auto=format&fit=crop" alt="Cafea la Renée" loading="lazy"></a>
+      <a class="insta-item reveal reveal-d1" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80&auto=format&fit=crop" alt="Prieteni la brunch" loading="lazy"></a>
+      <a class="insta-item reveal reveal-d2" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1533920379810-6bedac961555?w=600&q=80&auto=format&fit=crop" alt="Preparate Renée" loading="lazy"></a>
+      <a class="insta-item reveal reveal-d3" href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener"><img class="photo" src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=600&q=80&auto=format&fit=crop" alt="Atmosferă Renée" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX GALERIE -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Galerie foto" hidden>
+  <button type="button" class="lb-close" aria-label="Închide">✕</button>
+  <button type="button" class="lb-nav lb-prev" aria-label="Imaginea precedentă">‹</button>
+  <figure class="lb-stage">
+    <img class="lb-img" src="" alt="">
+    <figcaption class="lb-cap"></figcaption>
+  </figure>
+  <button type="button" class="lb-nav lb-next" aria-label="Imaginea următoare">›</button>
+  <div class="lb-count" aria-hidden="true"></div>
+</div>
 
 <!-- WP: footer.php -->
 <footer>
@@ -155,13 +185,11 @@
         <h4>Explorează</h4>
         <nav class="footer-links">
           <a href="index.html">Acasă</a>
-          <a href="magazin.html">Magazin</a>
+          <a href="meniu.html">Meniu</a>
           <a href="despre.html">Despre</a>
           <a href="evenimente.html">Evenimente</a>
           <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
-          <a href="termeni.html">Termeni și condiții</a>
-          <a href="confidentialitate.html">Politică de confidențialitate</a>
         </nav>
       </div>
       <div class="footer-col footer-info">
@@ -174,6 +202,11 @@
     </div>
     <div class="footer-bottom">
       <span class="footer-meta">© 2026 Renée · Chișinău</span>
+      <div class="footer-meta">
+        <a href="termeni.html">Termeni și condiții</a>
+        |
+        <a href="confidentialitate.html">Politică de confidențialitate</a>
+      </div>
       <span class="footer-meta">Toate drepturile rezervate</span>
     </div>
   </div>
@@ -181,6 +214,7 @@
 <!-- /WP: footer.php -->
 
 <script src="js/cart.js"></script>
+<script src="js/rez-modal.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

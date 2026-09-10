@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Magazin — Renée · Chișinău</title>
-<meta name="description" content="Cafea de specialitate, dulciuri, brunch box, merch și cadouri Renée — comandă online din magazinul nostru.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Meniu — Renée · Chișinău</title>
+<meta name="description" content="Meniul Renée — mic dejun servit toată ziua, brunch, feluri principale și deserturi, în cele două locații din Chișinău.">
+<link rel="preload" href="fonts/cormorant-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/opensans-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/shop.css">
 </head>
-<body class="subpage">
+<body class="subpage pagina-meniu">
 
 <!-- WP: header.php -->
 <header id="header">
@@ -19,7 +19,7 @@
   <button class="burger" id="burger" aria-label="Meniu" aria-expanded="false">Meniu</button>
   <nav id="nav">
     <a href="despre.html">Despre</a>
-    <a href="magazin.html">Magazin</a>
+    <a href="meniu.html">Meniu</a>
     <a href="evenimente.html">Evenimente</a>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
@@ -39,9 +39,10 @@
 <!-- SHOP HERO -->
 <section class="shop-hero">
   <div class="wrap">
-    <p class="eyebrow reveal" style="justify-content:center">Magazin</p>
-    <h1 class="h2 reveal">Renée, la <em>tine acasă</em></h1>
-    <p class="shop-sub reveal reveal-d1">Cafea proaspăt prăjită, dulciuri de casă, brunch box și cadouri — comandă online cu livrare în Chișinău sau ridicare din local.</p>
+    <svg class="hero-icon" aria-hidden="true" focusable="false"  viewBox="0 0 411 726" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M256.241 1.08441C248.747 3.56716 241.956 6.13384 237.038 8.09919C178.889 31.3491 180.004 74.7852 179.162 170.206C178.251 265.912 184.597 307.757 155.142 333.299C154.574 333.512 147.345 336.116 137.622 337.575V0H118.622V338.197C111.907 337.495 105.196 335.63 99.4079 331.787C99.3761 331.767 99.3443 331.747 99.3036 331.728C71.8789 306.024 77.9721 263.955 77.0899 170.206C76.2394 74.7852 77.3542 31.3491 19.2047 8.09919C14.2875 6.13384 7.49275 3.56716 0 1.08441V80.5362C0.43731 97.4477 0.476629 118.355 0.448662 144.423C0.316452 252.447 2.55517 291.543 78.0725 332.314L95.5738 339.312C96.3353 339.613 97.1451 339.939 97.9879 340.274L107.093 343.914L107.245 343.549C110.639 344.575 114.421 345.466 118.622 346.034V725.153H137.622V345.963C141.212 345.453 145.003 344.635 148.978 343.479L149.151 343.914L178.167 332.314C253.697 291.543 255.936 252.447 255.806 144.423C255.774 118.355 255.806 97.4477 256.241 80.5362V1.08441Z" fill="currentColor"/> <path d="M381.19 12.2604C327.116 54.0769 298.585 146.009 298.585 246.641C299.82 385.803 298.188 449.143 382.996 483.058C385.642 484.124 388.672 485.3 391.988 486.547V725.154H411V493.29V377.408V115.885V59.8445V0.00299072C411 0.00299072 393.336 2.87092 381.19 12.2604Z" fill="currentColor"/> </svg>
+    <p class="eyebrow reveal" style="justify-content:center">Meniu</p>
+    <h1 class="h2 reveal">Tot ce se gătește <em>la Renée</em></h1>
+    <p class="shop-sub reveal reveal-d1">Mic dejun servit toată ziua, brunch, feluri principale și deserturi — în ambele locații din Chișinău.</p>
   </div>
 </section>
 
@@ -63,7 +64,7 @@
         </select>
       </label>
     </div>
-    <div id="shopGrid" class="product-grid"></div>
+    <div id="shopGrid" class="cards"></div>
     <div id="shopPagination" class="pagination"></div>
   </div>
 </section>
@@ -85,13 +86,11 @@
         <h4>Explorează</h4>
         <nav class="footer-links">
           <a href="index.html">Acasă</a>
-          <a href="magazin.html">Magazin</a>
+          <a href="meniu.html">Meniu</a>
           <a href="despre.html">Despre</a>
           <a href="evenimente.html">Evenimente</a>
           <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
-          <a href="termeni.html">Termeni și condiții</a>
-          <a href="confidentialitate.html">Politică de confidențialitate</a>
         </nav>
       </div>
       <div class="footer-col footer-info">
@@ -104,6 +103,11 @@
     </div>
     <div class="footer-bottom">
       <span class="footer-meta">© 2026 Renée · Chișinău</span>
+      <div class="footer-meta">
+        <a href="termeni.html">Termeni și condiții</a>
+        |
+        <a href="confidentialitate.html">Politică de confidențialitate</a>
+      </div>
       <span class="footer-meta">Toate drepturile rezervate</span>
     </div>
   </div>
@@ -113,6 +117,7 @@
 <script src="data/products.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/shop.js"></script>
+<script src="js/rez-modal.js"></script>
 <script src="js/main.js"></script>
 <script>
   Shop.mountShop({
@@ -121,7 +126,7 @@
     sortId: 'shopSort',
     countId: 'shopCount',
     paginationId: 'shopPagination',
-    pageSize: 8
+    pageSize: 12
   });
 </script>
 </body>
