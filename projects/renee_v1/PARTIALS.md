@@ -61,6 +61,60 @@ De aceea `<pattern>` are `height="104.38"` și conține **patru copii** ale firu
 
 Culoarea vine prin `currentColor` — se schimbă din `.patern-banda { color: … }`, nu în markup.
 
+## 2.2 Delimitator full-width cu pattern — o singură linie
+
+Bandă orizontală de chevroni, pe toată lățimea paginii. **Copiezi exact asta, oriunde:**
+
+```html
+<div class="patern-separator" aria-hidden="true"></div>
+```
+
+Atât. Fără SVG inline, fără id-uri, fără JS. Se poate pune de câte ori vrei, pe orice pagină.
+
+**Înălțimea** o controlezi din clasă:
+
+| Clasă | Înălțime |
+|---|---|
+| `patern-separator` | 62px (implicit) |
+| `patern-separator subtire` | 26px |
+| `patern-separator gros` | 64px |
+
+Dala se scalează singură după înălțime (`background-size:auto 100%`) și se repetă orizontal, deci nu trebuie să potrivești nimic manual.
+
+**Sursa:** `img/patern-brown.svg` — artboard-ul complet (4214 × 298), adaptat de Sergiu. Cu `background-size:auto 100%` se scalează după înălțimea benzii și se repetă orizontal.
+
+### Animația
+
+Banda glisează lent spre stânga, **doar cât e pe ecran**. `js/main.js` comută clasa `.vizibil` printr-un `IntersectionObserver`, iar CSS-ul folosește `animation-play-state` — deci la ieșirea din ecran animația se **pune pe pauză**, nu se oprește. La revenire continuă de unde a rămas, nu sare la început.
+
+Viteză: un ciclu de 28s, adică ~31px/s la înălțimea implicită.
+
+⚠️ **`--h` e singurul reglaj.** Lățimea dalei se calculează din el (`--dala: calc(var(--h) * 14.1409)`, proporția fișierului), iar animația se deplasează exact cât o dală. Dacă pui o înălțime fixă în `height` în loc de `--h`, deplasarea nu mai corespunde dalei și apare un salt vizibil la fiecare ciclu.
+
+La `prefers-reduced-motion` se oprește singură — regula globală din `main.css` pune `animation:none` pe tot.
+
+⚠️ **Culoarea e fixă în fișier** (Crust Brown `#AF7B5C`). `background-image` nu poate moșteni `currentColor` — spre deosebire de banda verticală, care e SVG inline. Pentru altă culoare, duplichează fișierul și schimbă `fill`.
+
+Folosit pe `index.html` (între Evenimente private și Instagram), `contact.html` (între formular și Instagram) și `despre.html` (între galerie și Instagram).
+
+## 2.3 Switcher de limbă — DOAR PREZENTARE
+
+În header, după coșul de cumpărături, pe toate cele 13 pagini:
+
+```html
+<div class="lang" role="group" aria-label="Limbă">
+  <button type="button" class="lang-opt is-current" data-lang="ro" aria-current="true">RO</button>
+  <button type="button" class="lang-opt" data-lang="ru">RU</button>
+  <button type="button" class="lang-opt" data-lang="en">EN</button>
+</div>
+```
+
+⚠️ **Nu navighează nicăieri.** `js/main.js` doar comută starea activă, ca să se vadă cum arată. Structura multilingvă și traducerile se fac în WordPress — decizia lui Sergiu, 14 sept. 2026: nu construim subdirectoare `/ru/`, `/en/` în prototipul static.
+
+**WP:** → `pll_the_languages()` (Polylang) sau switcher-ul WPML, care generează linkurile reale.
+
+Sunt `<button>`, nu `<a>` — tocmai fiindcă nu duc nicăieri. Consecință: regulile de culoare ale header-ului (`header:not(.scrolled) … a`, `nav.open a`, `body.subpage … a`) au trebuit extinse să includă `.lang-opt`, altfel rămâneau închise peste video-ul din hero.
+
 ## 3. `<head>` — fonturi
 
 Identic pe toate cele 13 pagini, imediat după `<meta name="description">`:
@@ -77,32 +131,60 @@ Fonturile sunt self-hostate. **Nu readuce `<link>` către Google Fonts** — vez
 
 ## 4. Header
 
-Logo-ul e **SVG inline**, ca `currentColor` să-i schimbe culoarea la scroll. Sursa: `img/logo_simple.svg`.
+Trei zone: **logo · nav · acțiuni**. Nav-ul ține doar linkurile de pagină; `Rezervări`, coșul, switcher-ul de limbă și hamburgerul stau în `.header-actions` și **rămân vizibile pe mobil**, când nav-ul se ascunde.
+
+**Pragul e 900px**, nu 640: la 768 (iPad portret) nav-ul nu mai încape lângă logo.
+
+Hamburgerul e o iconiță din trei linii care se transformă în X prin clasa `.open`. `setMenu()` din `js/main.js` comută clasa — **nu scrie `textContent` pe buton**, ar șterge span-ul `.burger-ico`.
+
+Logo-ul e SVG inline, ca `currentColor` să-i schimbe culoarea la scroll. Sursa: `img/logo_simple.svg`.
+
+**Butonul de rezervare** are iconiţă + etichetă; sub 560px rămâne doar iconiţa, într-un buton pătrat de 42px, ca şi coşul. Nu se ascunde niciodată — e CTA-ul principal.
+
+⚠️ **Animaţiile de intrare folosesc `backwards`, nu `forwards`, şi nu pun `opacity:0` în starea de bază.** Cu `opacity:0` în bază, orice situaţie în care animaţia nu rulează — `prefers-reduced-motion`, browser vechi, eroare — lasă elementul **invizibil permanent**. Cu `backwards`, starea iniţială se aplică doar cât ţine animaţia; dacă animaţia lipseşte, elementul e vizibil normal. Vezi itemii din meniul mobil.
+
+⚠️ **`.scroll-hint` NU se centrează cu `translateX(-50%)`.** Animaţia `fadeUp` se termină cu `transform:none` şi, având `forwards`, anulează corecţia — elementul rămâne deplasat cu jumătate din lăţimea lui. Centrarea se face prin `left:0;right:0;margin-inline:auto;width:fit-content`. Acelaşi lucru e valabil pentru orice element centrat prin transform care primeşte şi o animaţie.
 
 ```html
 <!-- WP: header.php -->
 <header id="header">
   <a class="logo" href="index.html#top"><!-- conținutul din img/logo_simple.svg, inline --><span class="sr-only">Renée</span></a>
-  <button class="burger" id="burger" aria-label="Meniu" aria-expanded="false">Meniu</button>
   <nav id="nav">
     <a href="despre.html">Despre</a>
     <a href="meniu.html">Meniu</a>
     <a href="evenimente.html">Evenimente</a>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
-    <a class="btn-rez" href="index.html#vizita" data-rez>Rezervări</a>
-    <a class="cart-link" href="cos.html" aria-label="Coș">
-      Coș <span class="cart-count" id="cartCount">0</span>
-    </a>
     <div class="nav-social">
       <a href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Instagram</a>
       <a href="https://www.facebook.com/renee.brunch" target="_blank" rel="noopener">Facebook</a>
       <a href="https://www.tiktok.com/@renee_brunch" target="_blank" rel="noopener">TikTok</a>
     </div>
   </nav>
+  <div class="header-actions">
+    <a class="btn-rez" href="index.html#vizita" data-rez>Rezervări</a>
+    <a class="cart-link" href="cos.html" aria-label="Coș">
+      <!-- iconiță coș, SVG inline --><span class="cart-count" id="cartCount">0</span>
+    </a>
+    <!-- Switcher de limbă — DOAR PREZENTARE. Vezi PARTIALS.md §2.3. -->
+    <div class="lang">
+      <button type="button" class="lang-toggle" aria-haspopup="listbox" aria-expanded="false">
+        <span class="lang-curent">RO</span><i class="lang-chev" aria-hidden="true"></i>
+      </button>
+      <ul class="lang-list" role="listbox" aria-label="Limbă">
+        <li role="option" aria-selected="true" data-lang="ro">RO</li>
+        <li role="option" aria-selected="false" data-lang="ru">RU</li>
+        <li role="option" aria-selected="false" data-lang="en">EN</li>
+      </ul>
+    </div>
+    <button class="burger" id="burger" aria-label="Deschide meniul" aria-expanded="false">
+      <span class="burger-ico" aria-hidden="true"></span>
+    </button>
+  </div>
 </header>
 <!-- /WP: header.php -->
 ```
+
 
 ## 5. Footer
 
@@ -120,6 +202,18 @@ Linkurile legale stau în `footer-bottom`, nu în coloana de navigare.
           <a href="https://www.instagram.com/renee_brunch/" target="_blank" rel="noopener">Instagram</a>
           <a href="https://www.facebook.com/renee.brunch" target="_blank" rel="noopener">Facebook</a>
           <a href="https://www.tiktok.com/@renee_brunch" target="_blank" rel="noopener">TikTok</a>
+        </div>
+        <!-- Metode de plată.
+             Toate trei sunt logo-uri oficiale din img/ (visa.svg, mastercard.svg,
+             moldindconbank_logo.svg). A nu se redesena sau recolora — fiecare brand
+             are ghid propriu care interzice variantele modificate. -->
+        <div class="footer-plata">
+          <span class="plata-titlu">Metode de plată</span>
+          <div class="plata-logos">
+            <span class="plata-logo plata-visa"><img src="img/visa.svg" alt="Visa" width="780" height="500"></span>
+            <span class="plata-logo plata-mc"><img src="img/mastercard.svg" alt="Mastercard" width="780" height="500"></span>
+            <span class="plata-logo plata-micb"><img src="img/moldindconbank_logo.svg" alt="Moldindconbank" width="1000" height="171"></span>
+          </div>
         </div>
       </div>
       <div class="footer-col">
@@ -155,6 +249,16 @@ Linkurile legale stau în `footer-bottom`, nu în coloana de navigare.
 <!-- /WP: footer.php -->
 ```
 
+### Metodele de plată — de ce sunt `<img>` şi nu SVG inline
+
+Singurul loc din proiect unde un SVG **nu** se pune inline. Logo-urile sunt ale altor branduri: nu se recolorează, nu se redesenează, nu primesc `currentColor`.
+
+Chip-ul crem există pentru contrast — marcajele sunt în culorile lor de brand şi nu s-ar vedea pe footer-ul închis.
+
+Visa şi Mastercard au padding propriu în fişier (caseta standard `780×500`), deci chip-ul lor are `padding:0` şi imaginea umple cardul. Moldindconbank e wordmark simplu (`1000×171`) şi păstrează padding. Dacă le pui la aceeaşi înălţime de imagine, arată dezechilibrat — valorile din `main.css` sunt calibrate optic, nu matematic.
+
+Detalii complete în `CLAUDE.md` §5, „Logo-uri terţe".
+
 ## 5.1 Elementul activ din meniu — NU se marchează manual
 
 `js/main.js` adaugă singur `class="is-current"` şi `aria-current="page"` pe linkul care corespunde paginii curente. Nu pune nimic în HTML.
@@ -163,6 +267,27 @@ Subpaginile moştenesc părintele: `produs`, `cos`, `checkout`, `comanda-confirm
 `index`, `termeni` şi `confidentialitate` nu au element în meniu, deci nu se activează nimic — e corect.
 
 Butonul „Rezervări" şi „Coş" sunt excluse din selector: primul are `href="index.html#vizita"` şi s-ar activa pe home.
+
+## 5.2 Reguli de scalare — cum rămâne proporţional
+
+Trei convenţii, stabilite la adaptarea pentru mobil (14 sept. 2026). Dacă le încalci, mobilul se strică fără să se vadă pe desktop.
+
+**1. Spaţierile folosesc `vw`, nu `vh`.** Pe un telefon înalt, `20vh` devine 162px de padding — proporţional cu ecranul, dar nu cu lăţimea, care e ce contează. Toate cele 26 de paddinguri au fost convertite.
+
+```css
+padding: clamp(104px, 12.5vw, 210px);   /* nu 20vh */
+```
+
+**2. Minimul din `clamp` e valoarea de mobil, nu una de siguranţă.** La 375px, `6vw` înseamnă 22px — deci clamp-ul cade mereu pe minim. Dacă minimul e calibrat pentru desktop, mobilul rămâne supradimensionat. Regula: alege minimul pentru 375px, apoi creşte coeficientul `vw` până când valoarea de la 1440px revine unde era.
+
+| | Înainte | După | 375px | 1440px |
+|---|---|---|---|---|
+| `.h2` | `clamp(44px,6vw,84px)` | `clamp(30px,7.4vw,84px)` | 44 → **30** | 84 → 84 |
+| `.manifest` | `clamp(28px,3.4vw,44px)` | `clamp(21px,4.4vw,44px)` | 28 → **21** | 44 → 44 |
+
+**3. Titlurile îşi pun propriul `line-height`.** `body` are 1.6; un titlu care îl moşteneşte capătă 38px între rânduri la 24px font. Există `h1,h2,h3,h4{line-height:1.22}` global, dar orice titlu de tip display trebuie să-şi pună valoarea lui, mai strânsă.
+
+**Ţinte de atingere:** minim 44px pe mobil, crescute prin `padding`, nu prin `font-size` — vezi blocul „MOBIL — zone de atingere" din `main.css`.
 
 ## 6. Scripturi, în ordine, înainte de `</body>`
 

@@ -34,6 +34,177 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 ## Intrări
 
+## 2026-09-14 · ACASĂ · blog, articol, contact, separator, switcher, **adaptare mobilă + header nou**, coş gol, metode de plată
+
+### 🎯 CTA-ul de pe Evenimente — decizie de reținut
+
+Sergiu a scos butonul „Rezervă o masă" din secțiunea „Hai să vorbim". **Motivul contează mai mult decât schimbarea:** pagina de evenimente are alt obiectiv — clientul să organizeze un eveniment în local, nu să rezerve o masă. Sunt două fluxuri diferite, iar cel de rezervare îl diluează pe primul.
+
+Orice CTA adăugat acolo pe viitor trebuie să ducă spre organizarea evenimentului (contact, cerere de ofertă), **nu** spre modalul de rezervare. Notat și în `CLAUDE.md` §4.
+
+### 📰 Blog — carduri ca pe home
+
+Secțiunea de listare a primit clasa `blog-home`, aceeași ca pe pagina principală. Așa moștenește tot pachetul dintr-un singur loc: fundal `--cream-2`, carduri transparente care se luminează spre Tiramisu la hover, imagini 4/3, 4 coloane. Zero reguli duplicate. Adăugată și secțiunea Instagram.
+
+### 📄 Articol — galerie unificată + partajare
+
+Articolul avea **propriul lightbox**, primitiv: fără navigare, fără contor, fără efect de hover, cu markup și script separate. L-am înlocuit cu cel comun din `js/main.js` — aceleași `.g-item` cu voal și lupă ca pe celelalte galerii.
+
+**Bug găsit pe drum:** `.lightbox` era definit în **ambele** foi de stil. `shop.css` se încarcă după `main.css`, deci pe `index.html` (care încarcă ambele) regulile vechi le suprascriau pe cele noi — `padding:5vw`, `cursor:zoom-out` și `max-height:90vh` pe imagine în loc de 78vh. Blocul vechi e eliminat din `shop.css`.
+
+Partajare nouă la finalul articolului: Facebook, WhatsApp, Telegram și copiere link. Linkurile se construiesc din `location.href` real, nu hardcodate. Copierea folosește Clipboard API cu fallback pe `execCommand` — API-ul cere context securizat și ar pica pe `file://`.
+
+### 📍 Contact — coloane ca pe Despre
+
+Cele două locații erau în coloane asimetrice cu ambele hărți stivuite la final, ceea ce nu lăsa clar care hartă e a cui. Restructurate: coloane egale (măsurat 513px fiecare), etichetele sunt numele locațiilor, iar **fiecare hartă stă sub coloana ei**, la 28px — verificat că sunt pe același rând.
+
+### 🪡 Separator full-width cu pattern — refolosibil
+
+Bandă orizontală de chevroni pe toată lăţimea. **O singură linie de HTML**, fără SVG inline şi fără id-uri, deci se poate pune de câte ori vrei pe aceeaşi pagină:
+
+```html
+<div class="patern-separator" aria-hidden="true"></div>
+```
+
+Construit ca `background-image` cu fişier extern, tocmai ca să fie copy/paste. Consecinţa: **culoarea e fixă în fişier**, `background-image` nu moşteneşte `currentColor` — spre deosebire de banda verticală, care e SVG inline.
+
+Sergiu l-a adaptat singur după aceea: a trecut pe `img/patern-brown.svg` (artboard-ul complet) şi 62px. Am aliniat documentaţia la varianta lui.
+
+Folosit acum în trei locuri: `index.html` (între Evenimente private şi Instagram), `contact.html`, `despre.html`.
+
+### 🎞️ Animaţia separatorului — pauză, nu oprire
+
+Glisează spre stânga, 28s pe ciclu (~31px/s), **doar cât e pe ecran**. Două lucruri care par detalii dar nu sunt:
+
+**`animation-play-state`, nu adăugarea/scoaterea animaţiei.** Dacă adaugi clasa cu animaţia la intrarea în viewport, banda sare la început de fiecare dată când derulezi înapoi. Cu pauză, continuă de unde a rămas. Verificat: poziţia a îngheţat la −857.686px la ieşirea din ecran şi era tot acolo după 1,2s.
+
+**`--h` e singurul reglaj.** Lăţimea dalei se calculează din el (`calc(var(--h) * 14.1409)`, proporţia fişierului), iar animaţia se deplasează exact cât o dală. Dacă scrii înălţimea direct în `height`, deplasarea nu mai corespunde dalei şi apare un salt la fiecare ciclu.
+
+La `prefers-reduced-motion` se opreşte singură — regula globală din `main.css`.
+
+### 🌐 Switcher de limbă — DOAR vizual
+
+RO / RU / EN în header, pe toate cele 13 pagini, după coş.
+
+**Decizia lui Sergiu:** nu construim subdirectoare `/ru/`, `/en/` şi nici pagini traduse în prototipul static. Structura şi traducerile se fac în WordPress. Switcher-ul doar comută starea activă, ca să se vadă cum arată. Notat în `CLAUDE.md` §4.
+
+Sunt `<button>`, nu `<a>`, fiindcă nu duc nicăieri. **Consecinţă pe care era să o ratez:** regulile de culoare ale header-ului ţintesc `a`, deci switcher-ul rămânea închis peste video-ul din hero. Am extins cele trei reguli (hero, meniu mobil, subpagini) cu `.lang-opt`.
+
+### 🔀 Homepage — Evenimente şi Instagram inversate
+
+Ordinea e acum Testimoniale → Evenimente private → separator → Instagram → Vizita. Secţiunea Evenimente avea `padding-top:0` fiindcă venea după Instagram; scos, altfel stătea lipită de banda de testimoniale. Spaţiul din jurul separatorului e simetric, 126px sus şi jos — verificat.
+
+### 📱 Adaptarea pentru mobil — trei probleme sistemice, nu breakpoint-uri lipsă
+
+Nu lipseau media query-uri. Erau trei cauze care, odată reparate, au aranjat tot deodată.
+
+**1. Spaţierile foloseau `vh`.** Pe un telefon de 812px, `20vh` = 162px de padding. Proporţional cu ecranul, dar nu cu lăţimea — care e ce contează pe mobil. **26 de paddinguri** convertite la `vw`, în CSS şi în stilurile inline din HTML.
+
+**2. Minimele din `clamp` erau calibrate pentru desktop.** La 375px, `6vw` = 22px, deci fiecare clamp cădea pe minim — iar minimul era gândit pentru ecran mare. `.h2` rămânea la **44px** pe telefon. Metoda de corecţie: alegi minimul pentru 375px, apoi creşti coeficientul `vw` până valoarea de la 1440px revine unde era.
+
+| | 375px | 1440px |
+|---|---|---|
+| Padding secţiune | 114 → **64** | 126 → 130 |
+| `.h2` | 44 → **30** | **84 → 84** |
+| `.manifest` | 28 → **21** | **44 → 44** |
+| Pagina de preparat | 162 → **104** | **180 → 180** |
+
+**3. Titlurile moşteneau `line-height:1.6`** de la body — un titlu de card de 24px primea 38px între rânduri. Adăugat `h1,h2,h3,h4{line-height:1.22}` global.
+
+**Bug-uri găsite pe parcurs:** paginarea din meniu depăşea ecranul cu 33px (7 butoane fără `flex-wrap`) · coloanele de locaţii rămâneau două la 375px, fiindcă `.vizita-grid.egale` are specificitate mai mare decât regula responsive şi o bătea chiar în interiorul media query-ului · zone de atingere sub 44px, cele mai rele fiind bulinele de testimoniale la **8×8px**.
+
+Convenţiile sunt scrise în `PARTIALS.md` §5.2. Zero overflow orizontal pe toate cele 13 pagini, măsurat încărcându-le efectiv la 375px.
+
+### 🍔 Header restructurat — acţiuni separate de navigare
+
+`Rezervări`, coşul şi switcher-ul au ieşit din `<nav>` într-un `.header-actions` care **rămâne vizibil** când nav-ul se ascunde. Altfel dispăreau odată cu meniul.
+
+**Pragul e 900px**, nu 640 — la 768 (iPad portret) nav-ul nu încape lângă logo.
+
+Switcher-ul a devenit **dropdown** (buton cu limba curentă + listă), hamburgerul e o iconiţă din trei linii care se transformă în X, coşul e iconiţă cu badge. Butonul de rezervare devine iconiţă-calendar sub 560px — nu se ascunde, e CTA principal. La 375px bara de acţiuni e `42 · 33 · 44 · 44`; încape şi la 320px.
+
+⚠️ `setMenu()` scria `textContent` pe buton — ar fi şters span-ul iconiţei. Acum comută o clasă.
+
+### 🪤 Trei capcane CSS, toate invizibile în dezvoltare
+
+**`transform` e o singură proprietate.** `.scroll-hint` se centra cu `translateX(-50%)`, dar animaţia `fadeUp` se termină cu `transform:none` şi, având `forwards`, anula centrarea. Elementul sărea cu jumătate din lăţime **după** ce se termina animaţia — de aceea măsurătoarea mea anterioară, făcută la 0,5s, îl arăta centrat. Centrarea se face acum prin `margin-inline:auto`.
+
+**`forwards` + `opacity:0` în bază = element invizibil dacă animaţia nu rulează.** Itemii din meniul mobil intră scalonat; prima variantă i-ar fi lăsat invizibili permanent la `prefers-reduced-motion`. Corect e `backwards` **fără** `opacity:0` în starea de bază. Verificat forţând `animation:none`: opacitate 1 peste tot.
+
+**O regulă globală poate bate un override mobil mai puţin specific.** `.testi-dots button.active` (0,2,1) colora butonul întreg — care pe mobil are 44px pentru atingere — rezultând un cerc maro de 59px. Bulina reală de 8px era dedesubt, invizibilă.
+
+**Focus:** inelul albastru apărea şi la clic cu mouse-ul. Înlocuit cu `:focus{outline:none}` + `:focus-visible{outline:2px solid var(--accent-decor)}` — apare doar la tastatură. **Nu l-am şters**, ar fi făcut site-ul imposibil de navigat fără mouse.
+
+**Nu am putut:**
+- Verificare vizuală — zero, ca în sesiunile precedente.
+- **Animaţiile nu avansează** când panoul nu pictează — `getComputedStyle` le arată îngheţate la starea de start. De aceea animaţia scalonată din meniu nu a putut fi confirmată direct; am verificat în schimb **degradarea**, care e partea care contează: cu `animation:none` forţat, toţi itemii au opacitate 1.
+- `IntersectionObserver` nu se declanșează când panoul de browser nu pictează. Animația separatorului am putut-o confirma complet doar pe `index.html`; pe `contact.html` și `despre.html` nici măcar un observer creat direct în consolă nu răspundea, iar `.reveal` mergea 6 din 30. Codul e identic pe toate trei.
+
+### 🔬 Explicația pentru toate „nu pot confirma" din ultimele sesiuni
+
+**`getComputedStyle` din acest sandbox nu raportează proprietăți aflate sub `transition`.** Întoarce valoarea de dinainte, oricât aștepți — inclusiv mult peste durata tranziției.
+
+Demonstrat pe switcher: culoarea citită rămânea crem pe header solid, deși regula spunea altceva. Cu `element.style.transition='none'` pus temporar, aceleași citiri au ieșit **exact corecte**.
+
+Înseamnă că verificările pe care le-am raportat ca neconfirmabile — hover-ul de la Servicii, bordura verde de pe „Link copiat", fundalul cardurilor — erau foarte probabil corecte tot timpul, doar nemăsurabile.
+
+**Metoda, dacă dai peste asta:** scoate tranziția înainte de măsurătoare, citește, pune-o la loc.
+
+### 🛒 Coşul gol — redesign, plus un buton care era literalmente invizibil
+
+Cerinţa era estetică („nu-mi place cum arată"), dar sub ea erau două defecte reale.
+
+**Butonul invizibil.** Regula `.cart-empty a{color:var(--accent-text)}` prindea şi `.btn-primary`-ul din interior, fiindcă selectorul descendent (0,1,1) bate clasa simplă (0,1,0). Rezultat: text Vin pe fundal Black Pepper — **contrast 1,15, practic nevăzut**. Regula a fost ştearsă.
+
+**Coloana de sumar rămânea o cutie gri goală** când coşul n-avea nimic în el. Rezolvat cu o clasă de stare pe container, nu cu `display:none` pe copil:
+
+```css
+.cart-layout.is-empty{grid-template-columns:1fr}
+.cart-layout.is-empty .cart-side{display:none}
+```
+
+`renderCart` adaugă `is-empty` pe ramura goală şi o scoate pe cea plină — deci tranziţia gol → plin → gol se face singură, fără cod de curăţenie.
+
+Designul nou: cutie centrată pe `--cream-2`, max-width 560px, cu `logo_symbol.svg` inline la 52–72px în Crust Brown, titlu serif italic şi două CTA-uri (plin „Vezi meniul" + contur „Rezervă o masă", cu `data-rez`).
+
+**Lecţie de reţinut:** orice `.parinte a{color:...}` dintr-o zonă unde pot ajunge butoane e o bombă cu ceas. Dacă vrei să stilezi doar link-urile de text, scrie `.parinte p a`, nu `.parinte a`.
+
+### 💳 Metode de plată în footer — de la marcaje desenate la logo-uri oficiale
+
+Le-am făcut întâi ca placeholder-e în CSS (text „VISA", două cercuri pentru Mastercard). Sergiu a pus apoi fişierele reale în `img/`. Toate cele trei sunt acum oficiale şi regulile care desenau marcaje (`.mc-cercuri` etc.) au dispărut.
+
+**Două lucruri de ştiut despre fişierele primite:**
+
+1. **`viewBox` greşit la export.** `visa.svg` şi `mastercard.svg` veneau cu `viewBox="0 -140 780 780"` — o casetă pătrată în jurul unui marcaj de 780×500, cu ~140 unităţi de gol sus şi jos. Randate aşa ca `<img>`, marcajul ieşea de ~3× prea mic. Corectat la `viewBox="0 0 780 500"` în ambele.
+2. **`mastercard.svg` avea o ramă de card** — dreptunghi alb 780×500 cu contur negru de 15px — pe care Visa n-o avea. Scoasă, la decizia lui Sergiu, ca cele două să arate uniform.
+
+**Padding-ul e deja în fişier.** Visa şi Mastercard sunt din setul standard „card": marcajul e centrat cu padding propriu în caseta 780×500. Măsurat cu `getBBox()`, Visa ocupă 202/500 din înălţime (40%), Mastercard 359/500 (72%) — nu e un defect, aşa sunt marcajele oficiale. Deci chip-ul lor **nu mai adaugă padding**, imaginea umple cardul, şi ies două carduri identice de 47×30. Moldindconbank e wordmark simplu (1000×171), acolo se păstrează padding şi se scalează după înălţimea literei.
+
+**De ce există chip-ul crem:** marcajele sunt în culorile lor de brand (bleumarin `#1A1F71`, roşu/portocaliu, navy `#1D3D70`) şi n-ar avea contrast pe footer-ul închis. Nu se recolorează — fiecare brand are ghid propriu care interzice variantele modificate. Din acelaşi motiv sunt `<img>`, nu SVG inline cu `currentColor`, spre deosebire de restul pictogramelor din proiect.
+
+**Pentru cealaltă sesiune (OFICIU):**
+1. `.lightbox` nu mai există în `shop.css`. Singura definiție e în `main.css`. Nu o readuce.
+2. Galeriile sunt acum identice pe patru pagini: index, despre, evenimente, articol. Tiparul e `.g-item` + `data-lightbox`, documentat în `PARTIALS.md`.
+3. Clasa `blog-home` e mecanismul prin care lista de articole moștenește stilul de pe home. Nu duplica regulile.
+4. **Nu „repara" clamp-urile înapoi la minime mari.** Minimul din `clamp` e valoarea de mobil, nu una de siguranță — vezi `PARTIALS.md` §5.2. Pe desktop nu se vede nicio diferență, dar pe telefon totul redevine supradimensionat.
+5. **Spaţierile folosesc `vw`, nu `vh`.** Singurele `vh` rămase legitime sunt înălţimi de viewport reale: hero, lightbox, overlay-ul de meniu, footer-ul lipit jos.
+6. Header-ul are acum trei zone — logo, nav, `.header-actions`. Acţiunile rămân vizibile sub 900px, când nav-ul se ascunde. Nu le muta înapoi în `<nav>`.
+7. **Nu construi structură multilingvă** în proiectul static — switcher-ul din header e doar vizual, decizie explicită. Vezi `PARTIALS.md` §2.3.
+8. Separatorul cu pattern e o singură linie de HTML, `PARTIALS.md` §2.2. Nu-l rescrie ca SVG inline — a fost făcut extern tocmai ca să fie copiabil.
+9. **Citește secțiunea despre `getComputedStyle` de mai sus** înainte să tragi concluzia că o regulă CSS nu se aplică.
+10. **Logo-urile de plată nu se ating** — nici recolorate, nici redesenate, nici convertite la `currentColor`. Sunt `<img>` din motive de brand guidelines, nu din lene.
+11. Starea coşului gol se comandă din clasa `is-empty` pe `.cart-layout`, pusă de `renderCart`. Nu ascunde `.cart-side` din altă parte.
+
+**Întrebări deschise pentru Sergiu:**
+- **Denumirea primei locații** — încă trei variante în paralel pe site.
+- **Telefonul `+373 60 000 000`** din footer-ul tuturor celor 13 pagini, placeholder inventat.
+- Categoria **„Adaosuri"** (18 itemi), exclusă din catalog ca suplimente. De confirmat.
+- ~~Structura multilingvă~~ — **rezolvată**: se face în WordPress, nu aici.
+- ~~Logo-urile de plată~~ — **rezolvate**: toate trei sunt oficiale, în `img/`.
+
+---
+
+
 ## 2026-09-11 · ACASĂ · catalog real, redenumire Meniu, pagina de preparat, pattern
 
 Sesiune lungă, cu Sergiu prezent tot timpul. Tot ce urmează a fost cerut și confirmat de el pas cu pas.

@@ -54,6 +54,14 @@ body{
 }
 ::selection{background:var(--accent-fill);color:var(--cream)}
 img{max-width:100%;display:block}
+/* Titlurile moşteneau line-height:1.6 de la body — mult prea larg pentru un titlu,
+   mai ales pe mobil. Cele de tip display îşi pun valoarea lor, mai strânsă. */
+h1,h2,h3,h4{line-height:1.22}
+
+/* Inelul albastru implicit apărea şi la clic cu mouse-ul. `:focus-visible` îl
+   arată doar la navigarea din tastatură — accesibilitatea rămâne, zgomotul dispare. */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--accent-decor);outline-offset:3px;border-radius:4px}
 a{color:inherit;text-decoration:none}
 
 /* ---------- utilitare reveal ---------- */
@@ -89,9 +97,12 @@ a{color:inherit;text-decoration:none}
 header{
   position:fixed;inset:0 0 auto 0;z-index:100;
   padding:22px clamp(20px,5vw,64px);
-  display:flex;justify-content:space-between;align-items:center;
+  display:flex;align-items:center;gap:clamp(16px,3vw,40px);
   transition:background .4s, box-shadow .4s, padding .4s;
 }
+header .logo{flex:none}
+nav{margin-left:auto}
+.header-actions{display:flex;align-items:center;gap:clamp(10px,1.6vw,20px);flex:none}
 header.scrolled{
   background:rgba(224,215,209,.88);
   backdrop-filter:blur(14px);
@@ -127,8 +138,71 @@ nav a.is-current{font-weight:500}
 }
 .btn-rez:hover{background:var(--ink);color:var(--cream)}
 .btn-rez::after{display:none}
-.burger{display:none}
-.cart-link{ position:relative; }
+.btn-rez{display:inline-flex;align-items:center;gap:8px}
+.rez-ico{display:none;width:20px;height:20px;flex:none}
+
+/* ---------- switcher de limbă (dropdown) ---------- */
+.lang{position:relative}
+.lang-toggle{
+  display:flex;align-items:center;gap:6px;
+  background:none;border:none;cursor:pointer;padding:8px 6px;
+  font-family:var(--font-body);font-size:11px;letter-spacing:.14em;
+  color:inherit;line-height:1;
+}
+.lang-chev{
+  width:6px;height:6px;flex:none;
+  border-right:1px solid currentColor;border-bottom:1px solid currentColor;
+  transform:rotate(45deg) translateY(-1px);
+  transition:transform .3s var(--ease);
+}
+.lang.open .lang-chev{transform:rotate(-135deg) translateY(-1px)}
+.lang-list{
+  position:absolute;top:calc(100% + 8px);right:0;z-index:30;
+  list-style:none;margin:0;padding:6px;min-width:74px;
+  background:var(--cream);color:var(--ink);border-radius:10px;
+  box-shadow:0 18px 38px -16px rgba(36,33,34,.45), 0 0 0 1px rgba(36,33,34,.07);
+  opacity:0;transform:translateY(6px);pointer-events:none;
+  transition:opacity .25s var(--ease), transform .25s var(--ease);
+}
+.lang.open .lang-list{opacity:1;transform:none;pointer-events:auto}
+.lang-list li{
+  padding:9px 12px;border-radius:7px;cursor:pointer;
+  font-size:12px;letter-spacing:.14em;line-height:1;
+  transition:background .2s;
+}
+.lang-list li:hover{background:var(--cream-2)}
+.lang-list li[aria-selected="true"]{background:var(--accent-fill);color:var(--cream)}
+
+
+/* separator subţire între coduri */
+.lang-opt + .lang-opt{position:relative}
+.lang-opt + .lang-opt::before{
+  content:"";position:absolute;left:-2px;top:50%;transform:translateY(-50%);
+  width:1px;height:10px;background:currentColor;opacity:.25;
+}
+.burger{
+  display:none;position:relative;width:44px;height:44px;padding:0;
+  background:none;border:none;cursor:pointer;color:inherit;
+}
+.burger-ico,.burger-ico::before,.burger-ico::after{
+  position:absolute;left:11px;width:22px;height:1.5px;border-radius:2px;
+  background:currentColor;
+  transition:transform .35s var(--ease), opacity .2s linear, top .35s var(--ease);
+}
+.burger-ico{top:21.5px}
+.burger-ico::before{content:"";top:-7px;left:0}
+.burger-ico::after{content:"";top:7px;left:0}
+/* deschis → X */
+.burger.open .burger-ico{background:transparent}
+.burger.open .burger-ico::before{top:0;transform:rotate(45deg)}
+.burger.open .burger-ico::after{top:0;transform:rotate(-45deg)}
+.cart-link{position:relative;display:flex;align-items:center;padding:6px}
+.cart-ico{width:21px;height:21px;display:block}
+.cart-link .cart-count{
+  position:absolute;top:-1px;right:-4px;
+  min-width:17px;height:17px;padding:0 4px;border-radius:9px;
+  font-size:10px;line-height:17px;
+}
 .cart-count{
   display:inline-block; min-width:18px; height:18px; padding:0 5px;
   border-radius:9px; background:var(--accent-fill); color:#fff;
@@ -163,7 +237,8 @@ nav a.is-current{font-weight:500}
 
 /* header pe hero (înainte de scroll) — text crem */
 header:not(.scrolled) .logo,
-header:not(.scrolled) nav:not(.open) a{color:var(--cream)}
+header:not(.scrolled) nav:not(.open) a,
+header:not(.scrolled) .header-actions{color:var(--cream)}
 header:not(.scrolled) nav:not(.open) a::after{background:var(--cream)}
 header:not(.scrolled) .btn-rez{border-color:var(--cream)}
 header:not(.scrolled) .btn-rez:hover{background:var(--cream);color:var(--ink)}
@@ -198,7 +273,7 @@ nav.open .nav-social a::after{display:none}
 .hero-title{
   font-family:var(--serif);
   font-weight:400;
-  font-size:clamp(72px,17vw,240px);
+  font-size:clamp(58px,17vw,240px);
   line-height:.9;
   letter-spacing:-.02em;
 }
@@ -211,7 +286,7 @@ nav.open .nav-social a::after{display:none}
 @keyframes rise{to{transform:translateY(0)}}
 .hero-sub{
   display:flex;flex-wrap:wrap;align-items:baseline;gap:24px;
-  margin-top:clamp(24px,4vh,48px);
+  margin-top:clamp(20px,3vw,48px);
 }
 .hero-tag{
   font-family:var(--serif);font-style:italic;
@@ -223,8 +298,11 @@ nav.open .nav-social a::after{display:none}
   opacity:0;animation:fadeUp 1s var(--ease) 1.15s forwards;
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes navItemIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .scroll-hint{
-  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;
+  /* Centrare prin margin, NU prin translateX(-50%): animaţia fadeUp se termină
+     cu transform:none şi, cu `forwards`, ar anula corecţia de centrare. */
+  position:absolute;bottom:34px;left:0;right:0;margin-inline:auto;width:fit-content;z-index:2;
   font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(224,215,209,.75);
   display:flex;flex-direction:column;align-items:center;gap:10px;
   opacity:0;animation:fadeUp 1s var(--ease) 1.6s forwards;
@@ -261,14 +339,14 @@ nav.open .nav-social a::after{display:none}
 @keyframes scrollX{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ---------- despre ---------- */
-.section{padding:clamp(90px,14vh,160px) 0}
+.section{padding:clamp(64px,9vw,150px) 0}
 .despre-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);
   align-items:center;margin-top:56px;
 }
 .manifest{
   font-family:var(--serif);
-  font-size:clamp(28px,3.4vw,44px);
+  font-size:clamp(21px,4.4vw,44px);
   line-height:1.3;font-weight:400;
 }
 .manifest em{font-style:italic;color:var(--accent-text)}
@@ -361,7 +439,7 @@ nav.open .nav-social a::after{display:none}
   background:rgba(36,33,34,.22);transition:background .3s, transform .3s;
   padding:0;
 }
-.testi-dots button.active{background:var(--terra);transform:scale(1.35)}
+.testi-dots button.active{background:var(--terra);transform:scale(1.25)}
 
 /* ---------- instagram ---------- */
 .insta-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px}
@@ -375,7 +453,7 @@ nav.open .nav-social a::after{display:none}
 .insta-item::after{
   content:"@renee_brunch";
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:rgba(36,33,34,.45);color:var(--cream);
+  background:rgba(36,33,34,.65);color:var(--cream);
   font-size:11px;letter-spacing:.22em;text-transform:uppercase;
   opacity:0;transition:opacity .45s;
 }
@@ -445,7 +523,7 @@ nav.open .nav-social a::after{display:none}
 .meniu-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:64px}
 .h2{
   font-family:var(--serif);font-weight:400;
-  font-size:clamp(44px,6vw,84px);line-height:1.02;letter-spacing:-.015em;
+  font-size:clamp(30px,7.4vw,84px);line-height:1.04;letter-spacing:-.015em;
   margin-top:18px;
 }
 .h2 em{font-style:italic;color:var(--accent-text)}
@@ -514,6 +592,43 @@ nav.open .nav-social a::after{display:none}
   pointer-events:none;
 }
 @media(max-width:960px){ .patern-banda{display:none} }
+
+/* ---------- delimitator full-width cu pattern ----------
+   Refolosibil: pui oriunde <div class="patern-separator" aria-hidden="true"></div>
+   Se întinde pe toată lăţimea şi se repetă orizontal.
+   Înălţimea o dai din CSS — dala se scalează singură, `background-size:auto 100%`.
+   Culoarea e fixă în fişier (Crust Brown); background-image nu moşteneşte currentColor. */
+.patern-separator{
+  /* Un singur reglaj: --h. Lăţimea dalei se calculează din el, ca deplasarea
+     animaţiei să fie exact cât o dală — altfel bucla sare la fiecare ciclu.
+     14.1409 = 4214 / 298, proporţia fişierului patern-brown.svg. */
+  --h:62px;
+  --dala:calc(var(--h) * 14.1409);
+  height:var(--h);
+  background:url('../img/patern-brown.svg') repeat-x center;
+  background-size:var(--dala) 100%;
+  opacity:.7;
+  pointer-events:none;
+
+  /* Glisare lentă spre stânga. Pornită mereu, dar în pauză cât timp banda
+     nu e pe ecran — la revenire continuă de unde a rămas, nu de la capăt.
+     js/main.js comută clasa .vizibil printr-un IntersectionObserver.
+     La prefers-reduced-motion se opreşte singură: regula globală de la
+     „responsive" pune animation:none pe tot. */
+  animation:paternGlisare 28s linear infinite;
+  animation-play-state:paused;
+  will-change:background-position;
+}
+.patern-separator.vizibil{animation-play-state:running}
+
+@keyframes paternGlisare{
+  from{background-position-x:0}
+  to{background-position-x:calc(var(--dala) * -1)}
+}
+
+/* variante de înălţime — schimbă doar --h, restul se recalculează */
+.patern-separator.subtire{--h:26px}
+.patern-separator.gros{--h:64px}
 
 .card-gramaj{
   font-size:11px;letter-spacing:.16em;text-transform:uppercase;
@@ -669,13 +784,15 @@ nav.open .nav-social a::after{display:none}
 .vizita-cta{flex:none}
 /* pe evenimente.html blocul e centrat, nu în flex-ul din .vizita-head —
    îi trebuie spaţiul pe care flex:none nu-l mai dă */
-#cta-eveniment .vizita-cta{margin-top:30px}
 #cta-eveniment .tel-big{margin-top:28px}
 
 /* folosite încă în contact.html, despre.html, evenimente.html */
 /* varianta cu două coloane egale — două locații puse una lângă alta */
 .vizita-grid.egale{grid-template-columns:1fr 1fr}
 .vizita-grid.egale .lbl{white-space:nowrap;flex:none}
+/* contact.html — fiecare coloană îşi are harta dedesubt, nu toate la final */
+.loc-col{display:flex;flex-direction:column}
+.loc-col .map-wrap{margin-top:28px}
 .vizita-grid{
   display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(40px,6vw,90px);
   margin-top:56px;align-items:start;
@@ -745,13 +862,45 @@ footer a{transition:color .3s}
 footer a:hover{color:var(--accent-dark)}
 .footer-top{
   display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:clamp(30px,5vw,70px);
-  padding:clamp(56px,8vh,84px) 0 clamp(40px,6vh,56px);
+  padding:clamp(44px,5.6vw,84px) 0 clamp(32px,4vw,56px);
 }
 .footer-logo{display:inline-flex;align-items:center;margin-bottom:16px;color:var(--tiramisu)}
 .footer-logo-svg{height:46px;width:auto;display:block;fill:currentColor}
 .footer-tagline{font-size:14px;line-height:1.7;color:rgba(224,215,209,.6);max-width:34ch;margin-bottom:22px}
 .footer-social{display:flex;gap:18px;flex-wrap:wrap}
 .footer-social a{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(224,215,209,.7)}
+
+/* ---------- metode de plată (footer) ----------
+   Logo-uri oficiale din img/ (visa.svg, mastercard.svg, moldindconbank_logo.svg).
+   A nu se redesena sau recolora: fiecare brand are ghid propriu care interzice
+   variantele modificate. Chip-ul crem există fiindcă marcajele sunt în culorile
+   lor de brand (bleumarin, roşu/portocaliu) şi n-ar avea contrast pe footerul închis. */
+.footer-plata{margin-top:26px}
+.plata-titlu{
+  display:block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(224,215,209,.45);margin-bottom:12px;
+}
+.plata-logos{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.plata-logo{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:30px;padding:0 11px;border-radius:5px;
+  background:rgba(224,215,209,.92);
+}
+.plata-logo img{display:block;width:auto}
+/* Visa şi Mastercard vin din setul standard „card": marcajul e deja centrat
+   într-o casetă 780×500 cu padding propriu, deci chip-ul lor nu mai adaugă
+   padding — imaginea umple cardul. Moldindconbank e un wordmark simplu
+   (1000×171), aşa că acolo păstrăm padding şi îl scalăm după înălţimea literei. */
+.plata-visa,.plata-mc{padding:0;overflow:hidden}
+.plata-visa img,.plata-mc img{height:30px}
+.plata-micb img{height:15px}
+@media(max-width:480px){
+  .plata-logos{gap:8px}
+  .plata-logo{height:27px;padding:0 9px}
+  .plata-visa,.plata-mc{padding:0}
+  .plata-visa img,.plata-mc img{height:27px}
+  .plata-micb img{height:13px}
+}
 .footer-col h4{
   font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.22em;
   text-transform:uppercase;color:var(--tiramisu);margin-bottom:20px;
@@ -767,7 +916,7 @@ footer a:hover{color:var(--accent-dark)}
 .footer-info a{font-size:14px;color:rgba(224,215,209,.75)}
 .footer-bottom{
   display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;
-  padding:22px 0 clamp(28px,4vh,40px);border-top:1px solid rgba(224,215,209,.12);
+  padding:22px 0 clamp(22px,2.8vw,40px);border-top:1px solid rgba(224,215,209,.12);
 }
 .footer-meta{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(224,215,209,.45)}
 
@@ -991,7 +1140,10 @@ footer a:hover{color:var(--accent-dark)}
 .when-slots li:hover{background:var(--cream-2)}
 .when-slots li[aria-selected="true"]{background:var(--accent-fill);color:var(--cream)}
 @media(max-width:560px){
-  .pop-when{grid-template-columns:1fr;min-width:min(300px,88vw)}
+  /* popover mai lat → zile de calendar mai mari, potrivite pentru deget */
+  .pop-when{grid-template-columns:1fr;min-width:min(340px,90vw)}
+  .when-cal{padding:14px 12px}
+  .cal-grid button{font-size:14px}
   .when-time{border-left:none;border-top:1px solid rgba(36,33,34,.1)}
   .when-slots{grid-template-columns:repeat(3,1fr);max-height:150px}
 }
@@ -1038,23 +1190,20 @@ footer a:hover{color:var(--accent-dark)}
   .ritual-grid{grid-template-columns:1fr;gap:34px}
   .insta-grid{grid-template-columns:repeat(2,1fr)}
   .event-grid{grid-template-columns:1fr}
-  .despre-grid,.vizita-grid,.loc-panel{grid-template-columns:1fr}
+  .despre-grid,.vizita-grid,.vizita-grid.egale,.loc-panel{grid-template-columns:1fr}
   .despre-photo{max-width:480px}
   .g-1{grid-column:span 12}
   .g-2{grid-column:span 12;aspect-ratio:16/9}
   .g-3,.g-4,.g-5{grid-column:span 4}
 }
-@media(max-width:640px){
+@media(max-width:900px){
   nav{display:none}
+  /* nav-ul avea margin-left:auto; ascuns, nu mai împinge nimic */
+  .header-actions{margin-left:auto}
   .insta-grid{grid-template-columns:1fr 1fr;gap:10px}
   .form-grid{grid-template-columns:1fr}
   .map-wrap iframe{height:300px}
-  .burger{
-    display:block;background:none;border:1px solid var(--ink);
-    border-radius:999px;padding:9px 18px;font-family:var(--sans);
-    font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;
-    color:var(--ink);
-  }
+  .burger{display:block}
   nav.open{
     display:flex;position:fixed;top:0;left:0;width:100vw;height:100dvh;
     background:var(--cream);
@@ -1062,6 +1211,18 @@ footer a:hover{color:var(--accent-dark)}
     z-index:99;
   }
   nav.open a{font-size:16px}
+  /* itemii intră pe rând, nu toţi deodată */
+  /* `backwards`, nu `forwards`, şi FĂRĂ opacity:0 în starea de bază.
+     Aşa, dacă animaţia nu rulează — prefers-reduced-motion, browser vechi,
+     orice eşec — itemii rămân vizibili. Cu opacity:0 în bază ar dispărea. */
+  nav.open > a,
+  nav.open .nav-social{animation:navItemIn .42s var(--ease) backwards}
+  nav.open > a:nth-of-type(1){animation-delay:.05s}
+  nav.open > a:nth-of-type(2){animation-delay:.11s}
+  nav.open > a:nth-of-type(3){animation-delay:.17s}
+  nav.open > a:nth-of-type(4){animation-delay:.23s}
+  nav.open > a:nth-of-type(5){animation-delay:.29s}
+  nav.open .nav-social{animation-delay:.36s}
   .logo-svg{height:22px}
   .cards{grid-template-columns:1fr}
   .g-3,.g-4,.g-5{grid-column:span 12;aspect-ratio:4/3}
@@ -1095,7 +1256,8 @@ body.subpage header{
   box-shadow:0 1px 0 rgba(36,33,34,.08);
 }
 body.subpage header .logo,
-body.subpage header nav:not(.open) a{color:var(--ink)}
+body.subpage header nav:not(.open) a,
+body.subpage header .header-actions{color:var(--ink)}
 body.subpage header nav:not(.open) a::after{background:var(--ink)}
 /* meniul mobil deschis: linia sub elementul activ ar sta peste text */
 nav.open a.is-current::after{display:none}
@@ -1112,6 +1274,12 @@ body.subpage header .burger{border-color:var(--ink);color:var(--ink)}
 body.pagina-meniu{background:var(--cream-2)}
 body.pagina-meniu header.scrolled{background:rgba(213,204,198,.9)}
 body.pagina-meniu.subpage header{background:rgba(213,204,198,.9)}
+
+/* blog.html — hero-ul pe acelaşi fundal ca grila de articole, ca să nu apară
+   o dungă mai deschisă între titlu şi carduri */
+body.pagina-blog .shop-hero{background:var(--cream-2)}
+body.pagina-blog header.scrolled,
+body.pagina-blog.subpage header{background:rgba(213,204,198,.9)}
 
 /* blogul de pe home: 4 articole pe un rând, miniaturi landscape (nu pătrate) */
 .blog-home .product-grid{grid-template-columns:repeat(4,1fr)}
@@ -1139,4 +1307,65 @@ body.pagina-meniu.subpage header{background:rgba(213,204,198,.9)}
 @media(max-width:760px){
   .footer-top{grid-template-columns:1fr;gap:36px;text-align:left}
   .footer-bottom{justify-content:flex-start}
+}
+
+/* Sub 560px cele patru acţiuni nu mai încap lângă logo alături de text.
+   Butonul de rezervare devine iconiţă — rămâne CTA, doar că fără etichetă. */
+@media(max-width:560px){
+  .btn-rez{padding:0 !important;width:42px;height:42px;justify-content:center;gap:0}
+  .rez-ico{display:block}
+  .rez-txt{display:none}
+}
+@media(max-width:480px){
+  header{gap:8px;padding-left:16px;padding-right:16px}
+  .header-actions{gap:2px}
+  .lang-toggle{padding:8px 4px;gap:4px}
+  .logo-svg{height:20px}
+}
+
+/* ============================================================
+   MOBIL — zone de atingere
+   Sub 44px degetul ratează. Creştem prin padding, nu prin font-size,
+   ca proporţiile tipografice să rămână neschimbate.
+   ============================================================ */
+@media(max-width:760px){
+  nav.open a{padding:11px 4px}
+  nav.open .nav-social a{padding:10px 4px}
+
+  .card-add{padding:13px 22px}
+  .loc-tab{padding:13px 24px}
+  .link-arrow{display:inline-block;padding:10px 0 8px}
+  .map-unlock{padding:14px 26px}
+
+  /* (i) alergeni — pe telefon nu există hover, se atinge */
+  .alergeni-i{width:32px;height:32px;font-size:15px}
+  .alergeni-pop{max-width:min(260px,72vw)}
+
+  /* bulinele de testimoniale: bulina rămâne mică, zona de atingere creşte */
+  .testi-dots{gap:2px}
+  .testi-dots button{
+    width:44px;height:44px;padding:0;background:none;position:relative;
+  }
+  .testi-dots button::after{
+    content:"";position:absolute;inset:50% auto auto 50%;
+    width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;
+    background:rgba(36,33,34,.22);transition:background .3s,transform .3s;
+  }
+  /* regula globală .testi-dots button.active colorează BUTONUL (acum 44px);
+     o anulăm şi lăsăm doar bulina din ::after să se coloreze */
+  .testi-dots button.active{background:none;transform:none}
+  .testi-dots button.active::after{background:var(--terra);transform:scale(1.25)}
+
+  /* liste dese de linkuri — spaţiu vertical între ţinte */
+  .footer-col .footer-links a{padding:7px 0}
+  .footer-social a{padding:8px 0}
+  .footer-info a{display:inline-block;padding:6px 0}
+  .vizita-insta a{display:inline-block;padding:8px 0}
+
+  /* logo, switcher şi linkurile juridice din subsol */
+  .logo{padding:10px 0}
+  .lang-toggle{padding:11px 8px}
+  .footer-meta a{display:inline-block;padding:8px 0}
+  .info-row .val a{display:inline-block;padding:6px 0}
+
 }

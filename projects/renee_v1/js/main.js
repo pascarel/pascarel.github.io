@@ -18,6 +18,41 @@
     title.appendChild(word);
   }
 
+  /* ================= SWITCHER DE LIMBĂ =================
+     Doar vizual: comută eticheta şi starea, nu navighează. Structura
+     multilingvă şi traducerile se fac în WordPress. Vezi PARTIALS.md §2.3. */
+  (function(){
+    var lang = document.querySelector('.lang');
+    if (!lang) return;
+    var toggle = lang.querySelector('.lang-toggle');
+    var eticheta = lang.querySelector('.lang-curent');
+    var optiuni = lang.querySelectorAll('.lang-list li');
+
+    function inchide(){
+      lang.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    toggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      var deschis = !lang.classList.contains('open');
+      lang.classList.toggle('open', deschis);
+      toggle.setAttribute('aria-expanded', deschis ? 'true' : 'false');
+    });
+    optiuni.forEach(function(li){
+      li.addEventListener('click', function(){
+        optiuni.forEach(function(o){ o.setAttribute('aria-selected', o === li ? 'true' : 'false'); });
+        eticheta.textContent = li.textContent.trim();
+        inchide();
+      });
+    });
+    document.addEventListener('click', function(e){
+      if (!e.target.closest('.lang')) inchide();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') inchide();
+    });
+  })();
+
   /* ================= ELEMENT ACTIV ÎN MENIU =================
      Marcat din JS, nu manual în cele 13 pagini — altfel se dezsincronizează
      la fiecare pagină nouă. Subpaginile moştenesc părintele:
@@ -43,6 +78,26 @@
         a.setAttribute('aria-current', 'page');
       }
     });
+  })();
+
+  /* ================= SEPARATOR CU PATTERN =================
+     Animaţia rulează doar cât banda e pe ecran. Nu o pornim şi oprim —
+     o punem pe pauză, ca la revenire să continue de unde a rămas. */
+  (function(){
+    var benzi = document.querySelectorAll('.patern-separator');
+    if (!benzi.length) return;
+
+    if (!('IntersectionObserver' in window)){
+      /* fără observer, o lăsăm pur şi simplu pornită */
+      benzi.forEach(function(b){ b.classList.add('vizibil'); });
+      return;
+    }
+    var obs = new IntersectionObserver(function(intrari){
+      intrari.forEach(function(i){
+        i.target.classList.toggle('vizibil', i.isIntersecting);
+      });
+    }, { rootMargin: '80px 0px' });
+    benzi.forEach(function(b){ obs.observe(b); });
   })();
 
   /* ================= LIGHTBOX GALERIE ================= */
@@ -258,7 +313,10 @@
     header.classList.toggle('menu-open', open);
     document.body.classList.toggle('no-scroll', open);
     burger.setAttribute('aria-expanded', open);
-    burger.textContent = open ? 'Închide' : 'Meniu';
+    /* iconiţa se transformă în X prin clasă — NU scrie textContent aici,
+       ar şterge span-ul .burger-ico din interior */
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-label', open ? 'Închide meniul' : 'Deschide meniul');
   }
   burger.addEventListener('click', function(){
     setMenu(!nav.classList.contains('open'));

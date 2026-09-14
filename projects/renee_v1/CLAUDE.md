@@ -95,6 +95,12 @@ projects/rvg/          — proiect separat
 | Livrare & ridicare | **Dezactivat** pe pagina de preparat până pornesc vânzările online. Acordeonul „Livrare & ridicare" din `js/shop.js` `productDetails()` e **comentat, nu șters** — se reactivează odată cu checkout-ul, împreună cu pragul de 500 lei. |
 | Denumirea paginii | `magazin.html` → **`meniu.html`**, iar eticheta din meniu „Magazin" → **„Meniu"** (11 sept. 2026). Un local are meniu, nu magazin; cuvântul funcționează identic în RO/RU/EN și nu promite comerț care încă nu există. |
 | Catalog | **Real**, generat din API-ul eat-me.online: 73 de preparate, 7 categorii de bucătărie. Fără băuturi, fără adaosuri. Cele 23 de produse retail draft au fost eliminate. |
+| CTA pe pagina Evenimente | Secțiunea „Hai să vorbim" **nu conține buton de rezervare masă** — scos de Sergiu pe 14 sept. 2026. Pagina are alt obiectiv: clientul să organizeze un eveniment în local, nu să rezerve o masă. Rezervarea de masă e un alt flux și îl diluează. Orice CTA de aici trebuie să ducă spre organizarea evenimentului (contact, cerere de ofertă), nu spre modalul de rezervare. |
+| Multilingv | Site-ul va fi **RO / RU / EN**. În prototipul static există **doar switcher-ul vizual** din header — nu se construiesc subdirectoare sau pagini traduse. Structura și traducerile se fac în WordPress (Polylang/WPML). Decis 14 sept. 2026. |
+| Scalare responsive | Spaţierile folosesc **`vw`, nu `vh`**, iar **minimul din `clamp` e valoarea de mobil**, nu una de siguranţă. Titlurile îşi pun propriul `line-height` — `body` are 1.6, prea larg pentru un titlu. Convenţiile complete şi metoda de recalibrare: `PARTIALS.md` §5.2. Nu readuce minimele mari: pe desktop nu se vede nimic, pe telefon totul redevine supradimensionat. |
+| Header | Trei zone — logo, nav, `.header-actions`. Rezervări, coş şi switcher stau în acţiuni şi **rămân vizibile sub 900px**, când nav-ul devine meniu-overlay. Pragul e 900, nu 640: la 768 nav-ul nu încape lângă logo. |
+| Coş gol | Stare condusă de clasa **`is-empty`** pe `.cart-layout`, pusă şi scoasă de `renderCart` din `js/shop.js`. Ascunde coloana de sumar şi trece grila pe o coloană. Nu ascunde `.cart-side` din altă parte. Redesenat 14 sept. 2026, la cererea lui Sergiu. |
+| Metode de plată | Bloc `.footer-plata` în toate cele 13 pagini, sub reţelele sociale. **Logo-uri oficiale** din `img/`: `visa.svg`, `mastercard.svg`, `moldindconbank_logo.svg`. Sunt `<img>`, **nu** SVG inline cu `currentColor` — spre deosebire de restul pictogramelor. Motivul e în §5, „Logo-uri terţe". |
 
 ### Sursa de meniu real — API eat-me.online
 
@@ -216,6 +222,15 @@ Logo-ul poate sta peste fotografii, cu condiția să rămână clar lizibil și 
 ### Pictograme și pattern
 6 pictograme în stil de linie fluidă (monogram RR, tacâmuri, pahar, toaletă, marca WW, arcadă) + pattern chevron repetitiv în Tiramisu și Crust Brown. Pattern-ul devine `background-image` SVG repetabil.
 
+### Logo-uri terțe (plată) — regulă separată
+
+`img/visa.svg`, `img/mastercard.svg`, `img/moldindconbank_logo.svg`. **Nu sunt ale noastre.**
+
+- **Nu se recolorează, nu se redesenează, nu se convertesc la `currentColor`.** Fiecare brand are ghid propriu care interzice variantele modificate. De aceea sunt `<img>`, nu SVG inline — excepție conștientă de la regula generală a proiectului.
+- Fundalul crem al chip-ului (`rgba(224,215,209,.92)`) există fiindcă marcajele sunt în culorile lor (bleumarin `#1A1F71`, roșu/portocaliu, navy `#1D3D70`) și n-ar avea contrast pe footer-ul închis.
+- **Visa și Mastercard** vin din setul standard „card": marcajul e deja centrat cu padding propriu într-o casetă `780×500` (măsurat: Visa 40% din înălțime, Mastercard 72%). Chip-ul lor **nu adaugă padding** — imaginea umple cardul. Ambele fișiere au primit `viewBox="0 0 780 500"`; exportul original avea `0 -140 780 780`, ceea ce făcea marcajul de ~3× prea mic. Din `mastercard.svg` s-a scos rama de card (dreptunghi alb cu contur negru), ca cele două să fie uniforme.
+- **Moldindconbank** e wordmark simplu (`1000×171`) — acolo se păstrează padding și se scalează după înălțimea literei.
+
 ---
 
 ## 6. Ce lipsește — de obținut înainte de implementare
@@ -223,7 +238,8 @@ Logo-ul poate sta peste fotografii, cu condiția să rămână clar lizibil și 
 - [x] ~~Licență web The Seasons~~ — **abandonat**, înlocuit cu Cormorant Garamond (vezi §5)
 - [x] **Logo SVG** — prezent în `img/` (`logo.svg`, `logo_simple.svg`, `logo_symbol.svg`). Inline în toate cele 13 pagini, colorate prin `currentColor`.
 - [ ] **Pictograme SVG** (brandbook §5.1) — încă neprimite
-- [ ] **Structura multilingvă RO/RU/EN** — nediscutată. Afectează arhitectura (13 pagini × 3 limbi); de decis **înainte** de migrarea pe WordPress, nu după.
+- [x] **Logo-uri metode de plată** — primite 14 sept. 2026, oficiale, în `img/`. Vezi §5, „Logo-uri terțe".
+- [x] **Structura multilingvă RO/RU/EN** — decisă 14 sept. 2026: se face **în WordPress**, nu în prototipul static. Aici există doar switcher-ul vizual din header. Vezi §4.
 - [x] **Pattern SVG** — motivul extras și tileabil. Folosit ca SVG inline cu `<pattern>` în secțiunea „De ce Renée?" din `index.html`.
 - [ ] **Restul brandbook-ului** — spațiere, dimensiuni minime logo, ton de voce, aplicații
 - [ ] **Numele repo-ului nou** pentru temă

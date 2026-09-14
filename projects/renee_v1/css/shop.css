@@ -2,7 +2,7 @@
 
 /* ---------- shop hero ---------- */
 .shop-hero{
-  padding:clamp(150px,20vh,210px) 0 clamp(50px,7vh,80px);
+  padding:clamp(104px,12.5vw,210px) 0 clamp(40px,5vw,80px);
   text-align:center;
 }
 .shop-hero .h2{margin-top:14px}
@@ -14,7 +14,7 @@
 /* ---------- filtre categorii ---------- */
 .cat-filters{
   display:flex;flex-wrap:wrap;gap:12px;justify-content:center;
-  margin:0 0 clamp(40px,6vh,64px);
+  margin:0 0 clamp(32px,4.4vw,64px);
 }
 .cat-filter{
   border:1px solid rgba(36,33,34,.22);border-radius:999px;
@@ -46,7 +46,7 @@
 .shop-sort select:hover{border-color:var(--ink)}
 
 /* ---------- paginare ---------- */
-.pagination{display:flex;justify-content:center;gap:8px;margin-top:clamp(44px,6vh,64px)}
+.pagination{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:clamp(34px,4.4vw,64px)}
 .page-btn{
   min-width:42px;height:42px;padding:0 12px;border-radius:999px;cursor:pointer;
   border:1px solid rgba(36,33,34,.2);background:transparent;color:var(--ink);
@@ -103,7 +103,7 @@
 .pc-price{display:flex;align-items:center;justify-content:space-between;gap:10px}
 
 /* ---------- pagina produs ---------- */
-.product-detail{padding:clamp(150px,20vh,210px) 0 clamp(60px,8vh,100px)}
+.product-detail{padding:clamp(104px,12.5vw,210px) 0 clamp(44px,6vw,100px)}
 .pd-grid{
   display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(40px,6vw,80px);
   align-items:start;
@@ -157,7 +157,7 @@
 .pd-nutri td:last-child,.pd-nutri th:last-child{text-align:right;color:var(--ink)}
 .pd-note{font-size:11.5px;color:var(--ink-soft);opacity:.8;margin-top:8px}
 .pd-info h1{
-  font-family:var(--serif);font-weight:500;font-size:clamp(30px,3.6vw,44px);
+  font-family:var(--serif);font-weight:500;font-size:clamp(26px,4.4vw,44px);
   margin-bottom:14px;line-height:1.1;
 }
 .pd-price{font-family:var(--sans);font-size:22px;margin-bottom:18px}
@@ -186,8 +186,8 @@
 .pd-added.show{opacity:1;height:auto;margin-top:14px;display:flex;align-items:center;gap:8px}
 /* Verde nu se foloseşte ca text (brandbook) — rămâne doar ca bulină de semnal */
 .pd-added::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--verde);flex:none}
-.pd-notfound{padding:clamp(150px,20vh,210px) 0 100px;text-align:center}
-.pd-notfound h1{font-family:var(--serif);font-size:clamp(28px,3.6vw,40px);margin-bottom:18px}
+.pd-notfound{padding:clamp(104px,12.5vw,210px) 0 100px;text-align:center}
+.pd-notfound h1{font-family:var(--serif);font-size:clamp(24px,4vw,40px);margin-bottom:18px}
 
 /* ---------- stepper cantitate ---------- */
 .qty-stepper{
@@ -220,10 +220,10 @@
 
 /* ---------- related ---------- */
 /* preparate similare — bandă proprie pe fundal secundar, ca să se vadă cardurile */
-.similare{background:var(--cream-2);padding:clamp(50px,7vh,80px) 0 clamp(60px,8vh,90px)}
+.similare{background:var(--cream-2);padding:clamp(40px,5vw,80px) 0 clamp(46px,6vw,90px)}
 .similare:empty{display:none}
 .related-title{
-  font-family:var(--serif);font-weight:500;font-size:clamp(24px,2.6vw,32px);
+  font-family:var(--serif);font-weight:500;font-size:clamp(21px,3.2vw,32px);
   margin:0 0 30px;
 }
 
@@ -258,10 +258,38 @@
   transition:color .25s;
 }
 .cl-remove:hover{color:var(--accent-text)}
+/* ---------- coş gol ---------- */
+.cart-layout.is-empty{grid-template-columns:1fr}
+.cart-layout.is-empty .cart-side{display:none}
 .cart-empty{
-  text-align:center;padding:60px 0;color:var(--ink-soft);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:6px;padding:clamp(34px,5vw,64px) 24px clamp(44px,6vw,72px);
+  background:var(--cream-2);border-radius:20px;
+  max-width:560px;margin:0 auto;
 }
-.cart-empty a{border-bottom:1px solid var(--terra);color:var(--accent-text)}
+.empty-simbol{
+  width:auto;height:clamp(52px,7vw,72px);
+  color:var(--crust-brown);fill:currentColor;opacity:.9;
+  margin-bottom:20px;
+}
+.cart-empty h2{
+  font-family:var(--serif);font-weight:400;font-style:italic;
+  font-size:clamp(26px,3.4vw,36px);color:var(--ink);
+}
+.cart-empty p{
+  font-size:14.5px;line-height:1.65;color:var(--ink-soft);
+  max-width:38ch;margin-top:6px;
+}
+.cart-empty-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:26px}
+/* butonul secundar — contur, ca să nu concureze cu „Vezi meniul" */
+.btn-empty-alt{
+  display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;
+  border-radius:999px;padding:15px 30px;
+  font-family:var(--font-body);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  transition:background .35s,color .35s;
+}
+.btn-empty-alt:hover{background:var(--ink);color:var(--cream)}
 #checkoutEmpty{display:none}
 #checkoutEmpty.show{display:block}
 
@@ -313,7 +341,7 @@
 /* ---------- confirmare comandă ---------- */
 .confirm-box{
   max-width:640px;margin:0 auto;text-align:center;
-  padding:clamp(150px,20vh,210px) 0 clamp(60px,8vh,100px);
+  padding:clamp(104px,12.5vw,210px) 0 clamp(44px,6vw,100px);
 }
 /* simbolul din logo, în locul bifei — aceeaşi soluţie ca la confirmarea rezervării */
 .confirm-simbol{
@@ -326,7 +354,7 @@
   from{opacity:0;transform:translateY(14px) scale(.9)}
   to{opacity:1;transform:none}
 }
-.confirm-box h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.6vw,38px);margin-bottom:14px}
+.confirm-box h1{font-family:var(--serif);font-weight:500;font-size:clamp(24px,4vw,38px);margin-bottom:14px}
 #orderRecap{
   text-align:left;background:var(--cream-2);border-radius:16px;
   padding:26px 28px;margin:34px 0;
@@ -392,16 +420,16 @@
 .post-meta{display:flex;align-items:center;justify-content:center;gap:14px;font-size:13px;color:var(--ink-soft)}
 .post-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--ink-soft);opacity:.5}
 .post-feature{
-  margin:clamp(40px,6vh,70px) auto 0;max-width:1100px;
+  margin:clamp(30px,4.6vw,70px) auto 0;max-width:1100px;
   border-radius:18px;overflow:hidden;aspect-ratio:16/9;background:var(--cream-2);
 }
 .post-feature img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
 .post-feature:hover img{transform:scale(1.04)}
 
-.post-body{max-width:720px;margin:0 auto;padding-top:clamp(40px,6vh,64px)}
+.post-body{max-width:720px;margin:0 auto;padding-top:clamp(32px,4.4vw,64px)}
 .post-body p{color:var(--ink-soft);font-size:16px;line-height:1.8;margin-bottom:22px}
 .post-lead{font-size:20px !important;line-height:1.6 !important;color:var(--ink) !important;font-family:var(--serif)}
-.post-body h2{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3vw,30px);color:var(--ink);margin:42px 0 18px}
+.post-body h2{font-family:var(--serif);font-weight:500;font-size:clamp(21px,3.4vw,30px);color:var(--ink);margin:42px 0 18px}
 .post-body a{color:var(--accent-text);border-bottom:1px solid var(--terra)}
 .post-quote{
   border-left:3px solid var(--terra);padding:4px 0 4px 28px;margin:38px 0;
@@ -416,30 +444,52 @@
   margin-top:12px;font-size:12.5px;color:var(--ink-soft);text-align:center;letter-spacing:.02em;
 }
 
+/* partajare pe reţele — la finalul articolului */
+.post-share{
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  margin:46px 0;padding:22px 0;
+  border-top:1px solid rgba(36,33,34,.12);
+  border-bottom:1px solid rgba(36,33,34,.12);
+}
+.share-label{
+  font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--ink-soft);flex:none;
+}
+.share-btns{display:flex;gap:9px;flex-wrap:wrap}
+.share-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 16px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(36,33,34,.18);background:transparent;
+  color:var(--ink);font-family:var(--font-body);font-size:12px;
+  letter-spacing:.04em;line-height:1;
+  transition:background .3s,border-color .3s,color .3s;
+}
+.share-btn svg{width:16px;height:16px;fill:currentColor;flex:none}
+.share-btn[data-share="copy"] svg{fill:none}
+.share-btn:hover{background:var(--black-pepper);border-color:var(--black-pepper);color:var(--tiramisu)}
+.share-btn.copiat{
+  background:transparent;color:var(--ink);
+  border-color:var(--verde);   /* Verde doar ca bordură — niciodată text */
+}
+@media(max-width:560px){
+  .post-share{flex-direction:column;align-items:flex-start;gap:14px}
+  .share-btn span{display:none}
+  .share-btn{padding:11px}
+  .share-btn svg{width:18px;height:18px}
+}
+
 /* galerie foto în articol */
 .post-gallery-grid{
   display:grid;gap:12px;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:3/2;
 }
-.post-gallery-grid img{width:100%;height:100%;object-fit:cover;border-radius:12px;cursor:zoom-in;transition:transform .5s var(--ease)}
-.post-gallery-grid img:first-child{grid-row:1 / span 2}
-.post-gallery-grid img:hover{transform:scale(1.02)}
+.post-gallery-grid .g-item{width:100%;height:100%;border-radius:12px}
+.post-gallery-grid .g-item:first-child{grid-row:1 / span 2}
 @media(max-width:640px){
   .post-gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;aspect-ratio:auto}
-  .post-gallery-grid img{aspect-ratio:1/1}
-  .post-gallery-grid img:first-child{grid-column:1 / span 2;grid-row:auto;aspect-ratio:16/10}
+  .post-gallery-grid .g-item{aspect-ratio:1/1}
+  .post-gallery-grid .g-item:first-child{grid-column:1 / span 2;grid-row:auto;aspect-ratio:16/10}
 }
 
-/* lightbox galerie */
-.lightbox{
-  position:fixed;inset:0;z-index:300;background:rgba(36,33,34,.92);
-  display:none;align-items:center;justify-content:center;padding:5vw;cursor:zoom-out;
-}
-.lightbox.open{display:flex}
-.lightbox img{max-width:100%;max-height:90vh;border-radius:10px}
-.lightbox-close{
-  position:absolute;top:22px;right:26px;background:none;border:none;color:var(--cream);
-  font-size:30px;cursor:pointer;line-height:1;
-}
 
 /* ============================================================
    P0/P1 — badge-uri, USP bar, ship progress, bundle,
@@ -452,7 +502,7 @@
 /* USP / trust bar */
 .usp-bar{background:var(--ink);color:var(--cream)}
 .usp-inner{
-  display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(20px,5vw,64px);
+  display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(16px,2vw,52px);
   padding:20px clamp(20px,5vw,64px);
 }
 .usp-item{display:flex;align-items:center;gap:11px;font-size:12.5px;letter-spacing:.04em}
@@ -469,8 +519,8 @@
 .ship-bar-done .ship-fill{background:var(--sage)}
 
 /* bundle „se comandă des împreună" */
-.pd-bundle{margin:clamp(50px,8vh,90px) 0 0;padding-top:clamp(40px,6vh,60px);border-top:1px solid rgba(36,33,34,.12)}
-.pd-bundle h2{font-family:var(--serif);font-weight:500;font-size:clamp(22px,2.6vw,30px);margin-bottom:26px}
+.pd-bundle{margin:clamp(40px,6vw,90px) 0 0;padding-top:clamp(30px,4.2vw,60px);border-top:1px solid rgba(36,33,34,.12)}
+.pd-bundle h2{font-family:var(--serif);font-weight:500;font-size:clamp(20px,3vw,30px);margin-bottom:26px}
 .pd-bundle h2 em{color:var(--accent-text);font-style:italic}
 .bundle-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px}
 .bundle-item{display:flex;flex-direction:column;align-items:center;gap:8px;width:120px;text-align:center}
