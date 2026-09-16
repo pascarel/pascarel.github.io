@@ -40,62 +40,14 @@ Un element de galerie arată așa:
 </button>
 ```
 
-## 2.1 Banda decorativă cu pattern — copiată în 2 pagini
+## 2.1–2.2 Pattern-ul — ŞTERS
 
-SVG inline cu `<defs><pattern>`, în trei pagini: `index.html` („Povestea numelui"), `despre.html` („Ce ne ghidează") și `evenimente.html` („Tipuri de evenimente"). Secțiunea gazdă trebuie să aibă clasa **`poveste`**, care îi dă `position:relative` și `overflow:hidden`.
+Banda decorativă verticală şi delimitatorul full-width cu pattern **nu mai există**.
+Scoase 16 sept. 2026 la cererea clientului: „acel patern nu-l mai folosim pe site".
 
-Trei numere care merg împreună — dacă schimbi unul, le schimbi pe toate:
-
-| | Valoare | Unde |
-|---|---|---|
-| `patternTransform="scale(…)"` | `0.294` | în SVG, în ambele pagini |
-| lățimea benzii | `80px` | `.patern-banda` din `css/main.css` |
-| lățime | = `271.771 × scale` | altfel firul se taie sau lasă gol |
-| `height` din `<pattern>` | `104.38` | pasul real dintre frunze — vezi mai jos |
-
-**Motivul NU se rotește.** `img/patern.svg` e un câmp de 16 fire **verticale** puse alături — fiecare fir are tulpina pe stânga și frunzele care mătură spre dreapta-sus. Se ia un singur fir, așa cum e, și se repetă pe verticală. O rotație de 90° culcă tulpina și strică desenul.
-
-**Pasul vertical e `104.38`, nu `297.861`.** Firul desenat în `patern.svg` are 297.861 înălțime, dar conține doar două grupuri de frunze — la y=67.6 și y=172.0 — urmate de ~124 de unități de tulpină goală. Repetat la înălțimea lui naturală, apar goluri mari între grupuri. Distanța reală dintre frunze, măsurată pe centroizi, e **104.38**, iar în brandbook elementele stau lipite.
-
-De aceea `<pattern>` are `height="104.38"` și conține **patru copii** ale firului, la `+104.38`, `0`, `-104.38` și `-208.76` — fereastra dalei fiind mai scurtă decât firul, copiile umplu ce ar rămâne gol la margini.
-
-Culoarea vine prin `currentColor` — se schimbă din `.patern-banda { color: … }`, nu în markup.
-
-## 2.2 Delimitator full-width cu pattern — o singură linie
-
-Bandă orizontală de chevroni, pe toată lățimea paginii. **Copiezi exact asta, oriunde:**
-
-```html
-<div class="patern-separator" aria-hidden="true"></div>
-```
-
-Atât. Fără SVG inline, fără id-uri, fără JS. Se poate pune de câte ori vrei, pe orice pagină.
-
-**Înălțimea** o controlezi din clasă:
-
-| Clasă | Înălțime |
-|---|---|
-| `patern-separator` | 62px (implicit) |
-| `patern-separator subtire` | 26px |
-| `patern-separator gros` | 64px |
-
-Dala se scalează singură după înălțime (`background-size:auto 100%`) și se repetă orizontal, deci nu trebuie să potrivești nimic manual.
-
-**Sursa:** `img/patern-brown.svg` — artboard-ul complet (4214 × 298), adaptat de Sergiu. Cu `background-size:auto 100%` se scalează după înălțimea benzii și se repetă orizontal.
-
-### Animația
-
-Banda glisează lent spre stânga, **doar cât e pe ecran**. `js/main.js` comută clasa `.vizibil` printr-un `IntersectionObserver`, iar CSS-ul folosește `animation-play-state` — deci la ieșirea din ecran animația se **pune pe pauză**, nu se oprește. La revenire continuă de unde a rămas, nu sare la început.
-
-Viteză: un ciclu de 28s, adică ~31px/s la înălțimea implicită.
-
-⚠️ **`--h` e singurul reglaj.** Lățimea dalei se calculează din el (`--dala: calc(var(--h) * 14.1409)`, proporția fișierului), iar animația se deplasează exact cât o dală. Dacă pui o înălțime fixă în `height` în loc de `--h`, deplasarea nu mai corespunde dalei și apare un salt vizibil la fiecare ciclu.
-
-La `prefers-reduced-motion` se oprește singură — regula globală din `main.css` pune `animation:none` pe tot.
-
-⚠️ **Culoarea e fixă în fișier** (Crust Brown `#AF7B5C`). `background-image` nu poate moșteni `currentColor` — spre deosebire de banda verticală, care e SVG inline. Pentru altă culoare, duplichează fișierul și schimbă `fill`.
-
-Folosit pe `index.html` (între Evenimente private și Instagram), `contact.html` (între formular și Instagram) și `despre.html` (între galerie și Instagram).
+Au dispărut `.patern-banda`, `.patern-separator`, `@keyframes paternGlisare` şi
+IntersectionObserver-ul din `js/main.js`. Fişierele `img/patern*.svg` au rămas în repo,
+dar nu sunt referite de nimic. **Nu le readuce** — au fost scoase intenţionat.
 
 ## 2.3 Switcher de limbă — DOAR PREZENTARE
 

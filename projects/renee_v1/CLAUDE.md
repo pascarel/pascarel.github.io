@@ -101,6 +101,12 @@ projects/rvg/          — proiect separat
 | Header | Trei zone — logo, nav, `.header-actions`. Rezervări, coş şi switcher stau în acţiuni şi **rămân vizibile sub 900px**, când nav-ul devine meniu-overlay. Pragul e 900, nu 640: la 768 nav-ul nu încape lângă logo. |
 | Coş gol | Stare condusă de clasa **`is-empty`** pe `.cart-layout`, pusă şi scoasă de `renderCart` din `js/shop.js`. Ascunde coloana de sumar şi trece grila pe o coloană. Nu ascunde `.cart-side` din altă parte. Redesenat 14 sept. 2026, la cererea lui Sergiu. |
 | Metode de plată | Bloc `.footer-plata` în toate cele 13 pagini, sub reţelele sociale. **Logo-uri oficiale** din `img/`: `visa.svg`, `mastercard.svg`, `moldindconbank_logo.svg`. Sunt `<img>`, **nu** SVG inline cu `currentColor` — spre deosebire de restul pictogramelor. Motivul e în §5, „Logo-uri terţe". |
+| Paletă | **Schimbată complet 16 sept. 2026**, la cererea clientului: se foloseşte doar paleta designerului lor (`Downloads/ind/assets/css/variables.css`). Tiramisu / Vin / Verde nu se reintroduc. Fonturile NU vin de acolo — rămân Cormorant Garamond + Open Sans. Detalii în §5. |
+| Pattern decorativ | **Scos de pe tot site-ul** 16 sept. 2026 (cerere client): „acel patern nu-l mai folosim pe site". Şterse benzile verticale, separatoarele full-width, CSS-ul şi observer-ul. Fişierele rămân în `img/` dar **nu se mai referă**. |
+| Secţiunea Locaţii | Fără taburi. Câte un rând pe locaţie, fiecare cu poza localului, datele şi harta proprie; al doilea rând oglindit. ⚠️ Oglindirea se face cu `grid-column`, **nu cu `order`** — cu `order` poza ajunge în celălalt track şi iese de altă dimensiune. |
+| „Povestea numelui" (home) | `.poveste-numele`, pe **fundal închis**: proza la stânga, cele două deschideri reale la dreapta. Fundalul închis e intenţionat — rupe ritmul între Despre şi Momente, ambele pe crem cu fotografii. ⚠️ Accentul acolo e `--brand`; `--brand-deep` dă 2.32 şi dispare. |
+| „Valorile Renée" (Despre) | `.valori-grid` / `.valoare`: linie de sus plus titlu, **fără numerotare**. Cele trei valori nu sunt paşi într-o secvenţă, deci „01/02/03" ar fi decor deghizat în structură. |
+| Secţiunea „Momentele zilei" | `.momente`: fiecare fereastră de timp arată un **preparat real din catalog** (croissant / pancakes / pavlova), cu imaginea din API şi link către pagina lui. Secţiunea trimite în meniu, nu doar decorează. Ora stă într-o pastilă crem peste colţul pozei — contrast garantat faţă de crem, nu faţă de fotografie. |
 
 ### Sursa de meniu real — API eat-me.online
 
@@ -131,42 +137,70 @@ Nu există PHP/MySQL/WordPress în containerele cloud. Testarea reală (checkout
 
 ### Paletă — sursă unică de adevăr
 
-**Culori principale:**
-| Nume | Hex | Rol |
+⚠️ **Schimbată complet pe 16 sept. 2026, la cererea clientului.** Sursa nu mai e
+brandbook-ul, ci `assets/css/variables.css` din proiectul „ind" al designerului lor.
+Clientul a aprobat explicit ACEASTĂ paletă şi se foloseşte **doar ea**.
+Paleta veche (Tiramisu / Vin / Verde) **nu se reintroduce**.
+
+**Marcă:**
+| Token | Hex | Rol |
 |---|---|---|
-| Tiramisu | `#E0D7D1` | fundal principal |
-| Crust Brown | `#AF7B5C` | accent |
-| Black Pepper | `#242122` | text, secțiuni închise |
+| `--brand` | `#AF7B5C` | accent principal — identic cu vechiul Crust Brown |
+| `--brand-dark` | `#8F5E3E` | text mic pe deschis, butoane pline cu text alb |
+| `--brand-deep` | `#6B4330` | accentul care trebuie citit (cursivele din titluri) |
 
-**Culori adiționale:**
-| Nume | Hex | Rol |
+**Fundaluri:**
+| Token | Hex | Rol |
 |---|---|---|
-| Vin | `#561320` | accent închis |
-| Verde | `#6D816C` | accent decorativ |
+| `--white` | `#FFFFFF` | |
+| `--cream` | `#FAF7F4` | fundal principal |
+| `--cream-2` | `#F2EDE8` | fundal alternativ de secţiune |
+| `--border` | `#E8DDD5` | linii şi borduri pe deschis |
+| `--black` | `#0D0A09` | secţiuni închise |
 
-**Mapare peste tokens-urile vechi din `css/main.css`:**
-`--cream` `#F7F2EA` → `#E0D7D1` · `--ink` `#2B2118` → `#242122` · `--terra` `#C46A45` → `#AF7B5C` · `--sage` `#8A9B7C` → `#6D816C`
+**Text:**
+| Token | Hex | Rol |
+|---|---|---|
+| `--ink` | `#1A1410` | titluri |
+| `--text-body` | `#3D302A` | corp de text |
+| `--ink-soft` | `#7A6B62` | text secundar |
+| `--text-light` | `#A89C96` | DECOR pe deschis; ca text doar pe închis |
 
-✅ **Rezolvat 9 sept. 2026** (aprobat de Sergiu):
-- `--cream-2` → **`#D5CCC6`** (Tiramisu + 6% Black Pepper), fundal alternativ de secțiune
-- `--caramel` → eliminat; pe fundal închis se folosește Crust Brown
-- `--ink-soft` → **`#5C5856`** (Black Pepper 70% pe Tiramisu, contrast 4.96 ✓)
+**Ce s-a pierdut şi cu ce a fost înlocuit:**
+- **Vin `#561320`** → `--brand-deep`. Paleta lor n-are roşu închis.
+- **Verde `#6D816C`** → `--brand-deep`, prin tokenul `--ok`. Paleta lor n-are verde, iar
+  verdele era culoarea de confirmare (adăugat în coş, mesaj trimis, livrare completă).
+  Decis 16 sept. 2026: mergem 100% pe paleta lor, confirmarea rămâne pe text şi bifă.
 
-Rolurile semantice sunt definite în `css/main.css` `:root` și **acolo se schimbă**, nu prin căutare-înlocuire:
-`--accent-text` (Vin, text pe deschis) · `--accent-decor` (Crust Brown, linii/borduri/hover) ·
-`--accent-dark` (Crust Brown, text MARE pe închis) · `--accent-fill` (Vin, fundal plin sub text deschis).
+Numele vechi (`--tiramisu`, `--vin`, `--terra`, `--sage`…) **au rămas ca alias-uri**
+către valorile noi, ca să nu se rupă regulile existente. Nu te baza pe ele la cod nou.
+
+Rolurile semantice se schimbă **doar din `:root`**, nu prin căutare-înlocuire:
+`--accent-text` (brand-deep) · `--accent-decor` (brand) · `--accent-dark` (brand, pe închis) ·
+`--accent-fill` (brand-dark, fundal plin sub text alb) · `--ok` (confirmări).
 
 ### Reguli de contrast (WCAG, calculate)
 
-| Combinație | Raport | Verdict |
+| Combinaţie | Raport | Verdict |
 |---|---|---|
-| Black Pepper pe Tiramisu | 11.26 | ✅ text principal |
-| Vin pe Tiramisu | 9.81 | ✅ text |
-| Black Pepper pe Crust Brown | 4.42 | ⚠️ doar text mare (18pt+) |
-| **Crust Brown pe Tiramisu** | **2.55** | ❌ **niciodată text** — doar logo mare / decor |
-| Verde cu orice | max 3.81 | ❌ niciodată text — doar accent decorativ |
+| `--ink` pe `--cream` | 17.09 | ✅ text principal |
+| `--text-body` pe `--cream` | 11.89 | ✅ corp de text |
+| `--brand-deep` pe `--cream` | 7.96 | ✅ accent citibil |
+| `--brand-dark` pe `--cream` | 5.13 | ✅ text mic |
+| `--ink-soft` pe `--cream` | 4.79 | ✅ text secundar |
+| **`--ink-soft` pe `--cream-2`** | **4.40** | ❌ **sub prag** — vezi regula de mai jos |
+| **`--brand` pe `--cream`** | **3.39** | ⚠️ doar text ≥24px sau decor |
+| `--brand` pe `--black` | 5.46 | ✅ accent pe închis |
+| `--text-light` pe `--cream` | 2.50 | ❌ niciodată text pe deschis |
 
-Crust Brown pe Tiramisu apare în brandbook ca variantă de logo. E acceptabil pentru logo la dimensiune mare, **nu** pentru text curent, prețuri, butoane sau link-uri. Prețurile și CTA-urile dintr-un magazin trebuie să fie lizibile.
+**Regula `cream-2`:** pe suprafeţele `--cream-2` (secţiuni alternante, carduri de
+produs, cutia de coş gol, sumarele de comandă) `--ink-soft` pică sub prag pentru text mic.
+Acolo se coboară o treaptă, la `--text-body` — **redefinind variabila**, nu proprietatea
+`color`, ca să se aplice singur la tot ce e în interior. Lista de suprafeţe e în
+`css/main.css`, blocul „text secundar pe fundal cream-2".
+
+⚠️ **Nu inventa nuanţe intermediare** ca să repari un contrast. Clientul a cerut doar
+paleta lui; orice hex care nu e în tabelele de mai sus e o abatere de la decizie.
 
 ### Fonturi
 
@@ -238,6 +272,7 @@ Logo-ul poate sta peste fotografii, cu condiția să rămână clar lizibil și 
 - [x] ~~Licență web The Seasons~~ — **abandonat**, înlocuit cu Cormorant Garamond (vezi §5)
 - [x] **Logo SVG** — prezent în `img/` (`logo.svg`, `logo_simple.svg`, `logo_symbol.svg`). Inline în toate cele 13 pagini, colorate prin `currentColor`.
 - [ ] **Pictograme SVG** (brandbook §5.1) — încă neprimite
+- [x] **Poze pentru cele două locaţii** — `img/img_oassis.webp`, `img/img_urban.webp`, primite 16 sept. 2026 din folderul clientului (faţadele reale).
 - [x] **Logo-uri metode de plată** — primite 14 sept. 2026, oficiale, în `img/`. Vezi §5, „Logo-uri terțe".
 - [x] **Structura multilingvă RO/RU/EN** — decisă 14 sept. 2026: se face **în WordPress**, nu în prototipul static. Aici există doar switcher-ul vizual din header. Vezi §4.
 - [x] **Pattern SVG** — motivul extras și tileabil. Folosit ca SVG inline cu `<pattern>` în secțiunea „De ce Renée?" din `index.html`.
@@ -262,7 +297,7 @@ Numele, descrierile, prețurile, gramajele, imaginile și valorile nutriționale
 ### ❌ Încă inventat, de înlocuit obligatoriu
 - **Telefon `+373 60 000 000`** — placeholder, în footer-ul tuturor celor 13 pagini. Restul site-ului folosește `+373 78 784 040`.
 - **`hello@renee.md` / `centru@renee.md`** — de confirmat că domeniul și căsuțele există.
-- **Imagini de atmosferă, galerie, blog, Instagram** — hotlink-uri Unsplash. **Video hero** — hotlink Pexels. (Imaginile de preparate sunt reale, de pe CDN-ul Syrve.)
+- **Imagini de atmosferă, galerie, blog, Instagram** — hotlink-uri Unsplash. (Excepţie: pozele celor două locaţii sunt reale, din folderul clientului.) **Video hero** — hotlink Pexels. (Imaginile de preparate sunt reale, de pe CDN-ul Syrve.)
 - **Testimoniale** — fictive. **Blog și „Povestea"** — draft AI.
 - **Facebook și TikTok** — conturi presupuse; doar Instagram e confirmat.
 - **Program și telefon pe locații** — aceleași valori peste tot, marcate DRAFT. Probabil diferă între Oasis și Urban.

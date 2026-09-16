@@ -131,73 +131,106 @@
           <p class="reveal reveal-d2">Numele nostru înseamnă „renăscută". Fiecare vizită e un mic nou început: o masă lângă fereastră, o farfurie frumoasă, o conversație care nu se termină.</p>
         </div>
       </div>
-      <div class="despre-photo reveal reveal-d1">
-        <div class="parallax-wrap">
-          <img class="photo parallax" data-speed="0.12" src="img/preview.webp" alt="Interiorul cafenelei Renée" loading="lazy">
+      <!-- Două poze: una mare arcuită + una mică suprapusă în colţ.
+           Stilurile sunt în main.css, „despre — două poze". -->
+      <div class="despre-foto reveal reveal-d1">
+        <div class="despre-foto-mare">
+          <div class="parallax-wrap">
+            <img class="photo parallax" data-speed="0.12" src="img/preview.webp" alt="Interiorul cafenelei Renée" loading="lazy">
+          </div>
+        </div>
+        <div class="despre-foto-mica">
+          <img class="photo" src="img/interior.webp" alt="Detaliu din salonul Renée" loading="lazy">
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- POVESTEA -->
-<section class="section poveste" id="poveste" style="padding-top:0">
-  <svg class="patern-banda" aria-hidden="true" focusable="false"><defs><pattern id="patRenee" patternUnits="userSpaceOnUse" width="271.771" height="104.38" patternTransform="scale(0.294)"><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor" transform="translate(0 104.38)"/><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor"/><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor" transform="translate(0 -104.38)"/><path d="M208.112 85.0171C253.531 66.2849 271.771 58.5079 271.771 26.1239V0H266.33V3.90052C266.33 18.3228 257.39 22.6327 205.763 43.291C154.137 63.9494 135.873 72.545 130.84 116.606C124.632 64.7439 97.8365 40.161 62.1245 40.161C30.6788 40.161 0 57.7134 0 142.73V297.861H6.15972V262.226C6.18369 259.144 6.20765 256.616 6.20765 255.412C6.20765 206.656 39.9783 186.383 71.424 186.383C102.87 186.383 126.166 203.165 126.166 247.611V297.861H132.374V249.562C132.374 215.251 151.404 213.301 208.088 189.898C253.507 171.166 271.747 163.389 271.747 131.005V104.881H266.306V108.781C266.306 123.204 257.366 127.514 205.739 148.172C158.403 167.121 139.133 175.909 132.374 211.182V144.681C132.374 110.37 151.404 108.42 208.088 85.0171H208.112ZM62.1485 145.066C39.2353 145.066 16.7295 154.408 6.20765 192.378V157.345C6.23162 154.263 6.25559 151.735 6.25559 150.531C6.25559 101.775 40.0262 81.5017 71.4719 81.5017C102.918 81.5017 126.214 98.2837 126.214 142.73V198.205C115.645 162.233 92.0363 145.042 62.1485 145.042V145.066Z" fill="currentColor" transform="translate(0 -208.76)"/></pattern></defs><rect width="100%" height="100%" fill="url(#patRenee)"/></svg>
+<!-- POVESTEA NUMELUI -->
+<!-- Secţiune pe fundal închis, intenţionat: rupe ritmul între Despre (crem, cu poze)
+     şi Momentele zilei (crem, cu poze). Proza şi cronologia sunt separate —
+     doar cele două deschideri sunt cu adevărat o cronologie. -->
+<section class="poveste-numele" id="poveste">
   <div class="wrap">
     <p class="eyebrow reveal">Povestea numelui</p>
-    <h2 class="h2 reveal">De ce <em>Renée</em>?</h2>
-    <div class="timeline">
-      <div class="tl-item reveal">
-        <span class="tl-year">Ideea</span>
-        <h3>O dimineață care nu se mai termină</h3>
-        <p>Totul a pornit de la o întrebare simplă: de ce cel mai frumos moment al zilei — micul dejun — durează atât de puțin? Am vrut un loc unde el să nu se termine niciodată.</p>
+    <div class="pn-grid">
+      <div class="reveal">
+        <h2 class="pn-h">Renée înseamnă <em>„cea renăscută"</em>. Așa se simte o dimineață bună.</h2>
+        <div class="pn-proza">
+          <p>Totul a pornit de la o întrebare simplă: de ce cel mai frumos moment al zilei — micul dejun — durează atât de puțin? Am vrut un loc unde el să nu se termine niciodată.</p>
+          <p>Fiecare cafea bună, fiecare masă cu oameni dragi e un mic nou început. O renaștere de buzunar, în fiecare zi.</p>
+        </div>
       </div>
-      <div class="tl-item reveal">
-        <span class="tl-year">Numele</span>
-        <h3>Renée — „renăscută"</h3>
-        <p>În franceză, Renée înseamnă „cea renăscută". Fiecare cafea bună, fiecare masă cu oameni dragi e un mic nou început. O renaștere de buzunar, în fiecare zi.</p>
-      </div>
-      <div class="tl-item reveal">
-        <span class="tl-year">2025</span>
-        <h3>Prima casă — Oasis Mall</h3>
-        <p>Pe 28 martie 2025 am deschis ușile cu o promisiune: lumină bună,
-          farfurii frumoase și timp — luat înapoi de la grabă.</p>
-      </div>
-      <div class="tl-item reveal">
-        <span class="tl-year">2026</span>
-        <h3>Renée Urban, în centru</h3>
-        <p>Pe 28 iunie 2026 povestea a primit o a doua casă, pe bulevardul
-          Ștefan cel Mare. Același mic dejun fără sfârșit, acum la câțiva pași
-          de tot ce mișcă în oraș. Te așteptăm să faci parte din poveste.</p>
+      <div class="pn-crono reveal reveal-d1">
+        <h3>Cele două case</h3>
+        <div class="pn-eveniment">
+          <span class="pn-data">28 martie 2025</span>
+          <h4>Prima casă — Oasis Mall</h4>
+          <p>Am deschis ușile cu o promisiune: lumină bună, farfurii frumoase și timp — luat înapoi de la grabă.</p>
+        </div>
+        <div class="pn-eveniment">
+          <span class="pn-data">28 iunie 2026</span>
+          <h4>Renée Urban, în centru</h4>
+          <p>Povestea a primit o a doua casă, pe bulevardul Ștefan cel Mare. Același mic dejun fără sfârșit, acum în mijlocul orașului.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- RITUAL / MOMENTELE ZILEI -->
-<section class="section" id="ritual" style="padding-top:0">
+<!-- MOMENTELE ZILEI -->
+<!-- Fiecare moment arată un preparat real din catalog, servit în fereastra aia,
+     cu link către pagina lui. Imaginile vin de pe https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/-ul din API (Syrve),
+     aceleaşi ca în data/products.js. Dacă se schimbă preparatul din meniu,
+     se schimbă şi aici — nu sunt imagini decorative. -->
+<section class="momente" id="ritual">
   <div class="wrap">
-    <p class="eyebrow reveal">Momentele zilei</p>
-    <h2 class="h2 reveal">O zi întreagă<br>de <em>mic dejun</em></h2>
-    <div class="ritual-grid">
-      <div class="ritual-item reveal">
-        <span class="ritual-num">No. 01</span>
-        <h3>Dimineața liniștită</h3>
-        <p>Cafeaua proaspăt măcinată, croissante calde și primele raze prin fereastră. Începutul perfect, fără grabă.</p>
-        <span class="ritual-time">08:00 — 11:00</span>
+    <div class="mom-head">
+      <div>
+        <p class="eyebrow reveal">Momentele zilei</p>
+        <h2 class="mom-h reveal">O zi întreagă<br>de <em>mic dejun</em></h2>
       </div>
-      <div class="ritual-item reveal reveal-d1">
-        <span class="ritual-num">No. 02</span>
-        <h3>Brunch-ul leneș</h3>
-        <p>Momentul-vedetă: eggs benedict, pancakes, mimosa. Weekendul se simte cel mai bine la o masă lungă, cu prietenii.</p>
-        <span class="ritual-time">11:00 — 16:00</span>
-      </div>
-      <div class="ritual-item reveal reveal-d2">
-        <span class="ritual-num">No. 03</span>
-        <h3>După-amiaza dulce</h3>
-        <p>Desert, un flat white și o carte bună. Sau doar tu, lumina caldă și liniștea de dinaintea serii.</p>
-        <span class="ritual-time">16:00 — 21:00</span>
-      </div>
+      <span class="mom-durata reveal reveal-d1">08:00 — 21:00 · treisprezece ore</span>
+    </div>
+    <div class="mom-grid">
+
+      <article class="mom-item reveal">
+        <a href="produs.html?id=croissant-clasic-renee">
+          <div class="mom-foto">
+            <img src="https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/reneebrunch/6911/df05c365-c3e4-4744-964a-68c8aec5447f-752x552x100.webp" alt="Croissant Clasic Renée" loading="lazy">
+            <span class="mom-ora">08 — 11</span>
+          </div>
+          <h3>Dimineața liniștită</h3>
+          <p>Cafeaua proaspăt măcinată, croissante calde și primele raze prin fereastră. Începutul perfect, fără grabă.</p>
+          <p class="mom-preparat"><span>La ora asta</span> <b>Croissant Clasic Renée →</b></p>
+        </a>
+      </article>
+
+      <article class="mom-item reveal reveal-d1">
+        <a href="produs.html?id=pancacke-cu-caramela-si-sos-de-pomusoare">
+          <div class="mom-foto">
+            <img src="https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/6911/afb75a39-9039-48d0-972e-0b2ea0f8c2ae-752x552x100.webp" alt="Pancakes cu caramelă și sos de pomușoare" loading="lazy">
+            <span class="mom-ora">11 — 16</span>
+          </div>
+          <h3>Brunch-ul leneș</h3>
+          <p>Momentul-vedetă: eggs benedict, pancakes, mimosa. Weekendul se simte cel mai bine la o masă lungă, cu prietenii.</p>
+          <p class="mom-preparat"><span>La ora asta</span> <b>Pancakes cu caramelă →</b></p>
+        </a>
+      </article>
+
+      <article class="mom-item reveal reveal-d2">
+        <a href="produs.html?id=pavlova-renee">
+          <div class="mom-foto">
+            <img src="https://f3de18c8-cd97-436c-ad9e-8e1dc2839628.cdneu.syrve.com/eu/6911/6189897f-b949-4e27-9f7b-d89e6d5d3442-752x552x100.webp" alt="Pavlova Renée" loading="lazy">
+            <span class="mom-ora">16 — 21</span>
+          </div>
+          <h3>După-amiaza dulce</h3>
+          <p>Desert, un flat white și o carte bună. Sau doar tu, lumina caldă și liniștea de dinaintea serii.</p>
+          <p class="mom-preparat"><span>La ora asta</span> <b>Pavlova Renée →</b></p>
+        </a>
+      </article>
+
     </div>
   </div>
 </section>
@@ -384,7 +417,6 @@
   </div>
 </section>
 
-<div class="patern-separator" aria-hidden="true"></div>
 
 <!-- INSTAGRAM -->
 <section class="section" id="instagram">
@@ -416,64 +448,79 @@
       </div>
     </div>
 
-    <div class="loc reveal reveal-d1">
-      <div class="loc-tabs" role="tablist" aria-label="Locații Renée">
-        <button type="button" class="loc-tab is-active" role="tab" aria-selected="true" aria-controls="loc-oasis" id="tab-oasis">Renée Oasis Mall</button>
-        <button type="button" class="loc-tab" role="tab" aria-selected="false" aria-controls="loc-urban" id="tab-urban">Renée Urban</button>
-      </div>
-      <div class="loc-panel is-active" id="loc-oasis" role="tabpanel" aria-labelledby="tab-oasis">
-        <div class="info-list">
-          <div class="info-row">
-            <span class="lbl">Adresă</span>
-            <span class="val">Oasis Mall, str. Bogdan-Voievod 1, Chișinău</span>
+    <!-- Câte un rând pe locaţie. A înlocuit taburile (16 sept. 2026, cerere client):
+         ambele locaţii trebuie să aibă greutate egală, fără click.
+         `.invers` mută poza în dreapta la al doilea rând — vezi nota din main.css
+         despre de ce NU se face cu `order`. -->
+    <div class="locatii">
+
+      <article class="loc-rand reveal">
+        <div class="loc-foto">
+          <img class="photo" src="img/img_oassis.webp" alt="Intrarea Renée din Oasis Mall" loading="lazy">
+        </div>
+        <div class="loc-info">
+          <h3 class="loc-nume">Renée Oasis Mall</h3>
+          <div class="info-list">
+            <div class="info-row">
+              <span class="lbl">Adresă</span>
+              <span class="val">Oasis Mall, str. Bogdan-Voievod 1, Chișinău</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl">Program</span>
+              <span class="val">Lun – Joi · 08:00 – 21:00<br>Vin – Dum · 08:00 – 22:00 <!-- DRAFT: program de confirmat, poate diferi pe locații --></span>
+            </div>
+            <div class="info-row">
+              <span class="lbl">Telefon</span>
+              <span class="val"><a href="tel:+37378784040">+373 78 784 040</a> <!-- DRAFT: telefon de confirmat, poate diferi pe locații --></span>
+            </div>
+            <div class="info-row">
+              <span class="lbl">Rezervări</span>
+              <span class="val">Online, telefonic sau direct în local</span>
+            </div>
           </div>
-          <div class="info-row">
-            <span class="lbl">Program</span>
-            <span class="val">Lun – Joi · 08:00 – 21:00<br>Vin – Dum · 08:00 – 22:00 <!-- DRAFT: program de confirmat, poate diferi pe locații --></span>
-          </div>
-          <div class="info-row">
-            <span class="lbl">Telefon</span>
-            <span class="val"><a href="tel:+37378784040">+373 78 784 040</a> <!-- DRAFT: telefon de confirmat, poate diferi pe locații --></span>
-          </div>
-          <div class="info-row">
-            <span class="lbl">Rezervări</span>
-            <span class="val">Online, telefonic sau direct în local</span>
+          <div class="map-wrap">
+            <div class="map-shield" data-map>
+              <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=28.8538%2C47.0414%2C28.8608%2C47.0449&amp;layer=mapnik&amp;marker=47.043199%2C28.857288" title="Renée · Oasis Mall pe hartă" loading="lazy" referrerpolicy="no-referrer"></iframe>
+              <button type="button" class="map-unlock">Activează harta</button>
+            </div>
           </div>
         </div>
-        <div class="map-wrap">
-          <div class="map-shield" data-map>
-          <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=28.8538%2C47.0414%2C28.8608%2C47.0449&amp;layer=mapnik&amp;marker=47.043199%2C28.857288" title="Renée · Oasis Mall pe hartă" loading="lazy" referrerpolicy="no-referrer"></iframe>
-          <button type="button" class="map-unlock">Activează harta</button>
+      </article>
+
+      <article class="loc-rand invers reveal">
+        <div class="loc-foto">
+          <img class="photo" src="img/img_urban.webp" alt="Renée Urban, pe bulevardul Ștefan cel Mare" loading="lazy">
         </div>
-        </div>
-      </div>
-      <div class="loc-panel" id="loc-urban" role="tabpanel" aria-labelledby="tab-urban" hidden>
-        <div class="info-list">
-          <div class="info-row">
-            <span class="lbl">Adresă</span>
-            <span class="val">bd. Ștefan cel Mare și Sfânt 115/1, Chișinău</span>
+        <div class="loc-info">
+          <h3 class="loc-nume">Renée Urban</h3>
+          <div class="info-list">
+            <div class="info-row">
+              <span class="lbl">Adresă</span>
+              <span class="val">bd. Ștefan cel Mare și Sfânt 115/1, Chișinău</span>
+            </div>
+            <div class="info-row">
+              <span class="lbl">Program</span>
+              <span class="val">Lun – Joi · 08:00 – 21:00<br>Vin – Dum · 08:00 – 22:00 <!-- DRAFT: program de confirmat, poate diferi pe locații --></span>
+            </div>
+            <div class="info-row">
+              <span class="lbl">Telefon</span>
+              <span class="val"><a href="tel:+37378784040">+373 78 784 040</a> <!-- DRAFT: telefon de confirmat, poate diferi pe locații --></span>
+            </div>
+            <div class="info-row">
+              <span class="lbl">Rezervări</span>
+              <span class="val">Online, telefonic sau direct în local</span>
+            </div>
           </div>
-          <div class="info-row">
-            <span class="lbl">Program</span>
-            <span class="val">Lun – Joi · 08:00 – 21:00<br>Vin – Dum · 08:00 – 22:00 <!-- DRAFT: program de confirmat, poate diferi pe locații --></span>
-          </div>
-          <div class="info-row">
-            <span class="lbl">Telefon</span>
-            <span class="val"><a href="tel:+37378784040">+373 78 784 040</a> <!-- DRAFT: telefon de confirmat, poate diferi pe locații --></span>
-          </div>
-          <div class="info-row">
-            <span class="lbl">Rezervări</span>
-            <span class="val">Online, telefonic sau direct în local</span>
+          <!-- DRAFT: coordonată aproximativă (nr. 115). De înlocuit cu poziția exactă a corpului 115/1. -->
+          <div class="map-wrap">
+            <div class="map-shield" data-map>
+              <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=28.8222%2C47.0270%2C28.8292%2C47.0305&amp;layer=mapnik&amp;marker=47.028707%2C28.825674" title="Renée Urban pe hartă" loading="lazy" referrerpolicy="no-referrer"></iframe>
+              <button type="button" class="map-unlock">Activează harta</button>
+            </div>
           </div>
         </div>
-      <!-- DRAFT: coordonată aproximativă (nr. 115). De înlocuit cu poziția exactă a corpului 115/1. -->
-        <div class="map-wrap">
-          <div class="map-shield" data-map>
-          <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=28.8222%2C47.0270%2C28.8292%2C47.0305&amp;layer=mapnik&amp;marker=47.028707%2C28.825674" title="Renée Urban pe hartă" loading="lazy" referrerpolicy="no-referrer"></iframe>
-          <button type="button" class="map-unlock">Activează harta</button>
-        </div>
-        </div>
-      </div>
+      </article>
+
     </div>
   </div>
 </section>

@@ -34,6 +34,181 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 ## Intrări
 
+## 2026-09-16 · ACASĂ · feedback client: paletă nouă, patternul scos, patru secţiuni redesenate
+
+Primul feedback venit de la client pe template. Şase puncte, toate aplicate.
+
+### 🎨 Paleta e acum a lor — `Downloads/ind/assets/css/variables.css`
+
+Designerul clientului s-a jucat cu o gamă proprie, clientului i-a plăcut, şi s-a cerut explicit: **doar acea paletă**. Restul (fonturi, structură) rămâne ce aveam.
+
+Paleta lor e considerabil mai deschisă decât a noastră: fundalul principal trece de la Tiramisu `#E0D7D1` la `#FAF7F4`, adică de la bej mediu la aproape alb. Asta schimbă senzaţia întregului site — şi e exact ce a plăcut.
+
+**E bine construită.** Verificat prin calcul, nu pe încredere:
+
+| pe cream `#FAF7F4` | contrast |
+|---|---|
+| `--brand #AF7B5C` | 3.39 — decor sau text mare, **nu** text mic |
+| `--brand-dark #8F5E3E` | 5.13 ✓ |
+| `--brand-deep #6B4330` | 7.96 ✓ |
+| `--ink #1A1410` | 17.09 ✓ |
+| `--text-body #3D302A` | 11.89 ✓ |
+| `--ink-soft #7A6B62` | 4.79 ✓ (dar **4.40 pe cream-2** — vezi mai jos) |
+
+**Maparea, unde a fost nevoie de judecată:**
+- Vin `#561320` (accentul care trebuie citit — cursivele din titluri) → `--brand-deep`. Paleta lor n-are roşu închis; brand-deep e cel mai apropiat rol.
+- Verde `#6D816C` → `--brand-deep`, prin tokenul nou `--ok`. **Paleta lor n-are verde**, iar la noi verdele era culoarea de confirmare (adăugat în coş, „Mesaj trimis", bară de livrare completă). Decizia lui Sergiu: mergem 100% pe paleta lor. Preţul e că o confirmare nu se mai distinge instant prin culoare — rămâne pe text şi bifă.
+- Crust Brown `#AF7B5C` → `--brand`: **identice**, paleta lor porneşte din acelaşi maro.
+
+**Numele vechi de token au rămas ca alias-uri** (`--tiramisu`, `--vin`, `--terra`…), cu valori noi. Aşa n-a trebuit atinsă nicio regulă care le folosea. Au fost înlocuite în schimb **105 valori `rgba()` hardcodate** cu echivalentele din paleta nouă, plus gradientele decorative ale placeholder-elor foto, rescrise pe `var()`.
+
+### 🪤 Capcana de 0.1: `--ink-soft` pe `cream-2`
+
+Auditul de contrast pe toate cele 13 pagini a scos **11 texte la 4.40**, toate cu acelaşi tipar: text secundar mic pe fundal `cream-2`. `--ink-soft` dă 4.79 pe cream, dar cream-2 e cu o treaptă mai închis şi pică sub 4.5.
+
+Tentaţia e să inventezi o nuanţă intermediară. **Nu.** Clientul a cerut doar paleta lui. Soluţia a fost să coborâm o treaptă, tot în paleta lor, şi — important — **redefinind variabila, nu proprietatea**:
+
+```css
+.testi,.meniu,.similare,.product-card,.cart-empty,/* … */{
+  --ink-soft:var(--text-body);
+}
+```
+
+Aşa se aplică singur la orice text din interior, fără să enumerăm fiecare clasă. Prima încercare a prins doar secţiunile; au mai rămas 5 texte, fiindcă `.product-card` şi `.cart-empty` sunt ele însele suprafeţe cream-2. **Metoda care a găsit restul:** auditul rulat în `<iframe>` peste toate cele 13 pagini, nu pe una singură.
+
+Rezultat final: **0 probleme de contrast pe toate paginile**.
+
+### 🌿 Pattern-ul a dispărut de pe site
+
+Cerere directă: „în general acel patern nu-l mai folosim pe site". Scoase 3 benzi verticale SVG (index, despre, evenimente) şi 3 separatoare full-width (index, despre, contact), plus tot CSS-ul (`.patern-banda`, `.patern-separator`, `@keyframes paternGlisare`) şi IntersectionObserver-ul care punea animaţia pe pauză.
+
+Fişierele rămân în `img/`, nereferite. **Nu le readuce** — au fost scoase intenţionat, nu din greşeală.
+
+### 🖼️ Despre — două poze
+
+Poza mare arcuită plus una mică suprapusă în colţul dinspre text, cu ramă `--cream` care o desprinde. Containerul are padding exact cât depăşeşte poza mică, deci nu cere `overflow:hidden` pe părinte şi nu iese din secţiune.
+
+### 🔢 „De ce Renée?" — grilă în loc de timeline
+
+Timeline-ul vertical cu linie şi buline a fost înlocuit cu o grilă 2×2: numeral serif mare (01–04) în `--brand`, etichetă, titlu, text. Structura o dau numeralele şi linia fină de sus a fiecărui bloc.
+
+Numeralul e la 40–66px, deci pragul WCAG e 3.0 şi `--brand` trece cu 3.39. **La dimensiuni mici aceeaşi culoare ar pica** — nu refolosi valoarea pentru text mic.
+
+Acelaşi tipar a fost dus şi în „Valorile Renée" de pe Despre (`.poveste-grid.trei`, 3 coloane), ca să nu rămână două structuri diferite pentru acelaşi lucru.
+
+### 🕗 „Momentele zilei" — ora e elementul principal
+
+Trei rânduri în loc de trei coloane. Ora de start la 46–86px în serif, cu minutele ridicate ca la ceas; titlul şi textul pe mijloc; intervalul complet ca detaliu în dreapta. Pe mobil ora urcă deasupra textului.
+
+`sup` are nevoie de `vertical-align:baseline` + `top` negativ — `vertical-align:super` implicit scoate cifrele din rând la 86px.
+
+### 📍 Locaţiile — două rânduri alternate, cu poza localului
+
+Taburile ascundeau a doua locaţie în spatele unui click; clientul a cerut ca ambele să aibă greutate egală. Acum fiecare are rândul ei: poza localului pe o parte, numele + datele + harta pe cealaltă, oglindit la al doilea rând prin `.invers`.
+
+**`order` schimbă doar ordinea vizuală, nu şi pe cea din DOM** — tastatura şi cititorul de ecran parcurg tot poză → informaţii, la ambele rânduri. Pe mobil `.invers` se anulează, altfel al doilea rând ar începe cu textul şi primul cu poza.
+
+Pozele reale ale celor două locale (`img_oassis.webp`, `img_urban.webp`) au fost luate din folderul clientului. Sunt fotografii proprii ale lor, cu faţada Renée.
+
+Scoase odată cu taburile: `.loc-tabs`, `.loc-tab`, `.loc-panel`, comutarea din `js/main.js` şi evenimentul `mapsrelock` rămas fără emitent.
+
+### 🔁 A doua rundă: „nu m-ai convins"
+
+Clientul a respins prima variantă pentru cele două secţiuni. Două obiecţii, ambele corecte:
+
+**1. Locaţiile arătau diferit deşi au acelaşi conţinut.** Le oglindeam (`.invers`). Alternarea e bună pentru conţinut *diferit*; pentru două instanţe ale aceluiaşi tip de conţinut face exact rău — creierul citeşte „alt layout", nu „a doua locaţie". Oglindirea a fost scoasă, ambele rânduri au poza pe stânga.
+
+**2. Despre → Povestea → Momente erau trei variaţiuni pe aceeaşi temă.** Toate pe crem, eyebrow + titlu serif la stânga, linii hairline, text mic gri. Ritmul lipsea complet. Ce îl creează: schimbarea de fundal, de măsură, de aliniere, de scară.
+
+Şi o problemă pe care o introdusesem eu: **numerotarea 01–04 minţea.** „Ideea" şi „Numele" nu sunt paşi într-o secvenţă; doar 2025 şi 2026 sunt. Numerele decorau, nu informau.
+
+**Metoda de lucru, la întrebarea lui Sergiu (ce e mai ieftin în tokeni):** variantele s-au construit direct într-o pagină de probă care încărca `css/main.css`-ul real, nu ca mockup-uri separate. Ce se vede e ce va fi, iar mutarea în template e copy/paste. Fără muncă aruncată. Pagina (`_variante.html`) a fost ştearsă după alegere.
+
+Şase variante propuse, alese **P4 + M5**, cu o iteraţie la mijloc (M4 a fost respinsă ca „prea asemănător cu ce era" — era într-adevăr aceeaşi structură, alt fundal).
+
+### 🌑 Povestea numelui — fundal închis, proză separată de cronologie
+
+`.poveste-numele`. Stânga proza, dreapta cele două deschideri reale, despărţite de o linie verticală. Fundalul închis rupe ritmul între Despre şi Momente, ambele pe crem cu fotografii.
+
+**Capcana de contrast:** pe fundal închis accentul citibil e `--brand` (5.46 ✓). `--brand-deep`, folosit peste tot pe deschis, dă **2.32** — invizibil. Din acelaşi motiv `.eyebrow` a avut nevoie de override: foloseşte `--accent-text`, adică tot brand-deep.
+
+### 🥐 Momentele zilei — preparate reale din catalog
+
+`.momente`. Fiecare fereastră de timp arată preparatul care se serveşte atunci, cu fotografia din API şi link către pagina lui:
+
+| Fereastră | Preparat |
+|---|---|
+| 08 — 11 | Croissant Clasic Renée |
+| 11 — 16 | Pancakes cu caramelă şi sos de pomuşoare |
+| 16 — 21 | Pavlova Renée |
+
+Secţiunea nu mai e decorativă — trimite în meniu. Imaginile sunt aceleaşi URL-uri ca în `data/products.js`, deci nu sunt stock.
+
+Trei decizii de execuţie:
+- **Forma arcuită** a pozelor e cea din Despre şi Locaţii, nu dreptunghiul rotunjit de la cardurile de produs. Continuitate de brand, nu încă un tip de card.
+- **Decalaj pe verticală** între cele trei coloane, ca să nu fie un rând aliniat mort. Doar vizual: ordinea de citire rămâne 1-2-3.
+- **Ora stă într-o pastilă crem** peste colţul pozei, nu direct pe fotografie. Contrastul e garantat faţă de crem (7.96 ✓), nu faţă de o imagine care variază. Text alb peste fotografie e mereu o loterie.
+
+Iconiţele n-au putut fi folosite: cele 6 pictograme din brandbook §5.1 tot n-au fost livrate.
+
+**Verificat:** cele trei link-uri chiar deschid preparatele (titlurile citite din `produs.html`), toate imaginile se încarcă, 31 de perechi text/fundal din cele două secţiuni — **zero sub prag**, o coloană pe mobil cu decalajul anulat, fără overflow.
+
+### 🪤 `order` mută elementul, dar îl mută în alt track de grilă
+
+Clientul: „locaţiile au acelaşi tip de conţinut, dar arată diferit". Concluzia mea iniţială — că vina e alternarea — **era greşită**. Precizarea lui: alternarea era bună, **dimensiunile pozelor** difereau.
+
+Cauza: `.loc-rand` are coloanele `.9fr 1.1fr`, iar oglindirea se făcea cu `order:2` pe poză. `order` schimbă poziţia vizuală, dar elementul ajunge în **alt track**: poza oglindită cădea în coloana de `1.1fr` şi ieşea vizibil mai lată (471px vs 576px) decât cea din primul rând.
+
+Rezolvarea nu e `order`, ci inversarea lăţimilor plus aşezare explicită:
+
+```css
+.loc-rand{grid-template-columns:.9fr 1.1fr}
+.loc-rand.invers{grid-template-columns:1.1fr .9fr}
+.loc-rand.invers .loc-foto{grid-column:2}
+.loc-rand.invers .loc-info{grid-column:1}
+```
+
+Poza rămâne pe `.9fr` în ambele rânduri — măsurat, **471×589 identic**. Bonus: `grid-column` nu atinge ordinea din DOM, deci tastatura şi cititorul de ecran parcurg tot poză → informaţii, fără trucul de la `order`.
+
+**Dar `grid-column` singur nu e de ajuns.** Prima versiune a rupt rândul complet: poza sus-dreapta, informaţiile dedesubt-stânga, cu un gol imens între ele. Cauza e auto-placement-ul „sparse": poza primeşte coloana 2, cursorul trece de coloana 1, iar informaţiile cad pe **rândul 2**. Trebuie fixate amândouă explicit:
+
+```css
+.loc-rand.invers .loc-foto{grid-column:2;grid-row:1}
+.loc-rand.invers .loc-info{grid-column:1;grid-row:1}
+```
+
+**Cum am ratat-o la verificare:** măsurasem poziţiile pe orizontală (157 şi 797) şi am presupus că sunt pe acelaşi rând. Erau pe rânduri diferite, iar `x`-ul arăta perfect. **La orice layout în două coloane, verifică şi `y`, şi înălţimea rândului** — nu doar `x`-urile. Acum verificarea compară `top`-urile şi cere suprapunere verticală.
+
+**De reţinut:** când un element oglindit într-o grilă asimetrică îşi schimbă dimensiunea, nu e o iluzie optică — chiar e în altă coloană. Şi când „dispare" pe verticală, e pe alt rând.
+
+### 🔢 Numerotarea de pe Despre, scoasă şi ea
+
+Aceeaşi problemă ca pe home, semnalată de mine şi confirmată de Sergiu: `01 / 02 / 03` peste trei valori care **nu au ordine**. Ordinea lor nu înseamnă nimic, deci numerele erau decor deghizat în structură.
+
+`.poveste-grid` / `.pv-*` au dispărut complet, înlocuite de `.valori-grid` / `.valoare`: linie de sus plus titlu, atât. Titlul a crescut ca să preia greutatea vizuală pe care o ţineau numeralele.
+
+Dacă ajung pictogramele din brandbook §5.1, locul lor e deasupra titlului.
+
+**Pentru cealaltă sesiune (OFICIU):**
+0. **Pe `.poveste-numele` (fundal închis) foloseşte `--brand`, nu `--brand-deep`.** Al doilea dă 2.32 şi dispare. Acelaşi lucru pentru orice secţiune închisă adăugată ulterior.
+0b. **Oglindirea rândurilor de locaţii se face cu `grid-column`, nu cu `order`.** Vezi capcana de mai sus — cu `order` pozele ies de dimensiuni diferite.
+0c. **Nu adăuga numerotare 01/02/03** decât unde ordinea chiar înseamnă ceva. A fost scoasă de două ori, din acelaşi motiv.
+1. **Paleta se schimbă doar din `:root`.** Nu reintroduce Tiramisu, Vin sau Verde — au fost înlocuite la cererea clientului, nu din greşeală.
+2. **Nu inventa nuanţe intermediare** ca să repari un contrast. Dacă un token pică pe un fundal, coboară o treaptă în paleta lor şi redefineşte variabila pe suprafaţa aceea.
+3. Pattern-ul nu se mai foloseşte nicăieri. Fişierele din `img/` sunt moştenire.
+4. `--brand` e text-safe doar peste ~24px sau pe fundal închis. Pentru text mic pe deschis: `--brand-dark` sau `--brand-deep`.
+5. Auditul de contrast se rulează pe **toate** paginile, prin iframe — o singură pagină nu prinde suprafeţele din carduri.
+
+**Întrebări deschise pentru Sergiu:**
+- **Denumirea primei locaţii** — în noua secţiune apare „Renée Oasis Mall". Restul site-ului mai are două variante.
+- **Telefonul `+373 60 000 000`** din footer-ul tuturor paginilor, placeholder inventat.
+- Categoria **„Adaosuri"** (18 itemi), exclusă din catalog. De confirmat.
+- **Programul pe locaţii** — acum e identic la ambele, marcat DRAFT. Cu ambele locaţii vizibile simultan, diferenţa (dacă există) sare în ochi.
+- **Poza din Despre** — cele două imagini folosite sunt destul de asemănătoare (ambele interior). Dacă există o a doua poză cu alt cadru, arată mai bine.
+
+---
+
+
 ## 2026-09-14 · ACASĂ · blog, articol, contact, separator, switcher, **adaptare mobilă + header nou**, coş gol, metode de plată
 
 ### 🎯 CTA-ul de pe Evenimente — decizie de reținut

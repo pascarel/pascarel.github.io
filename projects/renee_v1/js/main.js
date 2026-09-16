@@ -80,25 +80,6 @@
     });
   })();
 
-  /* ================= SEPARATOR CU PATTERN =================
-     Animaţia rulează doar cât banda e pe ecran. Nu o pornim şi oprim —
-     o punem pe pauză, ca la revenire să continue de unde a rămas. */
-  (function(){
-    var benzi = document.querySelectorAll('.patern-separator');
-    if (!benzi.length) return;
-
-    if (!('IntersectionObserver' in window)){
-      /* fără observer, o lăsăm pur şi simplu pornită */
-      benzi.forEach(function(b){ b.classList.add('vizibil'); });
-      return;
-    }
-    var obs = new IntersectionObserver(function(intrari){
-      intrari.forEach(function(i){
-        i.target.classList.toggle('vizibil', i.isIntersecting);
-      });
-    }, { rootMargin: '80px 0px' });
-    benzi.forEach(function(b){ obs.observe(b); });
-  })();
 
   /* ================= LIGHTBOX GALERIE ================= */
   (function(){
@@ -172,27 +153,10 @@
       if (!shield.classList.contains('is-active')) { e.preventDefault(); unlock(); }
     });
     shield.addEventListener('mouseleave', lock);
-    document.addEventListener('mapsrelock', lock);
   });
 
-  /* Locații — comutare între taburi (Oasis Mall / Renée Urban) */
-  var locTabs = document.querySelectorAll('.loc-tab');
-  if (locTabs.length){
-    locTabs.forEach(function(tab){
-      tab.addEventListener('click', function(){
-        var target = tab.getAttribute('aria-controls');
-        locTabs.forEach(function(t){
-          var on = (t === tab);
-          t.classList.toggle('is-active', on);
-          t.setAttribute('aria-selected', on ? 'true' : 'false');
-        });
-        document.querySelectorAll('.loc-panel').forEach(function(panel){
-          panel.hidden = (panel.id !== target);
-        });
-        document.dispatchEvent(new Event('mapsrelock'));
-      });
-    });
-  }
+  /* Taburile de locaţii au fost scoase 16 sept. 2026 — fiecare locaţie
+     are acum rândul ei. Nu mai există .loc-tab / .loc-panel. */
 
   /* Marquee — umple minim 2x lățimea ecranului, apoi dublează pentru buclă perfectă */
   var track = document.getElementById('marqueeTrack');
