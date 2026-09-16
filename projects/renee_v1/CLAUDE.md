@@ -103,7 +103,7 @@ projects/rvg/          — proiect separat
 | Metode de plată | Bloc `.footer-plata` în toate cele 13 pagini, sub reţelele sociale. **Logo-uri oficiale** din `img/`: `visa.svg`, `mastercard.svg`, `moldindconbank_logo.svg`. Sunt `<img>`, **nu** SVG inline cu `currentColor` — spre deosebire de restul pictogramelor. Motivul e în §5, „Logo-uri terţe". |
 | Paletă | **Schimbată complet 16 sept. 2026**, la cererea clientului: se foloseşte doar paleta designerului lor (`Downloads/ind/assets/css/variables.css`). Tiramisu / Vin / Verde nu se reintroduc. Fonturile NU vin de acolo — rămân Cormorant Garamond + Open Sans. Detalii în §5. |
 | Pattern decorativ | **Scos de pe tot site-ul** 16 sept. 2026 (cerere client): „acel patern nu-l mai folosim pe site". Şterse benzile verticale, separatoarele full-width, CSS-ul şi observer-ul. Fişierele rămân în `img/` dar **nu se mai referă**. |
-| Secţiunea Locaţii | Fără taburi. Câte un rând pe locaţie, fiecare cu poza localului, datele şi harta proprie; al doilea rând oglindit. ⚠️ Oglindirea se face cu `grid-column`, **nu cu `order`** — cu `order` poza ajunge în celălalt track şi iese de altă dimensiune. |
+| Secţiunea Locaţii | Fără taburi. Câte un rând pe locaţie, fiecare cu poza localului, datele şi harta proprie; al doilea rând oglindit. ⚠️ Oglindirea se face cu **`grid-column` + `grid-row`**, nu cu `order`: cu `order` poza ajunge în celălalt track şi iese de altă dimensiune, iar fără `grid-row:1` auto-placement-ul rupe rândul în două. Ambele capcane sunt documentate în jurnal, 16→17 sept. |
 | „Povestea numelui" (home) | `.poveste-numele`, pe **fundal închis**: proza la stânga, cele două deschideri reale la dreapta. Fundalul închis e intenţionat — rupe ritmul între Despre şi Momente, ambele pe crem cu fotografii. ⚠️ Accentul acolo e `--brand`; `--brand-deep` dă 2.32 şi dispare. |
 | „Valorile Renée" (Despre) | `.valori-grid` / `.valoare`: linie de sus plus titlu, **fără numerotare**. Cele trei valori nu sunt paşi într-o secvenţă, deci „01/02/03" ar fi decor deghizat în structură. |
 | Secţiunea „Momentele zilei" | `.momente`: fiecare fereastră de timp arată un **preparat real din catalog** (croissant / pancakes / pavlova), cu imaginea din API şi link către pagina lui. Secţiunea trimite în meniu, nu doar decorează. Ora stă într-o pastilă crem peste colţul pozei — contrast garantat faţă de crem, nu faţă de fotografie. |
@@ -254,7 +254,10 @@ Licențe: Cormorant Garamond — OFL 1.1 · Open Sans — Apache 2.0. Ambele per
 Logo-ul poate sta peste fotografii, cu condiția să rămână clar lizibil și separat de fundal. Se implementează ca variante CSS, nu ca imagine unică.
 
 ### Pictograme și pattern
-6 pictograme în stil de linie fluidă (monogram RR, tacâmuri, pahar, toaletă, marca WW, arcadă) + pattern chevron repetitiv în Tiramisu și Crust Brown. Pattern-ul devine `background-image` SVG repetabil.
+
+**Pictogramele** — 6, în stil de linie fluidă (monogram RR, tacâmuri, pahar, toaletă, marca WW, arcadă). **Încă nelivrate.** Când ajung, primul loc unde își au rostul e deasupra titlurilor din „Valorile Renée” (Despre), de unde au fost scoase numeralele.
+
+**Pattern-ul** — ⛔ **nu se mai folosește.** Scos de pe tot site-ul pe 16 sept. 2026, la cererea explicită a clientului: „acel patern nu-l mai folosim pe site”. Fișierele (`patern.svg`, `patern-brown.svg`, `patern-motiv*.svg`) au rămas în `img/` ca moștenire, dar nu sunt referite de nimic. Nu le readuce.
 
 ### Logo-uri terțe (plată) — regulă separată
 
@@ -275,7 +278,7 @@ Logo-ul poate sta peste fotografii, cu condiția să rămână clar lizibil și 
 - [x] **Poze pentru cele două locaţii** — `img/img_oassis.webp`, `img/img_urban.webp`, primite 16 sept. 2026 din folderul clientului (faţadele reale).
 - [x] **Logo-uri metode de plată** — primite 14 sept. 2026, oficiale, în `img/`. Vezi §5, „Logo-uri terțe".
 - [x] **Structura multilingvă RO/RU/EN** — decisă 14 sept. 2026: se face **în WordPress**, nu în prototipul static. Aici există doar switcher-ul vizual din header. Vezi §4.
-- [x] **Pattern SVG** — motivul extras și tileabil. Folosit ca SVG inline cu `<pattern>` în secțiunea „De ce Renée?" din `index.html`.
+- [x] ~~**Pattern SVG**~~ — **abandonat 16 sept. 2026** la cererea clientului. Fișierele rămân în `img/`, nefolosite.
 - [ ] **Restul brandbook-ului** — spațiere, dimensiuni minime logo, ton de voce, aplicații
 - [ ] **Numele repo-ului nou** pentru temă
 - [x] **Decizie** `--cream-2` și `--caramel` — vezi §5

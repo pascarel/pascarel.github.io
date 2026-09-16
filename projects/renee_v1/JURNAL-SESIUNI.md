@@ -34,7 +34,12 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 ## Intrări
 
-## 2026-09-16 · ACASĂ · feedback client: paletă nouă, patternul scos, patru secţiuni redesenate
+## 2026-09-16 → 17 · ACASĂ · feedback client: paletă nouă, patternul scos, patru secţiuni redesenate
+
+> Intrarea are **două runde**. Prima a fost respinsă parţial de client, a doua e cea
+> care a rămas. Secţiunile marcate ⛔ **ÎNLOCUITE** descriu prima rundă şi nu mai
+> reflectă codul — sunt păstrate doar pentru raţionamentul care a rezistat.
+> Starea curentă e de la „🔁 A doua rundă" în jos.
 
 Primul feedback venit de la client pe template. Şase puncte, toate aplicate.
 
@@ -88,25 +93,27 @@ Fişierele rămân în `img/`, nereferite. **Nu le readuce** — au fost scoase 
 
 Poza mare arcuită plus una mică suprapusă în colţul dinspre text, cu ramă `--cream` care o desprinde. Containerul are padding exact cât depăşeşte poza mică, deci nu cere `overflow:hidden` pe părinte şi nu iese din secţiune.
 
-### 🔢 „De ce Renée?" — grilă în loc de timeline
+### 🔢 „De ce Renée?" — grilă în loc de timeline · ⛔ ÎNLOCUITĂ
 
-Timeline-ul vertical cu linie şi buline a fost înlocuit cu o grilă 2×2: numeral serif mare (01–04) în `--brand`, etichetă, titlu, text. Structura o dau numeralele şi linia fină de sus a fiecărui bloc.
+> Prima rundă. Home-ul a fost apoi refăcut complet ca `.poveste-numele` (vezi „🌑 Povestea numelui"), iar numerotarea a fost scoasă şi de pe Despre. `.poveste-grid` / `.pv-*` **nu mai există**.
 
-Numeralul e la 40–66px, deci pragul WCAG e 3.0 şi `--brand` trece cu 3.39. **La dimensiuni mici aceeaşi culoare ar pica** — nu refolosi valoarea pentru text mic.
+Timeline-ul vertical cu linie şi buline a fost înlocuit cu o grilă 2×2: numeral serif mare (01–04) în `--brand`, etichetă, titlu, text.
 
-Acelaşi tipar a fost dus şi în „Valorile Renée" de pe Despre (`.poveste-grid.trei`, 3 coloane), ca să nu rămână două structuri diferite pentru acelaşi lucru.
+**Ce rămâne valabil:** numeralul era la 40–66px, deci pragul WCAG e 3.0 şi `--brand` trece cu 3.39. **La dimensiuni mici aceeaşi culoare pică** — nu refolosi valoarea pentru text mic. Regula e în continuare în vigoare oriunde apare `--brand` ca text.
 
-### 🕗 „Momentele zilei" — ora e elementul principal
+### 🕗 „Momentele zilei" — ora e elementul principal · ⛔ ÎNLOCUITĂ
 
-Trei rânduri în loc de trei coloane. Ora de start la 46–86px în serif, cu minutele ridicate ca la ceas; titlul şi textul pe mijloc; intervalul complet ca detaliu în dreapta. Pe mobil ora urcă deasupra textului.
+> Prima rundă. Secţiunea a fost refăcută cu fotografii reale de preparate — vezi „🥐 Momentele zilei". `.mom-rand` / `.mom-text` / `.mom-interval` **nu mai există**; numele `.mom-*` au fost refolosite pentru structura nouă.
 
-`sup` are nevoie de `vertical-align:baseline` + `top` negativ — `vertical-align:super` implicit scoate cifrele din rând la 86px.
+Trei rânduri în loc de trei coloane, cu ora de start la 46–86px în serif.
+
+**Ce rămâne valabil:** `sup` are nevoie de `vertical-align:baseline` + `top` negativ — `vertical-align:super` implicit scoate cifrele din rând la dimensiuni mari.
 
 ### 📍 Locaţiile — două rânduri alternate, cu poza localului
 
 Taburile ascundeau a doua locaţie în spatele unui click; clientul a cerut ca ambele să aibă greutate egală. Acum fiecare are rândul ei: poza localului pe o parte, numele + datele + harta pe cealaltă, oglindit la al doilea rând prin `.invers`.
 
-**`order` schimbă doar ordinea vizuală, nu şi pe cea din DOM** — tastatura şi cititorul de ecran parcurg tot poză → informaţii, la ambele rânduri. Pe mobil `.invers` se anulează, altfel al doilea rând ar începe cu textul şi primul cu poza.
+⛔ **Oglindirea NU se mai face cu `order`.** Prima versiune folosea `order:2`, ceea ce a produs poze de dimensiuni diferite. Vezi capcana „🪤 `order` mută elementul…" pentru mecanismul exact şi pentru forma corectă.
 
 Pozele reale ale celor două locale (`img_oassis.webp`, `img_urban.webp`) au fost luate din folderul clientului. Sunt fotografii proprii ale lor, cu faţada Renée.
 
@@ -189,15 +196,28 @@ Aceeaşi problemă ca pe home, semnalată de mine şi confirmată de Sergiu: `01
 
 Dacă ajung pictogramele din brandbook §5.1, locul lor e deasupra titlului.
 
+### ✅ Starea finală a celor patru secţiuni
+
+| Secţiune | Clasă | Fundal | Ce o defineşte |
+|---|---|---|---|
+| Despre (home) | `.despre-grid` + `.despre-foto` | crem | text stânga, două poze suprapuse dreapta |
+| Povestea numelui | `.poveste-numele` / `.pn-*` | **închis** | proză stânga, cele două deschideri dreapta |
+| Momentele zilei | `.momente` / `.mom-*` | crem | trei preparate reale, decalate, cu link în meniu |
+| Locaţiile | `.locatii` / `.loc-rand` | **închis** | un rând pe locaţie, al doilea oglindit |
+| Valorile (Despre) | `.valori-grid` / `.valoare` | crem | linie + titlu, fără numerotare |
+
+Ritmul e dat de alternanţa fundalurilor şi de schimbarea structurii, nu de decor.
+
 **Pentru cealaltă sesiune (OFICIU):**
-0. **Pe `.poveste-numele` (fundal închis) foloseşte `--brand`, nu `--brand-deep`.** Al doilea dă 2.32 şi dispare. Acelaşi lucru pentru orice secţiune închisă adăugată ulterior.
-0b. **Oglindirea rândurilor de locaţii se face cu `grid-column`, nu cu `order`.** Vezi capcana de mai sus — cu `order` pozele ies de dimensiuni diferite.
-0c. **Nu adăuga numerotare 01/02/03** decât unde ordinea chiar înseamnă ceva. A fost scoasă de două ori, din acelaşi motiv.
 1. **Paleta se schimbă doar din `:root`.** Nu reintroduce Tiramisu, Vin sau Verde — au fost înlocuite la cererea clientului, nu din greşeală.
 2. **Nu inventa nuanţe intermediare** ca să repari un contrast. Dacă un token pică pe un fundal, coboară o treaptă în paleta lor şi redefineşte variabila pe suprafaţa aceea.
-3. Pattern-ul nu se mai foloseşte nicăieri. Fişierele din `img/` sunt moştenire.
-4. `--brand` e text-safe doar peste ~24px sau pe fundal închis. Pentru text mic pe deschis: `--brand-dark` sau `--brand-deep`.
-5. Auditul de contrast se rulează pe **toate** paginile, prin iframe — o singură pagină nu prinde suprafeţele din carduri.
+3. `--brand` e text-safe doar peste ~24px sau pe fundal închis. Pentru text mic pe deschis: `--brand-dark` sau `--brand-deep`.
+4. **Pe fundal închis (`.poveste-numele`, `.vizita`) accentul citibil e `--brand`, nu `--brand-deep`.** Al doilea dă 2.32 şi dispare. Valabil pentru orice secţiune închisă adăugată ulterior — inclusiv `.eyebrow`, care foloseşte `--accent-text` şi are nevoie de override.
+5. **Oglindirea rândurilor de locaţii se face cu `grid-column` + `grid-row`, nu cu `order`.** Vezi capcana de mai sus: cu `order` pozele ies de dimensiuni diferite, iar fără `grid-row` rândul se rupe în două.
+6. **Nu adăuga numerotare 01/02/03** decât unde ordinea chiar înseamnă ceva. A fost scoasă de două ori, din acelaşi motiv.
+7. Pattern-ul nu se mai foloseşte nicăieri. Fişierele din `img/` sunt moştenire.
+8. **Auditul de contrast se rulează pe toate paginile, prin iframe** — o singură pagină nu prinde suprafeţele din carduri. Şi la mai multe lăţimi: 375 / 1024 / 1440.
+9. **La layout în două coloane verifică şi `y`, nu doar `x`.** Vezi mai sus cum am ratat un rând rupt fiindcă măsurasem doar orizontala.
 
 **Întrebări deschise pentru Sergiu:**
 - **Denumirea primei locaţii** — în noua secţiune apare „Renée Oasis Mall". Restul site-ului mai are două variante.
@@ -365,7 +385,7 @@ Le-am făcut întâi ca placeholder-e în CSS (text „VISA", două cercuri pent
 5. **Spaţierile folosesc `vw`, nu `vh`.** Singurele `vh` rămase legitime sunt înălţimi de viewport reale: hero, lightbox, overlay-ul de meniu, footer-ul lipit jos.
 6. Header-ul are acum trei zone — logo, nav, `.header-actions`. Acţiunile rămân vizibile sub 900px, când nav-ul se ascunde. Nu le muta înapoi în `<nav>`.
 7. **Nu construi structură multilingvă** în proiectul static — switcher-ul din header e doar vizual, decizie explicită. Vezi `PARTIALS.md` §2.3.
-8. Separatorul cu pattern e o singură linie de HTML, `PARTIALS.md` §2.2. Nu-l rescrie ca SVG inline — a fost făcut extern tocmai ca să fie copiabil.
+8. ~~Separatorul cu pattern e o singură linie de HTML, `PARTIALS.md` §2.2.~~ **Depăşit 16 sept. 2026:** pattern-ul a fost scos de pe tot site-ul, separatorul nu mai există.
 9. **Citește secțiunea despre `getComputedStyle` de mai sus** înainte să tragi concluzia că o regulă CSS nu se aplică.
 10. **Logo-urile de plată nu se ating** — nici recolorate, nici redesenate, nici convertite la `currentColor`. Sunt `<img>` din motive de brand guidelines, nu din lene.
 11. Starea coşului gol se comandă din clasa `is-empty` pe `.cart-layout`, pusă de `renderCart`. Nu ascunde `.cart-side` din altă parte.
