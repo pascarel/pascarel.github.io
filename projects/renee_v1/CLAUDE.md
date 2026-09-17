@@ -107,7 +107,7 @@ projects/rvg/          — proiect separat
 | „Povestea numelui" (home) | `.poveste-numele`, pe **fundal închis**: proza la stânga, cele două deschideri reale la dreapta. Fundalul închis e intenţionat — rupe ritmul între Despre şi Momente, ambele pe crem cu fotografii. ⚠️ Accentul acolo e `--brand`; `--brand-deep` dă 2.32 şi dispare. |
 | „Valorile Renée" (Despre) | `.valori-grid` / `.valoare`: linie de sus plus titlu, **fără numerotare**. Cele trei valori nu sunt paşi într-o secvenţă, deci „01/02/03" ar fi decor deghizat în structură. |
 | Secţiunea „Momentele zilei" | `.momente`: fiecare fereastră de timp arată un **preparat real din catalog** (croissant / pancakes / pavlova), cu imaginea din API şi link către pagina lui. Secţiunea trimite în meniu, nu doar decorează. Ora stă într-o pastilă crem peste colţul pozei — contrast garantat faţă de crem, nu faţă de fotografie. |
-| **Catering (fourchette)** | Al doilea catalog al localului, **separat de Meniu**: candy bar, finger food, plăcinte, băuturi, pentru evenimente. Pagină proprie **`catering.html`**, date în `data/catering.js`, randare în `js/catering.js`. **Fără coş, fără pagină de detaliu**, un singur CTA — cerere de ofertă. **Pe homepage nu are secţiune sau grilă de produse** — doar butonul secundar „Meniu de catering" din secţiunea Evenimente private (adăugat 17 sept. 2026). Intrări: sub-item „Catering" în dropdown-ul Evenimente (singurul dropdown din nav), footer, cardul „Meniu de catering" şi teaser-ul de pe Evenimente. **În WordPress: CPT separat `catering` + taxonomie `catering_cat`**, nu produse Woo — se comandă cantităţi pentru un eveniment, nu porţii, şi nu intră în coş. Decis 17 sept. 2026. Detalii §4.1. |
+| **Catering** | Al doilea catalog al localului, **separat de Meniu**: candy bar, finger food, plăcinte, băuturi, pentru evenimente. Pagină proprie **`catering.html`**, date în `data/catering.js`, randare în `js/catering.js`. **Fără coş**; pagina de detaliu e **aceeaşi `produs.html`** (rutează după id: Meniu, apoi Catering), cu un singur CTA — „Cere o ofertă". Băuturile rămân listă, fără pagină. **Pe homepage nu are secţiune sau grilă de produse** — doar butonul secundar „Meniu de catering" din secţiunea Evenimente private (adăugat 17 sept. 2026). Intrări: sub-item „Catering" în dropdown-ul Evenimente (singurul dropdown din nav), footer, cardul „Meniu de catering" şi teaser-ul de pe Evenimente. **În WordPress: produse Woo obişnuite, într-o categorie-părinte `Catering` cu subcategorii** — NU CPT separat (schimbat în aceeaşi zi, 17 sept. 2026, când s-a decis că au pagină de produs identică). Ramura Catering: nevandabilă (`is_purchasable` false) până decide clientul, exclusă din Meniu, cu layout propriu în single-product. Detalii §4.1. |
 
 ### 4.1 Catering — al doilea catalog
 
@@ -124,14 +124,24 @@ se introduce manual. 70 de poziţii:
 Câmpurile sunt cele din `data/products.js` plus `unitate` (`buc` / `kg`) şi, la băuturi, `grup`.
 Imaginile sunt extrase din PDF în `img/catering/` (56 × ~367px, webp). Pentru WP, de cerut originalele.
 
-**Ce e draft acolo:** alergenii (deduşi din nume), preţurile băuturilor, termenul de comandă
+**Ce e draft acolo:** alergenii (deduşi din nume), **gramajele (estimate — PDF-ul nu le are; la kg = 1000, la băuturi volum în ml)**, preţurile băuturilor, termenul de comandă
 „minim 48 de ore", „fără cantitate minimă", „livrare în Chişinău", „TVA inclus" — toate marcate
 `DRAFT` în `catering.html`. Descrierile sunt **goale**: PDF-ul nu are, nu le inventăm.
 Două plăcinte (varză / carne de pui) au pozele atribuite prin comparare de pixeli, de verificat vizual.
 
-**Model WP:** CPT `catering` (`has_archive` → `/catering/`), taxonomie `catering_cat`, meta:
-`pret`, `unitate`, `alergeni`, `grup`. Filtrarea în pagină e JS, ca la Meniu — fără arhive de
-categorie indexabile. Teaser-ul de pe Evenimente = query pe 4 ID-uri alese manual (ACF relationship).
+**Model WP (revizuit 17 sept. 2026, după decizia că au pagină de produs):** produse Woo, nu CPT.
+- `product_cat` **Catering** ca părinte, cu copiii Candy Bar · Finger Food · Plăcintă Cosiţă · Băuturi.
+  Categoriile de bucătărie rămân la acelaşi nivel cu Catering.
+- **Meniul exclude ramura Catering** (`tax_query` cu `operator NOT IN` + `include_children`), pagina
+  `/catering/` arată doar ramura ei. Altfel macarons-urile apar între deserturile din local.
+- **Redirect-urile de arhivă** se ramifică: categoriile de bucătărie → `/meniu/`, ramura Catering → `/catering/`.
+- **Nevandabile:** `woocommerce_is_purchasable` → false pe ramură. Fără „Adaugă în coş", fără stepper,
+  fără sticky bar, fără bundle. Single-product pe ramură: breadcrumb Evenimente › Catering › subcategorie,
+  preţ + unitate + gramaj, acordeon alergeni, acordeon „Cum se comandă", CTA „Cere o ofertă" → contact.
+  Prototipul face exact asta în `produs.html` + `Catering.renderDetail()`.
+- Meta: `unitate` (buc/kg — atribut sau meta), gramaj → `weight` Woo, `masura` (g/ml), `grup` la băuturi.
+- Băuturile: produse în subcategoria lor, dar **fără pagină** (listă pe `/catering/`; single redirecţionează la listă).
+- Teaser-ul de pe Evenimente = 4 ID-uri alese manual (ACF relationship).
 
 ### Sursa de meniu real — API eat-me.online
 
@@ -149,6 +159,11 @@ Meniul **real și complet** al localului: 17 categorii, ~240 de preparate cu num
 ⚠️ Câmpurile `allergens` și `labels` există în schemă, dar sunt **goale pentru toate preparatele**. Alergenii afișați acum pe site sunt DRAFT puși de mână. Dacă localul le completează în eat-me, se pot prelua automat.
 
 ⚠️ `storeId=14189` e una din cele două locații (în prețuri apare și `storeId=10794`). De clarificat care e Oasis Mall și care Renée Urban — prețurile pot diferi.
+
+### Reguli mici pentru WP, strânse pe parcurs
+- **Articole conexe** (`articol.html`, `#related`): **maxim 4**, din aceeaşi categorie. Pe mobil sunt carusel orizontal.
+- **Blog** (`blog.html`): listă verticală; **paginare şi pe desktop** când vor fi mai multe articole. Fără carusel.
+- **Catering**: vezi §4.1.
 
 ### Ghid tehnic existent
 `projects/renee_v1/MIGRARE-WP.md` — 254 linii, tabel de mapare pagină → WP/Woo, model de date produs, shipping zones. **De consultat înainte de a scrie cod.** Rămâne referință, dar precede brandbook-ul, deci partea de design e depășită.
@@ -323,7 +338,7 @@ Numele, descrierile, prețurile, gramajele, imaginile și valorile nutriționale
 - **Badge-urile** `nou` / `vegan` / `recomandat` — atribuite determinist. `vegan` doar unde numele preparatului o spune explicit.
 
 ### ❌ Încă inventat, de înlocuit obligatoriu
-- **Catering:** preţurile băuturilor, termenul de comandă, condiţiile de livrare/cantitate din banda „Cum se comandă". Vezi §4.1.
+- **Catering:** gramajele tuturor celor 70 de poziţii, preţurile băuturilor, termenul de comandă, condiţiile de livrare/cantitate din banda „Cum se comandă". Vezi §4.1.
 - **Telefon `+373 60 000 000`** — placeholder, în footer-ul tuturor celor 13 pagini. Restul site-ului folosește `+373 78 784 040`.
 - **`hello@renee.md` / `centru@renee.md`** — de confirmat că domeniul și căsuțele există.
 - **Imagini de atmosferă, galerie, blog, Instagram** — hotlink-uri Unsplash. (Excepţie: pozele celor două locaţii sunt reale, din folderul clientului.) **Video hero** — hotlink Pexels. (Imaginile de preparate sunt reale, de pe CDN-ul Syrve.)

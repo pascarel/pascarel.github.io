@@ -125,14 +125,19 @@
 <!-- /WP: footer.php -->
 
 <script src="data/products.js"></script>
+<script src="data/catering.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/shop.js"></script>
+<script src="js/catering.js"></script>
 <script src="js/rez-modal.js"></script>
 <script src="js/main.js"></script>
 <script>
-  Shop.renderProductDetail('productDetail');
-  var p = window.getProduct(new URLSearchParams(location.search).get('id'));
+  /* O singură pagină de produs pentru ambele cataloage — ca single-product.php în WP,
+     unde ramura Catering primeşte alt layout (fără coş, „Cere o ofertă"). */
+  var pid = new URLSearchParams(location.search).get('id');
+  var p = window.getProduct(pid);
   if (p){
+    Shop.renderProductDetail('productDetail');
     var sim = window.getProductsByCategory(p.category).filter(function(x){ return x.id !== p.id; }).slice(0, 3);
     if (sim.length){
       var wrap = document.getElementById('relatedWrap');
@@ -140,6 +145,10 @@
         '<div id="relatedGrid" class="cards"></div></div>';
       Shop.renderProducts('relatedGrid', sim);
     }
+  } else {
+    var cp = Catering.renderDetail('productDetail', pid);
+    if (cp) Catering.renderSimilar('relatedWrap', cp);
+    else Shop.renderProductDetail('productDetail');   /* afişează „Produsul nu a fost găsit" */
   }
 </script>
 </body>

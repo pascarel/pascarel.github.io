@@ -56,6 +56,11 @@
   --sans:var(--font-body);
 
   --ease:cubic-bezier(.22,1,.36,1);
+
+  /* distanţa dintre carduri / imagini în TOATE grilele (meniu, blog, galerie,
+   instagram, catering). Un singur token — 17 sept. 2026, la cererea lui Sergiu:
+   erau patru valori (26 / 26 / 18 / 16) în patru secţiuni. 14px la 375, 26px la 1440. */
+--gap-grid:clamp(14px,1.8vw,26px);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -604,7 +609,7 @@ body.pagina-meniu,body.pagina-blog .shop-hero,
 /* ---------- instagram ---------- */
 .insta-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px}
 .insta-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap-grid);margin-top:52px;
 }
 .insta-item{
   position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;display:block;
@@ -701,7 +706,7 @@ body.pagina-meniu,body.pagina-blog .shop-hero,
 .h2 em{font-style:italic;color:var(--accent-text)}
 .meniu-note{font-size:13px;color:var(--ink-soft);letter-spacing:.06em;max-width:30ch}
 .cards{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:26px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap-grid);
 }
 .card{
   background:var(--cream);border-radius:14px;overflow:hidden;
@@ -796,7 +801,7 @@ body.pagina-meniu,body.pagina-blog .shop-hero,
 
 /* ---------- galerie ---------- */
 .galerie-grid{
-  display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-top:56px;
+  display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap-grid);margin-top:56px;
 }
 .g-item{
   position:relative;border-radius:14px;overflow:hidden;
@@ -1341,7 +1346,10 @@ footer a:hover{color:var(--accent-dark)}
   .loc-foto{max-width:420px}
   .valori-grid{grid-template-columns:1fr}
   .despre-photo{max-width:480px}
-  .despre-foto{max-width:480px;margin-inline:auto}
+  /* width:100% e obligatoriu: cu margin auto şi fără lăţime, containerul se strânge la
+     padding-ul lui (30px), fiindcă tot conţinutul e poziţionat absolut. Poza mare ieşea 0×0,
+     iar cea mică, ancorată jos, urca peste text. Găsit 17 sept. pe captura lui Sergiu. */
+  .despre-foto{width:100%;max-width:480px;margin-inline:auto}
   .g-1{grid-column:span 12}
   .g-2{grid-column:span 12;aspect-ratio:16/9}
   .g-3,.g-4,.g-5{grid-column:span 4}
@@ -1350,7 +1358,7 @@ footer a:hover{color:var(--accent-dark)}
   nav{display:none}
   /* nav-ul avea margin-left:auto; ascuns, nu mai împinge nimic */
   .header-actions{margin-left:auto}
-  .insta-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .insta-grid{grid-template-columns:1fr 1fr}
   .form-grid{grid-template-columns:1fr}
   .map-wrap iframe{height:300px}
   .burger{display:block}
@@ -1530,4 +1538,69 @@ body.pagina-blog.subpage header{background:rgba(242,237,232,.9)}
   .footer-meta a{display:inline-block;padding:8px 0}
   .info-row .val a{display:inline-block;padding:6px 0}
 
+}
+
+
+/* ============================================================
+   MOBIL — runda a doua, 17 sept. 2026 (cerinţele lui Sergiu, pe capturi)
+   ============================================================ */
+
+/* Carusel orizontal pe mobil: cardurile de blog de pe home şi „similare" de pe
+   pagina de produs. Un singur pattern, refolosibil: pune clasa-container în lista
+   de mai jos. Sângerează până la marginile ecranului (anulează padding-ul din .wrap)
+   şi se opreşte pe fiecare card (scroll-snap). Bara de scroll e ascunsă — indiciul
+   vizual e cardul următor, tăiat la margine. */
+@media(max-width:640px){
+  /* :not(.pagina-blog) — pe blog.html articolele stau unul sub altul (listă, cu paginare când
+     vor fi mai multe); caruselul e doar pentru secţiunea „Din jurnal" de pe home. */
+  body:not(.pagina-blog) .blog-home .product-grid,
+  #related .product-grid,
+  .similare .cards{
+    display:flex;grid-template-columns:none;
+    gap:var(--gap-grid);
+    overflow-x:auto;overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    margin-inline:calc(-1 * clamp(20px,5vw,64px));
+    padding-inline:clamp(20px,5vw,64px);
+    /* scroll-snap aliniază cardul la marginea zonei de scroll, NU la padding — fără asta
+       primul card porneşte derulat cu 20px şi stă lipit de marginea ecranului. */
+    scroll-padding-inline:clamp(20px,5vw,64px);
+    padding-bottom:6px;
+    scrollbar-width:none;
+  }
+  body:not(.pagina-blog) .blog-home .product-grid::-webkit-scrollbar,
+  #related .product-grid::-webkit-scrollbar,
+  .similare .cards::-webkit-scrollbar{display:none}
+  body:not(.pagina-blog) .blog-home .product-grid > *,
+  #related .product-grid > *,
+  .similare .cards > *{flex:0 0 78%;scroll-snap-align:start}
+
+  /* #3 footer: coloana „Explorează" dublează nav-ul — pe mobil dispare */
+  footer .footer-col:nth-child(2){display:none}
+
+  /* #4 „Momentele zilei": pozele 4/5 erau prea înalte pe o coloană → pătrate */
+  .mom-foto{aspect-ratio:1/1}
+
+  /* #5 galeria „Atmosfera": nu o poză sub alta. Prima lată, restul câte două pe rând. */
+  .g-1{grid-column:span 12;aspect-ratio:16/10}
+  .g-2,.g-3,.g-4,.g-5{grid-column:span 6;aspect-ratio:1/1}
+}
+
+@media(max-width:900px){
+  /* #6 Evenimente private: grila nu are titlu deasupra, deci cei 56px de margin-top
+     se adunau cu padding-ul secţiunii într-un gol. Pe home şi pe evenimente.html. */
+  .event-grid{margin-top:0}
+  /* #7 Locaţiile: poze pătrate, nu 4/5 */
+  .loc-foto{aspect-ratio:1/1}
+}
+
+/* Prima secţiune de după header, pe SUBPAGINI, la mobil: body.subpage are deja padding-top:72px
+   pentru header-ul fixat, iar secţiunile de deschidere mai pun 96–104px peste (inline sau în
+   .shop-hero / .product-detail / .confirm-box). Pe desktop golul e intenţionat, pe telefon e un
+   ecran gol. !important fiindcă trei pagini au valoarea inline. Articolul are deja 30px. */
+@media(max-width:640px){
+  body.subpage header + section,
+  body.subpage header + article{padding-top:40px !important}
+  body.subpage .confirm-box,
+  body.subpage .pd-notfound{padding-top:0}
 }

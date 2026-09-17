@@ -290,7 +290,7 @@ Pagini fără magazin (dar cu badge de coș în header):
 
 `js/contact.js` se adaugă **doar** pe `contact.html`.
 
-Pagini cu catering (`catering`, `evenimente`) — catalogul separat, fără coş:
+Pagini cu catering (`catering`, `evenimente`, plus `produs`, care încarcă **ambele** cataloage şi rutează după id) — catalogul separat, fără coş:
 
 ```html
 <script src="data/catering.js"></script>

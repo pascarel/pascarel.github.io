@@ -34,9 +34,16 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 ## Intrări
 
-## 2026-09-17 · ACASĂ · catering: al doilea catalog, pagină nouă, dropdown în nav
+## 2026-09-17 · ACASĂ · catering (catalog + pagină de produs), dropdown în nav, cinci runde de mobil
 
-Clientul a trimis un PDF cu meniul de **fourchette pentru evenimente** (candy bar, finger food,
+> Sesiune lungă, cu Sergiu prezent. Pe scurt: **catering** — pagină nouă, 70 de poziţii, pagină
+> de produs comună cu Meniul, model WP schimbat de la CPT la produse Woo în categoria Catering ·
+> **nav** — primul dropdown (Evenimente › Catering) pe toate cele 14 pagini · **mobil** — cinci
+> runde de corecţii pe capturi (grile, carusele, filtre sticky, paginare compactă, goluri de sus,
+> coş). Fişiere noi: `catering.html`, `data/catering.js`, `js/catering.js`, `img/catering/` (56).
+> Un commit, din GitHub Desktop, la finalul zilei. Detaliile, în ordinea în care s-au întâmplat:
+
+Clientul a trimis un PDF cu meniul de **catering pentru evenimente** (el îi zice „fourchette"; pe site cuvântul nu apare — decizia lui Sergiu, 17 sept.) (candy bar, finger food,
 plăcinte, băuturi). Sergiu a decis: pagină proprie, **nu pe homepage**, intrare din Evenimente şi
 footer, sub-item în nav. În WordPress va fi **CPT separat**, nu produse Woo. Totul e în `CLAUDE.md` §4.1.
 
@@ -46,7 +53,9 @@ footer, sub-item în nav. În WordPress va fi **CPT separat**, nu produse Woo. T
   alergeni, CTA „Cere o ofertă" pe fundal închis, apoi **secţiunea Instagram** (copiată de pe
   Evenimente) înainte de footer — altfel CTA-ul închis se lipea de footer-ul închis într-un singur
   bloc negru. Fără coş, fără pagină de detaliu, fără buton de rezervare (regula de pe Evenimente).
-- **`data/catering.js`** — 70 de poziţii, aceleaşi câmpuri ca la preparate + `unitate` (buc/kg).
+- **`data/catering.js`** — 70 de poziţii, aceleaşi câmpuri ca la preparate + `unitate` (buc/kg) şi `masura` (g/ml).
+  **Gramajele sunt ESTIMATE de mine** — PDF-ul nu le are, Sergiu a cerut să existe pe site. Cardurile
+  le arată ca în Meniu („35 g", „1 kg", „330 ml" la băuturi). De confirmat cu bucătăria, toate 70.
 - **`js/catering.js`** — randare separată de `shop.js`: carduri fără coş, băuturile ca listă în două
   coloane, `mountTeaser()` pentru Evenimente. **Trece textele prin `esc()`** — spre deosebire de shop.js.
 - **`img/catering/`** — 56 de poze reale extrase din PDF cu `pdfimages`, convertite webp (780 KB).
@@ -54,6 +63,148 @@ footer, sub-item în nav. În WordPress va fi **CPT separat**, nu produse Woo. T
 - **Evenimente:** cardul „Meniu personalizat" → „Meniu de catering" cu link; teaser cu 4 preparate.
 - **Home:** buton secundar de contur „Meniu de catering" lângă „Discută cu noi", în secţiunea Evenimente private. Fără grilă de produse pe home — asta era decizia; un link se poate.
 - **Evenimente (hero):** acelaşi buton secundar lângă „Discută cu noi". Pagina are acum trei intrări spre catering: butonul din hero, cardul din Servicii, teaser-ul. Sergiu le vrea pe toate trei.
+
+### 🔁 Schimbare de model: cateringul are pagină de produs → produse Woo, nu CPT
+
+Sergiu a decis, la final de zi, că preparatele de catering au **pagină de detaliu identică** cu cea
+din Meniu. Asta răstoarnă decizia de dimineaţă: dacă e produs cu pagină de produs, e produs Woo,
+într-o **categorie-părinte Catering cu subcategorii**, nu CPT separat. Modelul complet e în
+`CLAUDE.md` §4.1 — inclusiv cele trei consecinţe care altfel amestecă meniurile: Meniul exclude
+ramura, redirect-urile de arhivă se ramifică, ramura e nevandabilă.
+
+În prototip: **nu există `catering-produs.html`.** `produs.html` încarcă ambele cataloage, încearcă
+întâi Meniul, apoi Cateringul (`Catering.renderDetail`), şi abia apoi „Produsul nu a fost găsit".
+Varianta de catering: breadcrumb Evenimente › Catering › subcategorie, preţ + „per bucată / per
+kilogram" + gramaj, acordeoane Alergeni şi „Cum se comandă" (DRAFT), CTA **„Cere o ofertă"** + telefon.
+Fără coş, stepper, sticky bar, bundle. „Similare" = 3 din aceeaşi subcategorie. Cardurile de catering
+au primit link către produs. **Băuturile rămân listă, fără pagină** (decizia lui Sergiu).
+
+Detaliu: `main.js` marca Meniu ca activ pe orice `produs.html`. Pe un preparat de catering,
+`renderDetail` mută starea pe Evenimente + Catering.
+
+Scos, la observaţia lui Sergiu: eyebrow-ul „Catering · Candy Bar" de deasupra titlului. Repeta
+breadcrumb-ul de două rânduri mai sus. Titlul stă acum direct sub breadcrumb — aceeaşi regulă ca la
+pagina de preparat din Meniu, unde eyebrow-ul cu categoria a fost scos pe 11 sept. din acelaşi motiv.
+
+Verificat pe mobil (375px): poză, titlu, preţ + unitate + gramaj, buton şi telefon pe un rând,
+acordeoane, similare pe o coloană, fără overflow. Un defect găsit şi reparat, valabil şi pentru
+preparatele din Meniu: la nume lungi, ultimul „/" din breadcrumb rămânea singur pe rând. Sub 640px
+ultimul separator se ascunde şi numele trece pe rândul lui (`.pd-crumb em{flex-basis:100%}`).
+
+**Deschis:** „Cere o ofertă" duce la `contact.html`, unde formularul e generic. Când vine un
+formular dedicat (dată, invitaţi, preparate), linkul se schimbă acolo.
+
+### 📱 Mobil, runda a doua — opt puncte de la Sergiu, pe capturi
+
+Toate în blocul „MOBIL — runda a doua" de la finalul `css/main.css` (plus o ştergere în `shop.css`):
+
+1. **Catering: o coloană**, ca în Meniu. Regula mea de două coloane a fost scoasă — consecvenţa bate scurtarea derulării.
+2. **„Similare" pe pagina de produs → carusel orizontal.** Valabil şi pentru preparatele din Meniu (aceeaşi clasă).
+3. **Footer: coloana „Explorează" ascunsă** sub 640px — dublează nav-ul.
+4. **„Momentele zilei": poze pătrate** (erau 4/5, prea înalte pe o coloană).
+5. **Galeria „Atmosfera":** prima poză lată 16/10, restul câte două pe rând, pătrate. Nu mai e o poză sub alta.
+6. **Evenimente private: golul de sus.** Cauza: `.event-grid` avea `margin-top:56px` gândit pentru un titlu deasupra, care pe home nu există; se aduna cu padding-ul secţiunii. Pe mobil e 0 — şi pe evenimente.html.
+7. **Locaţiile: poze pătrate** (erau 4/5).
+8. **Blogul de pe home → carusel orizontal.**
+
+**Caruselul** e un singur pattern (`display:flex` + `overflow-x:auto` + `scroll-snap`), pe două
+containere: `.blog-home .product-grid` şi `.similare .cards`. Sângerează până la marginile
+ecranului anulând padding-ul din `.wrap` cu margin negativ, cardul are 78% din lăţime ca să se vadă
+următorul tăiat la margine — ăsta e indiciul că se derulează, bara de scroll e ascunsă.
+Ca să-l pui pe alt container, îl adaugi în lista de selectori, atât.
+
+⚠️ Caruselul e **doar pe home** (`body:not(.pagina-blog)`): `blog.html` foloseşte aceeaşi clasă
+`blog-home` şi ar fi devenit şi el carusel. Decizia lui Sergiu: pe pagina de Blog articolele stau
+unul sub altul, iar când vor fi mai multe vine **paginare, şi pe desktop** — încă neimplementată,
+sunt doar 4 articole draft.
+
+Caruselul e şi pe **„Articole conexe"** din `articol.html` (`#related .product-grid`), la cererea
+lui Sergiu. **Pentru WP: maxim 4 articole conexe** — notat şi în comentariul din `articol.html`.
+
+🪤 **Capcana caruselului:** primul card pornea lipit de marginea ecranului, deşi containerul avea
+padding. `scroll-snap-align:start` aliniază cardul la marginea *zonei de scroll*, nu la padding —
+containerul se deschidea deja derulat cu 20px (`scrollLeft` = 20). Fix: `scroll-padding-inline`
+egal cu padding-ul. Fără el, orice carusel cu snap şi padding are acelaşi defect.
+
+Măsurat la 375px: blog 4 carduri de 261px într-un container care derulează 1127px; similare 852px;
+galerie g-2..g-5 câte 160px; toate aspect-ratio-urile noi aplicate; fără overflow pe pagină.
+
+**9 (găsit după, pe captură): „Despre Renée" pe home — poza mare lipsea, cea mică urca peste text.**
+Cauza, măsurată: `.despre-foto` avea 30px lăţime. Regula de mobil îi dădea `max-width:480px;
+margin-inline:auto` fără `width`, iar tot conţinutul lui e poziţionat absolut, deci containerul
+s-a strâns la propriul padding. Poza mare: 0×0. Cea mică, ancorată `bottom:0`, se întindea 160px
+în sus, peste paragraf. Fix: `width:100%`. Capcană generală: **un element cu `margin:auto` şi doar
+copii absoluţi n-are lăţime** — pe desktop îl salva coloana de grid care îl întindea.
+
+### 📱 Mobil, runda a treia — pagina Meniu (şi Catering): filtre, toolbar, paginare
+
+Patru cerinţe de la Sergiu, pe capturi din `meniu.html`. Codul e comun cu Catering (aceleaşi clase).
+
+1. **Filtrele pe un rând derulabil** (`.cat-filters`, flex + overflow-x, sângerare la margini).
+2. **Bara de filtre e sticky sub header.** `top` vine din `--header-h`, setat de `main.js` din
+   înălţimea reală a header-ului. ⚠️ Header-ul se **strânge la scroll** (88 → 72px): dacă variabila
+   se citea o singură dată, rămânea o fantă de 15px între header şi bară prin care treceau cardurile.
+   Se recalculează la scroll (rAF) şi la `transitionend`.
+   **Chip-ul activ e mereu vizibil:** `reneeChipReveal(bar, chip)` derulează bara ca să-l centreze,
+   la click şi la scrollspy. Nu foloseşte `scrollIntoView` — ar fi mişcat şi pagina pe verticală.
+   **Scrollspy** există **doar pe Catering**, în modul „Toate", unde categoriile sunt secţiuni una sub
+   alta: un IntersectionObserver pe blocul fiecărei categorii aprinde chip-ul ei. Nu schimbă filtrul;
+   click-ul filtrează ca înainte. **Pe Meniu nu se poate aşa cum e acum:** „Toate" e o listă
+   paginată şi sortată, nu grupată pe categorii, deci nu există „categoria vizibilă pe ecran".
+   Ar fi cerut ca „Toate" să afişeze secţiuni pe categorie, fără paginare. **Decizia lui Sergiu:
+   nu, Meniul rămâne aşa** — listă paginată; scrollspy doar pe Catering.
+3. **Toolbar pe un rând:** eticheta „Sortează" dispare sub 640px, select-ul se explică singur.
+4. **Paginare compactă:** `‹ 1 2 … 6 7 ›` + pagina curentă. JS-ul randează toate paginile şi pune
+   `.page-far` pe cele din mijloc + un `.page-dots` între grupuri; CSS-ul le ascunde/arată doar pe
+   mobil. Desktop-ul rămâne cu toate paginile, neschimbat.
+
+Verificat la 375px: bară sticky la 72px după scroll (= marginea de jos a header-ului), click pe
+„Pâine" (ultimul chip) → bara derulează şi chip-ul e în ecran; pe Catering, la secţiunea Plăcinte,
+chip-ul „Finger Food" rămâne aprins cât timp blocul lui e încă în banda de sus, apoi trece; paginarea
+arată exact 7 elemente; toolbar 56px pe un rând; fără overflow.
+
+### 📱 Mobil, runda a patra — pagina de produs (Meniu + Catering)
+
+1. **Golul de sus.** Cauza: `body.subpage` are deja `padding-top:72px` pentru header-ul fixat, iar
+   `.product-detail` mai punea 104px peste — breadcrumb-ul ajungea la 180px de sus. Pe mobil
+   secţiunea are acum 40px; breadcrumb la 24px sub header.
+2. **Breadcrumb fără numele produsului** — e în h1, imediat dedesubt. Scos din ambele randări
+   (`shop.js`, `catering.js`); regula de mobil pentru `em`-ul orfan nu mai are obiect, ştearsă.
+3. **„+"-ul din „Se comandă des împreună"** stă la mijlocul pozei (înălţimea pozei: 100 / 80px pe
+   mobil), nu al cardului cu tot cu titlul pe două rânduri.
+4. **CTA-ul sticky de jos:** pe mobil butonul devine iconiţă rotundă de 46px (coş cu plus), cu
+   `aria-label`; textul rămâne pe desktop. Numele produsului are acum loc (52vw în loc de 40vw).
+
+### 📱 Coş pe mobil: stepper-ul de cantitate se întindea pe toată coloana
+
+`.qty-stepper` e `inline-flex`, dar în `.cart-line` (grid) devine item de grid şi se întinde pe
+coloana `1fr` — o pastilă de ~200px cu − şi + la capete. Fix: `justify-self:start` în regula de
+mobil. Măsurat: 118px, butoane de 38px. Coşul de test a fost golit după verificare.
+
+### 📱 Catering, toolbar pe mobil: număr + descriere una sub alta
+
+Pe Catering toolbar-ul n-are sortare, ci numărul de poziţii şi descrierea categoriei — text serif
+pe două rânduri. Pe un rând cu numărul arăta a două coloane rupte. Sub 640px, doar pe
+`body.pagina-catering`, toolbar-ul e coloană, aliniat stânga. Meniul rămâne pe un rând.
+
+### 📱 Golul de sus pe TOATE subpaginile (mobil)
+
+Acelaşi mecanism ca la produs, generalizat la cererea lui Sergiu: `body.subpage` are 72px pentru
+header, iar prima secţiune mai punea 96–104px (inline pe despre / contact / evenimente / termeni /
+confidenţialitate, în CSS la `.shop-hero`, `.product-detail`, `.confirm-box`, `.pd-notfound`).
+O singură regulă la finalul `main.css`, sub 640px: `body.subpage header + section` (şi `+ article`)
+→ `padding-top:40px !important` — `!important` doar din cauza valorilor inline. Verificat prin
+iframe pe toate cele 13 subpagini: 40px peste tot, primul text la 24px sub header, zero overflow.
+Home-ul nu e afectat (nu are `.subpage`).
+
+### 📐 Un singur gap pentru toate grilele
+
+Sergiu a observat că cele patru grile de carduri/imagini aveau patru distanţe diferite:
+meniu 26, blog 26, galerie 18, instagram 16 (plus 16 / 10 / 14 în variantele de mobil).
+Acum există un token, **`--gap-grid: clamp(14px, 1.8vw, 26px)`** în `:root`, folosit de
+`.cards`, `.product-grid`, `.galerie-grid`, `.insta-grid` (deci şi de catering şi blog).
+Override-urile de gap din media queries au fost scoase. Măsurat: 14px la 375, 26px la 1440,
+identic în toate patru. `.mom-grid` şi `.valori-grid` rămân separate — sunt grile de text, nu de carduri.
 
 ### 🪤 Capcane
 
@@ -91,13 +242,39 @@ cu `getComputedStyle`/tranziţii) — le-am confirmat prin geometrie, nu vizual.
 
 **Pentru cealaltă sesiune (OFICIU):**
 1. Cateringul e **al doilea catalog**, cu propriile fişiere. Nu-l băga în `products.js` sau `shop.js`.
-2. La migrare: CPT `catering`, nu Woo. Modelul de date e în `CLAUDE.md` §4.1.
+2. La migrare: **produse Woo în categoria-părinte Catering**, nevandabile, excluse din Meniu — NU CPT (decizia s-a schimbat în cursul zilei). Modelul e în `CLAUDE.md` §4.1.
 3. Dropdown-ul din nav are trei reguli neevidente — `PARTIALS.md` §4.1. Nu le „cură".
 4. `js/catering.js` are `esc()`. Când tratezi XSS-ul din `shop.js`, e modelul de urmat.
+5. **`produs.html` e pagina de produs pentru AMBELE cataloage.** Rutează după id: Meniu → Catering →
+   „negăsit". Nu crea `catering-produs.html`. În WP e `single-product.php` cu condiţie pe ramura Catering.
+6. **Băuturile de catering n-au pagină de produs** — `renderDetail` întoarce `null` pentru `bauturi`. Intenţionat.
+7. **`--gap-grid`** e singura distanţă între carduri/imagini, în toate grilele. Nu pune `gap` hardcodat pe
+   `.cards`, `.product-grid`, `.galerie-grid`, `.insta-grid` — nici în media queries.
+8. **Caruselul de mobil** (`display:flex` + `overflow-x` + `scroll-snap`) e un singur bloc în `main.css`,
+   pe trei containere: blogul de pe home, „Articole conexe", „Similare" de pe produs. **Nu şi pe `blog.html`**
+   (`body:not(.pagina-blog)`), acolo articolele stau vertical, cu paginare viitoare. Trebuie obligatoriu
+   `scroll-padding-inline` = padding, altfel primul card porneşte lipit de margine.
+9. **Bara de filtre e sticky sub header** pe mobil, cu `top:var(--header-h)`. Variabila o setează `main.js`
+   şi o **recalculează la scroll** — header-ul se strânge de la 88 la 72px. Nu o înlocui cu o valoare fixă.
+   `reneeChipReveal(bar, chip)` ţine chip-ul activ vizibil; e în `main.js`, folosit de `shop.js` şi `catering.js`.
+10. **Scrollspy doar pe Catering**, în modul „Toate". Pe Meniu nu se face — Sergiu a decis că Meniul rămâne listă
+    paginată, nu secţiuni pe categorie.
+11. **Paginarea** randează toate paginile şi marchează cu `.page-far` / `.page-dots`; CSS-ul ascunde pe mobil.
+    Când vine paginarea pe Blog (decizie: da, şi pe desktop), refoloseşte `renderPagination` din `shop.js`.
+12. **Golul de sus pe subpagini:** `body.subpage` are 72px pentru header; pe mobil prima secţiune de după header
+    primeşte 40px prin regula de la finalul `main.css` (`header + section`, cu `!important` din cauza stilurilor
+    inline). Nu mai adăuga `padding-top:clamp(104px…)` pe secţiuni de deschidere fără să ştii asta.
+13. **Capcană de layout:** un element cu `margin:auto` şi doar copii absoluţi n-are lăţime (`.despre-foto` s-a
+    strâns la 30px pe mobil). Pe desktop îl întindea coloana de grid. Dă-i `width:100%`.
+14. **Ordinea imaginilor extrase din PDF cu `pdfimages` nu e ordinea de citire.** Dacă mai vin PDF-uri de la
+    client, randezi pagina cu `pdftoppm` şi compari celulele cu fişierele extrase — metoda e descrisă mai sus.
+15. **Cache-ul din panoul de browser** ţine CSS/JS vechi după editare. Înainte să conchizi că o regulă „nu se
+    aplică": `fetch(url,{cache:'reload'})` şi reload. M-a păcălit de trei ori azi.
 
 **Întrebări deschise pentru Sergiu:**
 - **Facebook:** PDF-ul spune `fb.com/reneebrunch`, site-ul `facebook.com/renee.brunch`. Care e bun?
 - **Băuturile de catering** — preţuri reale, sau le scoatem până vin?
+- **Gramajele de catering** — 70 de valori estimate; lista e în `data/catering.js`. De cerut clientului cele reale.
 - **Termenul de comandă şi condiţiile** din banda „Cum se comandă" — inventate, de confirmat cu localul.
 - **Descrieri pentru preparatele de catering** — cardurile sunt fără text. Le scrie clientul?
 - Cele două plăcinte cu poze incerte (varză / carne de pui).

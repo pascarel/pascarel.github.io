@@ -164,6 +164,7 @@
       btn.addEventListener('click', function(){
         buttons.forEach(function(b){ b.classList.remove('active'); });
         this.classList.add('active');
+        if (window.reneeChipReveal) window.reneeChipReveal(el, this);
         if (typeof onSelect === 'function') onSelect(this.getAttribute('data-cat'));
       });
     });
@@ -174,8 +175,14 @@
     if (!el) return;
     if (totalPages <= 1){ el.innerHTML = ''; return; }
     var html = '<button type="button" class="page-btn page-arrow" data-go="' + (current - 1) + '"' + (current === 1 ? ' disabled' : '') + ' aria-label="Pagina anterioară">‹</button>';
+    /* Pe mobil se văd doar marginile (1, 2 … 6, 7) şi pagina curentă; restul primesc
+       .page-far şi se ascund din CSS, iar între grupuri apare un „…". Pe desktop se văd toate. */
+    var prevShown = false;
     for (var i = 1; i <= totalPages; i++){
-      html += '<button type="button" class="page-btn' + (i === current ? ' active' : '') + '" data-go="' + i + '">' + i + '</button>';
+      var edge = i <= 2 || i > totalPages - 2 || i === current;
+      if (edge && !prevShown && i > 1) html += '<span class="page-dots" aria-hidden="true">…</span>';
+      html += '<button type="button" class="page-btn' + (i === current ? ' active' : '') + (edge ? '' : ' page-far') + '" data-go="' + i + '">' + i + '</button>';
+      prevShown = edge;
     }
     html += '<button type="button" class="page-btn page-arrow" data-go="' + (current + 1) + '"' + (current === totalPages ? ' disabled' : '') + ' aria-label="Pagina următoare">›</button>';
     el.innerHTML = html;
@@ -321,7 +328,10 @@
         '<div class="sticky-info"><img src="' + ((p.images && p.images[0]) || '') + '" alt="">' +
           '<div><span class="sticky-name">' + p.name + '</span>' +
           '<span class="sticky-price" id="stickyPrice"></span></div></div>' +
-        '<button type="button" class="btn-add" id="stickyAdd">Adaugă în coș</button>' +
+        '<button type="button" class="btn-add" id="stickyAdd" aria-label="Adaugă în coș">' +
+          '<span class="sticky-add-txt">Adaugă în coș</span>' +
+          '<svg class="sticky-add-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h2l1.5 11.5a1.5 1.5 0 0 0 1.5 1.3h7.8a1.5 1.5 0 0 0 1.5-1.2L21 8H7"/><circle cx="10" cy="21" r="1.2"/><circle cx="18" cy="21" r="1.2"/><path d="M12 10v5M9.5 12.5h5"/></svg>' +
+        '</button>' +
       '</div>';
     document.body.appendChild(bar);
     /* apare după ce butonul principal iese din viewport */
@@ -401,7 +411,7 @@
     }
 
     el.innerHTML =
-      '<nav class="pd-crumb"><a href="meniu.html">Meniu</a><span>/</span><a href="meniu.html">' + catName(p.category) + '</a><span>/</span><em>' + p.name + '</em></nav>' +
+      '<nav class="pd-crumb" aria-label="Breadcrumb"><a href="meniu.html">Meniu</a><span>/</span><a href="meniu.html">' + catName(p.category) + '</a></nav>' +   /* fără numele produsului — e în h1, imediat dedesubt */
       '<div class="pd-grid">' +
         '<div class="pd-gallery reveal">' +
           '<div class="pd-main"><img id="pdMainImg" src="' + mainImg + '" alt="' + p.name + '"></div>' +

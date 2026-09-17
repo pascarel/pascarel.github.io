@@ -53,6 +53,34 @@
     });
   })();
 
+  /* ================= BARA DE FILTRE (Meniu, Catering) =================
+     Două utilitare folosite de shop.js şi catering.js:
+     - --header-h pe :root, ca bara sticky de filtre să se lipească exact sub header;
+     - reneeChipReveal(bar, chip): derulează bara orizontală ca chip-ul activ să fie
+       mereu vizibil (centrat), fără să mişte pagina pe verticală. */
+  (function(){
+    var header = document.getElementById('header');
+    function setH(){
+      if (header) document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    }
+    setH();
+    window.addEventListener('resize', setH);
+    window.addEventListener('load', setH);
+    /* header-ul se strânge la scroll (padding animat, .scrolled) — recalculăm şi atunci,
+       altfel bara sticky rămâne la înălţimea veche şi apare o fantă între ele */
+    if (header) header.addEventListener('transitionend', setH);
+    var tick = false;
+    window.addEventListener('scroll', function(){
+      if (tick) return; tick = true;
+      requestAnimationFrame(function(){ setH(); tick = false; });
+    }, { passive:true });
+  })();
+  window.reneeChipReveal = function(bar, chip){
+    if (!bar || !chip || bar.scrollWidth <= bar.clientWidth + 1) return;
+    var left = chip.offsetLeft - (bar.clientWidth - chip.offsetWidth) / 2;
+    bar.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+  };
+
   /* ================= ELEMENT ACTIV ÎN MENIU =================
      Marcat din JS, nu manual în cele 13 pagini — altfel se dezsincronizează
      la fiecare pagină nouă. Subpaginile moştenesc părintele:
