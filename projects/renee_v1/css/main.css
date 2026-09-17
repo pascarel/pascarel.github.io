@@ -215,12 +215,9 @@ nav a.is-current{font-weight:500}
 .burger.open .burger-ico::after{top:0;transform:rotate(-45deg)}
 .cart-link{position:relative;display:flex;align-items:center;padding:6px}
 .cart-ico{width:21px;height:21px;display:block}
-.cart-link .cart-count{
-  position:absolute;top:-1px;right:-4px;
-  min-width:17px;height:17px;padding:0 4px;border-radius:9px;
-  font-size:10px;line-height:17px;
-}
+
 .cart-count{
+  position:absolute;top:-1px;right:-4px;
   display:inline-block; min-width:18px; height:18px; padding:0 5px;
   border-radius:9px; background:var(--accent-fill); color:#fff;
   font-size:11px; 
@@ -381,7 +378,7 @@ body.pagina-meniu,body.pagina-blog .shop-hero,
 .manifest em{font-style:italic;color:var(--accent-text)}
 .despre-text p{margin-bottom:20px;color:var(--ink-soft);max-width:46ch}
 .despre-photo{
-  position:relative;aspect-ratio:4/5;border-radius:200px 200px 16px 16px;
+  position:relative;aspect-ratio:4/5;border-radius: 14px;
   overflow:hidden;
 }
 
@@ -395,18 +392,21 @@ body.pagina-meniu,body.pagina-blog .shop-hero,
 }
 .despre-foto-mare{
   position:relative;aspect-ratio:4/5;
-  border-radius:200px 200px 16px 16px;
+  border-radius: 14px;
   overflow:hidden;
+  border:clamp(6px,.9vw,12px) solid var(--cream);
+  box-shadow:0 18px 44px rgba(26,20,16,.16);
 }
 .despre-foto-mica{
+  background-color: #fff;
   position:absolute;left:0;bottom:0;
   width:clamp(120px,19vw,216px);aspect-ratio:3/4;
-  border-radius:16px;overflow:hidden;
+  border-radius: 14px;overflow:hidden;
   /* Rama deschisă o desprinde de poza mare, indiferent ce culori au cele două. */
   border:clamp(6px,.9vw,12px) solid var(--cream);
   box-shadow:0 18px 44px rgba(26,20,16,.16);
 }
-.despre-foto-mica .photo{position:absolute;inset:0}
+.despre-foto-mica .photo{position:absolute;inset:0; border-radius:inherit;object-fit:cover;width:100%;height:100%;}
 
 /* placeholder foto elegant */
 .ph{
@@ -473,7 +473,7 @@ body.pagina-meniu,body.pagina-blog .shop-hero,
 .mom-item a{text-decoration:none;color:inherit;display:block}
 .mom-foto{
   position:relative;aspect-ratio:4/5;
-  border-radius:160px 160px 14px 14px;overflow:hidden;
+  border-radius: 14px;overflow:hidden;
   background:var(--cream-2);
 }
 .mom-foto img{
@@ -620,7 +620,14 @@ body.pagina-meniu,body.pagina-blog .shop-hero,
   display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(34px,5vw,72px);
   align-items:center;margin-top:56px;
 }
-.event-photo{position:relative;aspect-ratio:5/4;border-radius:16px;overflow:hidden}
+.event-photo{
+  position:relative;
+  aspect-ratio:5/4;
+  border-radius:16px;
+  overflow:hidden;
+  border:clamp(6px,.9vw,12px) solid var(--cream);
+  box-shadow:0 18px 44px rgba(26,20,16,.16);
+}
 .event-photo .photo{width:100%;height:100%;object-fit:cover}
 .event-list{display:grid;gap:0;margin:28px 0 36px}
 .event-list li{
@@ -914,9 +921,13 @@ body.pagina-meniu,body.pagina-blog .shop-hero,
 .loc-rand.invers .loc-foto{grid-column:2;grid-row:1}
 .loc-rand.invers .loc-info{grid-column:1;grid-row:1}
 .loc-foto{
-  position:relative;aspect-ratio:4/5;
-  border-radius:180px 180px 16px 16px;
+  position:relative;
+  aspect-ratio:4/5;
+  border-radius: 14px;
   overflow:hidden;
+
+  border: clamp(6px,.9vw,12px) solid var(--cream);
+  box-shadow: 0 18px 44px rgba(26,20,16,.16);
 }
 .loc-nume{
   font-family:var(--serif);font-weight:400;
