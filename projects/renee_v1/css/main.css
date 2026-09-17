@@ -925,9 +925,6 @@ body.pagina-meniu,body.pagina-blog .shop-hero,
   aspect-ratio:4/5;
   border-radius: 14px;
   overflow:hidden;
-
-  border: clamp(6px,.9vw,12px) solid var(--cream);
-  box-shadow: 0 18px 44px rgba(26,20,16,.16);
 }
 .loc-nume{
   font-family:var(--serif);font-weight:400;
