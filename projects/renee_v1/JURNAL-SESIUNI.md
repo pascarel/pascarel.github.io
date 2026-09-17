@@ -34,6 +34,77 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 ## Intrări
 
+## 2026-09-17 · ACASĂ · catering: al doilea catalog, pagină nouă, dropdown în nav
+
+Clientul a trimis un PDF cu meniul de **fourchette pentru evenimente** (candy bar, finger food,
+plăcinte, băuturi). Sergiu a decis: pagină proprie, **nu pe homepage**, intrare din Evenimente şi
+footer, sub-item în nav. În WordPress va fi **CPT separat**, nu produse Woo. Totul e în `CLAUDE.md` §4.1.
+
+### 📄 Ce s-a livrat
+
+- **`catering.html`** — hero, bandă „cum se comandă" (DRAFT), filtre pe 4 categorii, catalog, notă
+  alergeni, CTA „Cere o ofertă" pe fundal închis, apoi **secţiunea Instagram** (copiată de pe
+  Evenimente) înainte de footer — altfel CTA-ul închis se lipea de footer-ul închis într-un singur
+  bloc negru. Fără coş, fără pagină de detaliu, fără buton de rezervare (regula de pe Evenimente).
+- **`data/catering.js`** — 70 de poziţii, aceleaşi câmpuri ca la preparate + `unitate` (buc/kg).
+- **`js/catering.js`** — randare separată de `shop.js`: carduri fără coş, băuturile ca listă în două
+  coloane, `mountTeaser()` pentru Evenimente. **Trece textele prin `esc()`** — spre deosebire de shop.js.
+- **`img/catering/`** — 56 de poze reale extrase din PDF cu `pdfimages`, convertite webp (780 KB).
+- **Nav:** dropdown Evenimente → Catering pe toate cele 14 pagini. **Footer:** link Catering, 14 pagini.
+- **Evenimente:** cardul „Meniu personalizat" → „Meniu de catering" cu link; teaser cu 4 preparate.
+- **Home:** buton secundar de contur „Meniu de catering" lângă „Discută cu noi", în secţiunea Evenimente private. Fără grilă de produse pe home — asta era decizia; un link se poate.
+- **Evenimente (hero):** acelaşi buton secundar lângă „Discută cu noi". Pagina are acum trei intrări spre catering: butonul din hero, cardul din Servicii, teaser-ul. Sergiu le vrea pe toate trei.
+
+### 🪤 Capcane
+
+**Imaginile din PDF nu ies în ordinea de citire.** `pdfimages` le scoate în ordinea obiectelor din
+fişier — pe paginile 3–5 era pe coloane, pe pagina 1 aproape pe rânduri, pe pagina 6 amestecat.
+Metoda: randezi pagina cu `pdftoppm`, decupezi cele 9 celule ale grilei şi le compari pixel cu pixel
+cu fişierele extrase. A dat potriviri clare peste tot, **cu excepţia plăcintelor**, care arată la fel
+între ele — două (varză / carne de pui) au rămas cu o marjă mică. De verificat vizual de Sergiu.
+
+**Textul din dropdown era crem pe crem peste hero.** Regula `header:not(.scrolled) nav:not(.open) a`
+are specificitate (0,2,3) şi stă mai jos în fişier decât a mea. Am pus un `li` în selector ca să
+ajung la (0,2,4). Documentat în `PARTIALS.md` §4.1 ca să nu-l „simplifice" nimeni.
+
+**Selectorul de stare activă `#nav > a` a orbit odată ce Evenimente a intrat într-un `div`.**
+Acum e `#nav a`, cu excluderea `.nav-social` prin `closest()`. Şi marchează şi părintele, deci pe
+catering se aprind Evenimente + Catering.
+
+**`evenimente.html` şi `despre.html` nu încărcau `shop.css`**, deşi PARTIALS spunea că `<head>`-ul e
+identic. Teaser-ul de catering avea nevoie de el — adăugat pe Evenimente. Despre rămâne fără.
+
+**Tooltip-ul de alergeni ieşea din card** pe catering: e ancorat `left:0`, iar acolo iconiţa stă pe
+dreapta. Override doar pe `.cat-card`: `left:auto;right:0`.
+
+**Cache-ul browserului din panou** m-a păcălit de două ori — vedeam CSS/JS vechi. Înainte de a trage
+concluzia că o regulă nu se aplică: `fetch(url,{cache:'reload'})` pe fişier, apoi reload.
+
+### ✅ Verificat în browser
+
+Desktop şi 375px: 56 carduri + 14 rânduri de băuturi, zero imagini rupte, zero erori în consolă,
+zero overflow orizontal pe catering, evenimente şi overlay-ul mobil. Dropdown: cutie crem, text ink
+măsurat şi pe hero-ul de pe home. Stare activă dublă pe catering. Teaser 4 carduri, buton centrat.
+
+**Nu am putut:** screenshot-urile nu prind tooltip-ul şi dropdown-ul în tranziţie (problema cunoscută
+cu `getComputedStyle`/tranziţii) — le-am confirmat prin geometrie, nu vizual. Nicio operaţiune git.
+
+**Pentru cealaltă sesiune (OFICIU):**
+1. Cateringul e **al doilea catalog**, cu propriile fişiere. Nu-l băga în `products.js` sau `shop.js`.
+2. La migrare: CPT `catering`, nu Woo. Modelul de date e în `CLAUDE.md` §4.1.
+3. Dropdown-ul din nav are trei reguli neevidente — `PARTIALS.md` §4.1. Nu le „cură".
+4. `js/catering.js` are `esc()`. Când tratezi XSS-ul din `shop.js`, e modelul de urmat.
+
+**Întrebări deschise pentru Sergiu:**
+- **Facebook:** PDF-ul spune `fb.com/reneebrunch`, site-ul `facebook.com/renee.brunch`. Care e bun?
+- **Băuturile de catering** — preţuri reale, sau le scoatem până vin?
+- **Termenul de comandă şi condiţiile** din banda „Cum se comandă" — inventate, de confirmat cu localul.
+- **Descrieri pentru preparatele de catering** — cardurile sunt fără text. Le scrie clientul?
+- Cele două plăcinte cu poze incerte (varză / carne de pui).
+- Rămân de dinainte: denumirea primei locaţii, telefonul din footer, „Adaosuri", programul pe locaţii.
+
+---
+
 ## 2026-09-16 → 17 · ACASĂ · feedback client: paletă nouă, patternul scos, patru secţiuni redesenate
 
 > Intrarea are **două runde**. Prima a fost respinsă parţial de client, a doua e cea

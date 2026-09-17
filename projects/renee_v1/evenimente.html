@@ -9,6 +9,7 @@
 <link rel="preload" href="fonts/opensans-300-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/shop.css"><!-- pentru cardurile de catering (.cat-*) din teaser -->
 </head>
 <body class="subpage">
 
@@ -18,7 +19,12 @@
   <nav id="nav">
     <a href="despre.html">Despre</a>
     <a href="meniu.html">Meniu</a>
-    <a href="evenimente.html">Evenimente</a>
+    <div class="nav-item">
+      <a href="evenimente.html">Evenimente</a>
+      <ul class="nav-sub">
+        <li><a href="catering.html">Catering</a></li>
+      </ul>
+    </div>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
     <div class="nav-social">
@@ -61,7 +67,10 @@
         <p class="eyebrow reveal">Evenimente private</p>
         <h1 class="h2 reveal">Sărbătorește <em>la Renée</em></h1>
         <p class="reveal reveal-d1" style="color:var(--ink-soft);font-size:15px;max-width:44ch;margin-top:18px"><!-- DRAFT: de înlocuit -->De la aniversări intime la mic dejun corporate pentru echipe întregi, Renée devine locul tău pentru câteva ore — cu farfurii frumoase, servire atentă și atmosferă caldă.</p>
-        <a class="btn-solid reveal reveal-d2" style="margin-top:28px" href="tel:+37378784040">Discută cu noi</a>
+        <div class="cta-row reveal reveal-d2">
+          <a class="btn-solid" href="tel:+37378784040">Discută cu noi</a>
+          <a class="btn-outline" href="catering.html">Meniu de catering</a>
+        </div>
       </div>
     </div>
   </div>
@@ -97,10 +106,10 @@
         </div>
       </article>
       <article class="card reveal reveal-d1">
-        <div class="card-img"><img class="photo" src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=700&q=80&auto=format&fit=crop" alt="Meniu personalizat" loading="lazy"></div>
+        <a class="card-link" href="catering.html"><div class="card-img"><img class="photo" src="img/catering/mini-croissant-cu-somon.webp" alt="Mini croissant cu somon, din meniul de catering" loading="lazy"></div></a>
         <div class="card-body">
-          <h3>Meniu personalizat</h3>
-          <p><!-- DRAFT: de înlocuit -->Construim un meniu de brunch adaptat grupului tău, de la porții mici la platouri de servit.</p>
+          <h3><a class="card-title-link" href="catering.html">Meniu de catering</a></h3>
+          <p><!-- DRAFT: de înlocuit -->Candy bar, finger food și plăcinte împletite — la bucată sau la kilogram, în local sau livrate. <a class="card-more" href="catering.html">Vezi meniul</a></p>
         </div>
       </article>
       <article class="card reveal reveal-d2">
@@ -117,6 +126,23 @@
           <p><!-- DRAFT: de înlocuit -->Colaborăm cu floristul nostru pentru un decor discret, potrivit stilului Renée.</p>
         </div>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- CATERING — teaser cu 4 preparate reale din data/catering.js; intrarea principală spre catering.html -->
+<section class="section cat-teaser" id="catering">
+  <div class="wrap">
+    <div class="meniu-head">
+      <div>
+        <p class="eyebrow reveal">Catering</p>
+        <h2 class="h2 reveal">Fourchette <em>pentru evenimentul tău</em></h2>
+      </div>
+      <p class="meniu-note reveal reveal-d1">Candy bar, finger food, plăcinte și băuturi — 70 de poziții, la bucată sau la kilogram.</p>
+    </div>
+    <div id="cateringTeaser" class="cards cat-grid"></div>
+    <div class="cat-teaser-cta reveal">
+      <a class="btn-solid" href="catering.html">Vezi meniul de catering</a>
     </div>
   </div>
 </section>
@@ -209,6 +235,7 @@
           <a href="meniu.html">Meniu</a>
           <a href="despre.html">Despre</a>
           <a href="evenimente.html">Evenimente</a>
+          <a href="catering.html">Catering</a>
           <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
         </nav>
@@ -234,8 +261,14 @@
 </footer>
 <!-- /WP: footer.php -->
 
+<script src="data/catering.js"></script>
 <script src="js/cart.js"></script>
+<script src="js/catering.js"></script>
 <script src="js/rez-modal.js"></script>
 <script src="js/main.js"></script>
+<script>
+  Catering.mountTeaser({ gridId:'cateringTeaser',
+    ids:['choux-fistic','mini-croissant-cu-roast-beef','macaron-fistic','placinta-cosita-cu-visine'] });
+</script>
 </body>
 </html>

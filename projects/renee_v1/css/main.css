@@ -148,6 +148,38 @@ nav a:hover::after{transform:scaleX(1);transform-origin:left}
 /* pagina curentă — linia rămâne trasă, nu doar la hover */
 nav a.is-current::after{transform:scaleX(1)}
 nav a.is-current{font-weight:500}
+
+/* ---------- submeniu (Evenimente → Catering) ----------
+   Singurul dropdown din nav. Se deschide la hover şi la focus din tastatură
+   (:focus-within); pe mobil, în overlay, e mereu desfăşurat — vezi @media 900. */
+.nav-item{position:relative;display:flex;align-items:center}
+.nav-item > a{padding-right:14px}
+.nav-item > a::before{
+  content:"";position:absolute;right:0;top:50%;width:5px;height:5px;
+  border-right:1px solid currentColor;border-bottom:1px solid currentColor;
+  transform:translateY(-70%) rotate(45deg);transition:transform .3s var(--ease);
+}
+.nav-item:hover > a::before,
+.nav-item:focus-within > a::before{transform:translateY(-30%) rotate(-135deg)}
+.nav-sub{
+  list-style:none;margin:0;
+  position:absolute;top:100%;left:-18px;min-width:160px;
+  margin-top:12px;padding:12px 18px;
+  background:var(--cream);border:1px solid var(--border);border-radius:10px;
+  box-shadow:0 18px 34px -18px rgba(26,20,16,.35);
+  opacity:0;visibility:hidden;transform:translateY(6px);
+  transition:opacity .3s var(--ease),transform .3s var(--ease),visibility 0s linear .3s;
+}
+/* punte invizibilă peste golul de 12px — altfel meniul se închide pe drum */
+.nav-sub::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}
+.nav-item:hover .nav-sub,
+.nav-item:focus-within .nav-sub{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.nav-sub li{padding:4px 0}
+/* dropdown-ul e mereu pe crem → textul e mereu ink, inclusiv peste hero-ul închis.
+   `li` e acolo pentru specificitate: (0,2,4) bate `header:not(.scrolled) nav:not(.open) a`
+   (0,2,3), care e declarată mai jos în fişier şi altfel ar câştiga. */
+header nav .nav-item .nav-sub li a{color:var(--ink);white-space:nowrap}
+header nav .nav-item .nav-sub li a::after{background:var(--ink)}
 .btn-rez{
   border:1px solid var(--ink);border-radius:999px;
   padding:10px 22px !important;
@@ -638,6 +670,15 @@ body.pagina-meniu,body.pagina-blog .shop-hero,
   transition:background .35s,transform .35s;
 }
 .btn-solid:hover{background:var(--accent-fill);transform:translateY(-2px)}
+/* perechea de contur a lui .btn-solid — aceleaşi dimensiuni, ca să stea pe un rând */
+.btn-outline{
+  display:inline-block;background:transparent;color:var(--ink);
+  border:1px solid var(--ink);border-radius:999px;padding:14px 33px;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  transition:background .35s,color .35s,transform .35s;
+}
+.btn-outline:hover{background:var(--ink);color:var(--cream);transform:translateY(-2px)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px 14px;align-items:center;margin-top:28px}
 
 /* ---------- harta ---------- */
 .map-wrap{
@@ -1325,13 +1366,26 @@ footer a:hover{color:var(--accent-dark)}
      Aşa, dacă animaţia nu rulează — prefers-reduced-motion, browser vechi,
      orice eşec — itemii rămân vizibili. Cu opacity:0 în bază ar dispărea. */
   nav.open > a,
+  nav.open > .nav-item,
   nav.open .nav-social{animation:navItemIn .42s var(--ease) backwards}
+  /* nth-of-type numără doar <a>-urile: Despre, Meniu, Blog, Contact.
+     Evenimente e în .nav-item (div) şi primeşte al treilea delay. */
   nav.open > a:nth-of-type(1){animation-delay:.05s}
   nav.open > a:nth-of-type(2){animation-delay:.11s}
-  nav.open > a:nth-of-type(3){animation-delay:.17s}
-  nav.open > a:nth-of-type(4){animation-delay:.23s}
-  nav.open > a:nth-of-type(5){animation-delay:.29s}
+  nav.open > .nav-item{animation-delay:.17s}
+  nav.open > a:nth-of-type(3){animation-delay:.23s}
+  nav.open > a:nth-of-type(4){animation-delay:.29s}
   nav.open .nav-social{animation-delay:.36s}
+  /* submeniul e mereu desfăşurat în overlay — fără hover pe telefon */
+  nav.open .nav-item{display:flex;flex-direction:column;align-items:center;gap:16px}
+  nav.open .nav-item > a{padding-right:0}
+  nav.open .nav-item > a::before{display:none}
+  nav.open .nav-sub{
+    position:static;opacity:1;visibility:visible;transform:none;
+    background:none;border:0;padding:0;box-shadow:none;min-width:0;
+  }
+  nav.open .nav-sub::before{display:none}
+  nav.open .nav-sub a{font-size:13px;color:var(--ink-soft) !important;letter-spacing:.2em}
   .logo-svg{height:22px}
   .cards{grid-template-columns:1fr}
   .g-3,.g-4,.g-5{grid-column:span 12;aspect-ratio:4/3}

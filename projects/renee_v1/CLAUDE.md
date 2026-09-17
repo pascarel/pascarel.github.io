@@ -1,7 +1,7 @@
 # Instrucțiuni de lucru — pascarel.github.io
 
 > Fișier citit automat de Claude Code la începutul fiecărei sesiuni.
-> Actualizat: 9 septembrie 2026.
+> Actualizat: 17 septembrie 2026.
 
 ---
 
@@ -69,7 +69,7 @@ Site de portofoliu static, publicat pe GitHub Pages. Fără build, fără `packa
 ```
 index.html, en/        — portofoliu (RO + EN)
 assets/img/            — screenshot-uri portofoliu + favicon.svg
-projects/renee_v1/     — Renée: prezentare + magazin demo (11 pagini)  ← proiect activ
+projects/renee_v1/     — Renée: prezentare + magazin demo (14 pagini)  ← proiect activ
 projects/renee_v2/     — Renée v2, o pagină + cart.js (neanalizat încă)
 projects/rvg/          — proiect separat
 ```
@@ -107,6 +107,31 @@ projects/rvg/          — proiect separat
 | „Povestea numelui" (home) | `.poveste-numele`, pe **fundal închis**: proza la stânga, cele două deschideri reale la dreapta. Fundalul închis e intenţionat — rupe ritmul între Despre şi Momente, ambele pe crem cu fotografii. ⚠️ Accentul acolo e `--brand`; `--brand-deep` dă 2.32 şi dispare. |
 | „Valorile Renée" (Despre) | `.valori-grid` / `.valoare`: linie de sus plus titlu, **fără numerotare**. Cele trei valori nu sunt paşi într-o secvenţă, deci „01/02/03" ar fi decor deghizat în structură. |
 | Secţiunea „Momentele zilei" | `.momente`: fiecare fereastră de timp arată un **preparat real din catalog** (croissant / pancakes / pavlova), cu imaginea din API şi link către pagina lui. Secţiunea trimite în meniu, nu doar decorează. Ora stă într-o pastilă crem peste colţul pozei — contrast garantat faţă de crem, nu faţă de fotografie. |
+| **Catering (fourchette)** | Al doilea catalog al localului, **separat de Meniu**: candy bar, finger food, plăcinte, băuturi, pentru evenimente. Pagină proprie **`catering.html`**, date în `data/catering.js`, randare în `js/catering.js`. **Fără coş, fără pagină de detaliu**, un singur CTA — cerere de ofertă. **Pe homepage nu are secţiune sau grilă de produse** — doar butonul secundar „Meniu de catering" din secţiunea Evenimente private (adăugat 17 sept. 2026). Intrări: sub-item „Catering" în dropdown-ul Evenimente (singurul dropdown din nav), footer, cardul „Meniu de catering" şi teaser-ul de pe Evenimente. **În WordPress: CPT separat `catering` + taxonomie `catering_cat`**, nu produse Woo — se comandă cantităţi pentru un eveniment, nu porţii, şi nu intră în coş. Decis 17 sept. 2026. Detalii §4.1. |
+
+### 4.1 Catering — al doilea catalog
+
+Sursa: PDF-ul „Renée_Catering" de la client (17 sept. 2026, 6 pagini). **Nu există în eat-me**;
+se introduce manual. 70 de poziţii:
+
+| Categorie | Poziţii | Unitate |
+|---|---|---|
+| Candy Bar | 23 (incl. 3 ecler mini, 7 macarons) | buc |
+| Finger Food | 24 (una la kg: somon copt cu legume) | buc |
+| Plăcintă Cosiţă | 9 | kg |
+| Băuturi | 14 (7 răcoritoare, 7 cafea & ceai) | buc — **preţuri INVENTATE**, PDF-ul nu le are |
+
+Câmpurile sunt cele din `data/products.js` plus `unitate` (`buc` / `kg`) şi, la băuturi, `grup`.
+Imaginile sunt extrase din PDF în `img/catering/` (56 × ~367px, webp). Pentru WP, de cerut originalele.
+
+**Ce e draft acolo:** alergenii (deduşi din nume), preţurile băuturilor, termenul de comandă
+„minim 48 de ore", „fără cantitate minimă", „livrare în Chişinău", „TVA inclus" — toate marcate
+`DRAFT` în `catering.html`. Descrierile sunt **goale**: PDF-ul nu are, nu le inventăm.
+Două plăcinte (varză / carne de pui) au pozele atribuite prin comparare de pixeli, de verificat vizual.
+
+**Model WP:** CPT `catering` (`has_archive` → `/catering/`), taxonomie `catering_cat`, meta:
+`pret`, `unitate`, `alergeni`, `grup`. Filtrarea în pagină e JS, ca la Meniu — fără arhive de
+categorie indexabile. Teaser-ul de pe Evenimente = query pe 4 ID-uri alese manual (ACF relationship).
 
 ### Sursa de meniu real — API eat-me.online
 
@@ -298,11 +323,12 @@ Numele, descrierile, prețurile, gramajele, imaginile și valorile nutriționale
 - **Badge-urile** `nou` / `vegan` / `recomandat` — atribuite determinist. `vegan` doar unde numele preparatului o spune explicit.
 
 ### ❌ Încă inventat, de înlocuit obligatoriu
+- **Catering:** preţurile băuturilor, termenul de comandă, condiţiile de livrare/cantitate din banda „Cum se comandă". Vezi §4.1.
 - **Telefon `+373 60 000 000`** — placeholder, în footer-ul tuturor celor 13 pagini. Restul site-ului folosește `+373 78 784 040`.
 - **`hello@renee.md` / `centru@renee.md`** — de confirmat că domeniul și căsuțele există.
 - **Imagini de atmosferă, galerie, blog, Instagram** — hotlink-uri Unsplash. (Excepţie: pozele celor două locaţii sunt reale, din folderul clientului.) **Video hero** — hotlink Pexels. (Imaginile de preparate sunt reale, de pe CDN-ul Syrve.)
 - **Testimoniale** — fictive. **Blog și „Povestea"** — draft AI.
-- **Facebook și TikTok** — conturi presupuse; doar Instagram e confirmat.
+- **Facebook și TikTok** — conturi presupuse; doar Instagram e confirmat. ⚠️ PDF-ul de catering are în subsol `fb.com/reneebrunch`, site-ul foloseşte `facebook.com/renee.brunch` — unul din ele e greşit.
 - **Program și telefon pe locații** — aceleași valori peste tot, marcate DRAFT. Probabil diferă între Oasis și Urban.
 - **Coordonata Renée Urban** — `47.0287072, 28.8256740` e nr. 115 pe bd. Ștefan cel Mare (OSM îl dă ca Muzeul Național de Artă). Corpul **115/1** nu e localizabil în OSM.
 - **Textul juridic** din `termeni.html` și `confidentialitate.html` — schelet cu capitole, fără conținut redactat.
@@ -316,7 +342,7 @@ Politică de retur · Politică cookies. (Termeni și confidențialitate există
 
 ## 8. Notă tehnică — escaping
 
-`js/shop.js` (14 apeluri) și `js/checkout.js` (2) folosesc `innerHTML` fără escaping. Inofensiv în varianta statică, unde datele vin din `data/products.js` controlat de developer. **La migrarea pe WP, unde textele vin din CMS, devine risc XSS** — se folosesc `esc_html()` / `esc_attr()` / `wp_kses_post()`. Detaliat în `MIGRARE-WP.md` §8.
+`js/shop.js` (14 apeluri) și `js/checkout.js` (2) folosesc `innerHTML` fără escaping. (`js/catering.js` trece textele prin `esc()` — modelul de urmat.) Inofensiv în varianta statică, unde datele vin din `data/products.js` controlat de developer. **La migrarea pe WP, unde textele vin din CMS, devine risc XSS** — se folosesc `esc_html()` / `esc_attr()` / `wp_kses_post()`. Detaliat în `MIGRARE-WP.md` §8.
 
 ---
 

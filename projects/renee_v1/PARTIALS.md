@@ -1,6 +1,6 @@
 # Partiale — Renée
 
-Ce se repetă pe pagini și **de unde se ia**. Actualizat 10 sept. 2026.
+Ce se repetă pe pagini și **de unde se ia**. Actualizat 17 sept. 2026.
 
 Site-ul e static, fără build. Există două mecanisme diferite — nu le confunda:
 
@@ -9,7 +9,7 @@ Site-ul e static, fără build. Există două mecanisme diferite — nu le confu
 | **Copy-paste**, documentat aici | header, footer, `<head>` | schimbi aici **și** în toate cele 13 pagini |
 | **Injectat din JS**, sursă unică | modalul de rezervare, lightbox-ul de galerie | schimbi într-un singur loc |
 
-Cele 13 pagini: `index` · `magazin` · `produs` · `cos` · `checkout` · `comanda-confirmata` · `despre` · `contact` · `evenimente` · `blog` · `articol` · `termeni` · `confidentialitate`
+Cele 14 pagini: `index` · `meniu` · `produs` · `cos` · `checkout` · `comanda-confirmata` · `despre` · `contact` · `evenimente` · `catering` · `blog` · `articol` · `termeni` · `confidentialitate`
 
 ---
 
@@ -81,6 +81,8 @@ Identic pe toate cele 13 pagini, imediat după `<meta name="description">`:
 
 Fonturile sunt self-hostate. **Nu readuce `<link>` către Google Fonts** — vezi `CLAUDE.md` §5.
 
+⚠️ **`despre.html` nu încarcă `shop.css`** — singura abatere rămasă. `evenimente.html` îl încarcă din 17 sept. 2026, fiindcă teaser-ul de catering foloseşte clasele `.cat-*` din `shop.css`.
+
 ## 4. Header
 
 Trei zone: **logo · nav · acțiuni**. Nav-ul ține doar linkurile de pagină; `Rezervări`, coșul, switcher-ul de limbă și hamburgerul stau în `.header-actions` și **rămân vizibile pe mobil**, când nav-ul se ascunde.
@@ -104,7 +106,13 @@ Logo-ul e SVG inline, ca `currentColor` să-i schimbe culoarea la scroll. Sursa:
   <nav id="nav">
     <a href="despre.html">Despre</a>
     <a href="meniu.html">Meniu</a>
-    <a href="evenimente.html">Evenimente</a>
+    <!-- singurul dropdown din nav — vezi §4.1 -->
+    <div class="nav-item">
+      <a href="evenimente.html">Evenimente</a>
+      <ul class="nav-sub">
+        <li><a href="catering.html">Catering</a></li>
+      </ul>
+    </div>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
     <div class="nav-social">
@@ -136,6 +144,24 @@ Logo-ul e SVG inline, ca `currentColor` să-i schimbe culoarea la scroll. Sursa:
 </header>
 <!-- /WP: header.php -->
 ```
+
+### 4.1 Dropdown-ul Evenimente → Catering
+
+Singurul submeniu din nav, adăugat 17 sept. 2026. `.nav-item` e un `div` care ţine linkul părinte
+şi lista `.nav-sub`. Se deschide la **hover** şi la **`:focus-within`** (tastatură) — fără JS,
+fără buton de toggle. Sub 900px, în overlay, e **mereu desfăşurat** ca linie mai mică sub Evenimente.
+
+Trei lucruri care nu se văd din markup:
+- **Culoarea textului din dropdown e mereu ink**, şi peste hero-ul închis de pe home, fiindcă fundalul
+  cutiei e mereu crem. Regula are un `li` în selector doar pentru specificitate — altfel o bate
+  `header:not(.scrolled) nav:not(.open) a`, care e mai jos în fişier. Nu-l scoate.
+- **Animaţia din meniul mobil** numără cu `nth-of-type` doar `<a>`-urile directe. `.nav-item` fiind
+  `div`, primeşte propriul delay (al treilea); Blog şi Contact au devenit `nth-of-type(3)` şi `(4)`.
+- **Starea activă:** `js/main.js` marchează linkurile după fişier **şi** după părinte
+  (`catering.html` → `evenimente.html`), deci pe catering se aprind amândouă. Selectorul e `#nav a`,
+  nu `#nav > a` — cu `>` Evenimente nu mai era găsit.
+
+**WP:** `wp_nav_menu` cu `depth => 2`; walker-ul trebuie să scoată exact `div.nav-item > a + ul.nav-sub`.
 
 
 ## 5. Footer
@@ -175,6 +201,7 @@ Linkurile legale stau în `footer-bottom`, nu în coloana de navigare.
           <a href="meniu.html">Meniu</a>
           <a href="despre.html">Despre</a>
           <a href="evenimente.html">Evenimente</a>
+          <a href="catering.html">Catering</a>
           <a href="blog.html">Blog</a>
           <a href="contact.html">Contact</a>
         </nav>
@@ -243,7 +270,7 @@ padding: clamp(104px, 12.5vw, 210px);   /* nu 20vh */
 
 ## 6. Scripturi, în ordine, înainte de `</body>`
 
-Pagini cu magazin/coș (`index`, `magazin`, `produs`, `cos`, `checkout`, `comanda-confirmata`):
+Pagini cu magazin/coș (`index`, `meniu`, `produs`, `cos`, `checkout`, `comanda-confirmata`):
 
 ```html
 <script src="data/products.js"></script>
@@ -262,3 +289,17 @@ Pagini fără magazin (dar cu badge de coș în header):
 ```
 
 `js/contact.js` se adaugă **doar** pe `contact.html`.
+
+Pagini cu catering (`catering`, `evenimente`) — catalogul separat, fără coş:
+
+```html
+<script src="data/catering.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/catering.js"></script>
+<script src="js/rez-modal.js"></script>
+<script src="js/main.js"></script>
+<script>
+  Catering.mount({ gridId:'catGrid', filtersId:'catFilters', countId:'catCount', descId:'catDesc' });   // catering.html
+  Catering.mountTeaser({ gridId:'cateringTeaser', ids:[ /* 4 id-uri din data/catering.js */ ] });    // evenimente.html
+</script>
+```

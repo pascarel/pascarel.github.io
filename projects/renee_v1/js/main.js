@@ -63,17 +63,20 @@
       'articol.html': 'blog.html',
       'cos.html':     'meniu.html',
       'checkout.html':'meniu.html',
-      'comanda-confirmata.html': 'meniu.html'
+      'comanda-confirmata.html': 'meniu.html',
+      'catering.html': 'evenimente.html'   /* sub-item în dropdown: se aprind amândouă */
     };
     var fisier = location.pathname.split('/').pop() || 'index.html';
-    var activ = PARINTE[fisier] || fisier;
+    var parinte = PARINTE[fisier] || null;
 
     /* doar linkurile de pagină: fără butonul Rezervări (care are href
-       index.html#vizita şi s-ar activa pe home), fără Coş, fără social */
-    document.querySelectorAll('#nav > a:not(.btn-rez):not(.cart-link)').forEach(function(a){
+       index.html#vizita şi s-ar activa pe home), fără Coş, fără social.
+       Include linkurile din .nav-item / .nav-sub (dropdown-ul Evenimente). */
+    document.querySelectorAll('#nav a:not(.btn-rez):not(.cart-link)').forEach(function(a){
+      if (a.closest('.nav-social')) return;
       var href = (a.getAttribute('href') || '').split('#')[0].split('/').pop();
       if (!href) return;
-      if (href === activ) {
+      if (href === fisier || href === parinte) {
         a.classList.add('is-current');
         a.setAttribute('aria-current', 'page');
       }
