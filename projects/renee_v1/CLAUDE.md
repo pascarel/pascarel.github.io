@@ -26,21 +26,45 @@ Două contexte, anunțate explicit de mine la începutul sesiunii:
 
 **Important:** sesiunile Claude Code din browser/cloud rulează întotdeauna pe un clone proaspăt din GitHub, indiferent unde sunt eu fizic. Un fișier care există doar pe laptop și nu e pushed **nu e vizibil** în acea sesiune. Dacă ai nevoie de el, ceri să fie commit-uit și pushed, sau atașat în chat.
 
-### 1.1 Două sesiuni paralele — identifică-te corect
+### 1.1 Sesiuni paralele — identifică-te corect
 
-Proiectul e dezvoltat de **două sesiuni Claude separate**, care nu se văd una pe alta și nu au memorie comună:
+Proiectul e dezvoltat de **mai multe sesiuni Claude**, care nu se văd una pe alta şi nu au
+memorie comună. Sergiu lucrează de pe mai multe maşini şi chiar **de pe conturi Claude diferite**.
 
-| Sesiune | Rulează | Poate |
+⚠️ **Regula veche era greşită** şi a produs o etichetă falsă pe 17 sept. 2026: identifica
+sesiunea după sistemul de operare (`Darwin` → „ACASĂ"). Sergiu a lucrat de la birou pe un Mac,
+sesiunea a văzut `Darwin` şi s-a semnat „ACASĂ". **Sistemul de operare nu spune unde eşti.**
+
+**Prima acţiune în orice sesiune:** rulează
+
+```bash
+pwd && uname -s && hostname && git config user.name
+```
+
+Apoi te identifici după **ce poţi face**, nu după unde crezi că eşti:
+
+| Tip | Cum îl recunoşti | Poate |
 |---|---|---|
-| **OFICIU** | container cloud, Linux, clone din GitHub | citește repo-ul, analizează, scrie fișiere local în container. **Nu poate face `push`** (403) și nu vede laptopul. |
-| **ACASĂ** | laptop, macOS, `~/Documents/GitHub/pascarel.github.io` | modifică fișierele reale, deschide paginile în browser. Push-ul îl face utilizatorul din GitHub Desktop. |
+| **LOCAL** | `/Users/…` sau `/home/<user>/…` cu repo-ul clonat real, `hostname` al unei maşini fizice | modifică fişierele reale, deschide paginile în browser. Push-ul îl face Sergiu din GitHub Desktop. |
+| **CLOUD** | container, de obicei Linux, clone proaspăt din GitHub | citeşte, analizează, scrie local în container. **Nu poate face `push`** (403). |
 
-**Prima acțiune în orice sesiune:** rulează `pwd && uname -s`.
-`/home/user/…` + `Linux` → ești **OFICIU**. `/Users/…` + `Darwin` → ești **ACASĂ**.
+**Maşina se notează cu `hostname`, nu cu o presupunere despre loc.** Cea de acasă e
+`Sergiu-MacBook-Pro.local`. Dacă `hostname` e altceva, **nu ghici** — scrie în jurnal
+hostname-ul aşa cum l-ai citit şi, dacă ai nevoie de locaţie, întreabă-l pe Sergiu.
 
-Locul de execuție se fixează la pornirea sesiunii și **nu se schimbă** după. O sesiune pornită din browser rămâne în cloud chiar dacă e deschisă ulterior din aplicația de pe laptop — aplicația e doar fereastra, nu locul unde rulează codul.
+Formatul de semnătură în jurnal: `## AAAA-LL-ZZ · LOCAL (hostname) · titlu` sau `## AAAA-LL-ZZ · CLOUD · titlu`.
 
-**Comunicarea între sesiuni se face exclusiv prin repo**, în [`JURNAL-SESIUNI.md`](JURNAL-SESIUNI.md). Citește-l la început și scrie în el la final. Nu presupune ce a făcut cealaltă sesiune — verifică `git log`.
+Locul de execuţie se fixează la pornirea sesiunii şi **nu se schimbă** după. O sesiune pornită
+din browser rămâne în cloud chiar dacă e deschisă ulterior din aplicaţia de pe laptop —
+aplicaţia e doar fereastra, nu locul unde rulează codul.
+
+**Autorul commit-urilor e mereu `pascarel`** (userul de GitHub al lui Sergiu), cu emailul
+`pascarusergiu003@gmail.com`. Dacă `git config user.name` întoarce altceva, semnalează-i —
+pe laptop câmpul de nume avea din greşeală un email (`sergiu@wildpress.co`), corectat 18 sept. 2026.
+Commit-urile deja făcute păstrează numele vechi; nu se rescrie istoria pentru asta.
+
+**Comunicarea între sesiuni se face exclusiv prin repo**, în [`JURNAL-SESIUNI.md`](JURNAL-SESIUNI.md).
+Citeşte-l la început şi scrie în el la final. Nu presupune ce a făcut cealaltă sesiune — verifică `git log`.
 
 ### Verificarea sincronizării
 Pe laptop, în Terminal:

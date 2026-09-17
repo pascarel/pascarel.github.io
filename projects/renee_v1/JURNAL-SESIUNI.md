@@ -16,7 +16,7 @@ Ele **nu se văd una pe alta** și nu au memorie comună. Acest fișier e singur
 Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 ```
-## AAAA-LL-ZZ · OFICIU sau ACASĂ
+## AAAA-LL-ZZ · LOCAL (hostname) sau CLOUD · titlu
 
 **Făcut:** ce s-a livrat concret, cu fișierele atinse
 **Nu am putut:** ce a rămas blocat și de ce
@@ -29,12 +29,21 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 - Nu presupune ce a făcut cealaltă sesiune — confirmă în `git log` înainte.
 - Dacă ai lăsat ceva la jumătate, spune-o explicit. O predare incompletă anunțată e mult mai bună decât una tăcută.
 - Nu marca drept „gata" ceva ce nu ai putut testa. Scrie ce ai verificat și ce nu.
+- **Semnează-te cu `hostname`, nu cu o presupunere despre loc.** Vezi `CLAUDE.md` §1.1: vechea
+  regulă identifica sesiunea după sistemul de operare şi a produs o etichetă falsă („ACASĂ"
+  pentru o sesiune rulată de la birou, pe Mac). Dacă nu ştii unde eşti, nu ghici — întreabă.
 
 ---
 
 ## Intrări
 
-## 2026-09-17 · ACASĂ · catering (catalog + pagină de produs), dropdown în nav, cinci runde de mobil
+## 2026-09-17 · LOCAL (maşina de la birou) · catering (catalog + pagină de produs), dropdown în nav, cinci runde de mobil
+
+> ✏️ **Corecţie de etichetă (18 sept.):** intrarea era semnată „ACASĂ". Sergiu a lucrat de la
+> **birou**, de pe alt cont Claude. Sesiunea a aplicat regula de atunci din `CLAUDE.md` §1.1, care
+> identifica după sistemul de operare (`Darwin` → ACASĂ) — regulă acum rescrisă, fiindcă sistemul
+> de operare nu spune unde eşti. Commit-urile acestei zile sunt cele cinci semnate `pascarel`
+> (`05f0793` → `a2b1572`).
 
 > Sesiune lungă, cu Sergiu prezent. Pe scurt: **catering** — pagină nouă, 70 de poziţii, pagină
 > de produs comună cu Meniul, model WP schimbat de la CPT la produse Woo în categoria Catering ·
@@ -45,7 +54,7 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 Clientul a trimis un PDF cu meniul de **catering pentru evenimente** (el îi zice „fourchette"; pe site cuvântul nu apare — decizia lui Sergiu, 17 sept.) (candy bar, finger food,
 plăcinte, băuturi). Sergiu a decis: pagină proprie, **nu pe homepage**, intrare din Evenimente şi
-footer, sub-item în nav. În WordPress va fi **CPT separat**, nu produse Woo. Totul e în `CLAUDE.md` §4.1.
+footer, sub-item în nav. În WordPress vor fi **produse Woo** (CPT `product`), într-o **categorie-părinte `Catering` cu subcategorii** — **nu** CPT separat. (Dimineaţa decizia fusese CPT separat; s-a schimbat în aceeaşi zi, când Sergiu a cerut pagină de produs pentru preparatele de catering — vezi „🔁 Schimbare de model" mai jos.) Totul e în `CLAUDE.md` §4.1.
 
 ### 📄 Ce s-a livrat
 
