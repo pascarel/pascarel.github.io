@@ -37,6 +37,10 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 ## Intrări
 
+## 2026-09-18 · LOCAL (Sergius-Mac-Studio.local) · arhitectura WP decisă; lucrul continuă în renee-wp
+
+Arhitectura WordPress + WooCommerce e decisă: specul e în `docs/superpowers/specs/2026-09-18-renee-wp-tema-design.md`, planul Fazei 1 în `docs/superpowers/plans/2026-09-18-renee-wp-faza-1-schelet.md`. Codul se scrie în repo separat, `renee-wp`, branch `faza-1`. Prototipul de aici rămâne îngheţat ca referinţă de design, nu se mai dezvoltă funcţional.
+
 ## 2026-09-17 · LOCAL (maşina de la birou) · catering (catalog + pagină de produs), dropdown în nav, cinci runde de mobil
 
 > ✏️ **Corecţie de etichetă (18 sept.):** intrarea era semnată „ACASĂ". Sergiu a lucrat de la

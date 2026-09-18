@@ -189,6 +189,15 @@ Meniul **real și complet** al localului: 17 categorii, ~240 de preparate cu num
 - **Blog** (`blog.html`): listă verticală; **paginare şi pe desktop** când vor fi mai multe articole. Fără carusel.
 - **Catering**: vezi §4.1.
 
+### ➡️ 18 sept. 2026 — arhitectura temei WP e decisă și scrisă
+
+Spec-ul complet, aprobat pe secțiuni: [`docs/superpowers/specs/2026-09-18-renee-wp-tema-design.md`](docs/superpowers/specs/2026-09-18-renee-wp-tema-design.md).
+Repo nou: **`renee-wp`** (structură de `wp-content`: temă `renee` + plugin `renee-forms` + `seed/` + `docs/`).
+Pe scurt: temă clasică fără framework şi **fără jQuery** (Store API pentru coş), SCSS → CSS minificat commit-uit, SCF cu `acf-json/`,
+seed prin `wp renee seed`, catering = produse Woo în categoria-părinte Catering, lansare în **modul B** (coş + „Trimite comanda", fără plată),
+WPML în subdirectoare, Hetzner cu OpenLiteSpeed + LiteSpeed Cache, WebP generat de WP. Autor temă: Sergiu Pascaru, `https://pascarel.github.io/`.
+**Prototipul de aici devine referinţă de design şi nu se mai modifică** după ce începe tema.
+
 ### Ghid tehnic existent
 `projects/renee_v1/MIGRARE-WP.md` — 254 linii, tabel de mapare pagină → WP/Woo, model de date produs, shipping zones. **De consultat înainte de a scrie cod.** Rămâne referință, dar precede brandbook-ul, deci partea de design e depășită.
 
@@ -344,7 +353,7 @@ Logo-ul poate sta peste fotografii, cu condiția să rămână clar lizibil și 
 - [x] **Structura multilingvă RO/RU/EN** — decisă 14 sept. 2026: se face **în WordPress**, nu în prototipul static. Aici există doar switcher-ul vizual din header. Vezi §4.
 - [x] ~~**Pattern SVG**~~ — **abandonat 16 sept. 2026** la cererea clientului. Fișierele rămân în `img/`, nefolosite.
 - [ ] **Restul brandbook-ului** — spațiere, dimensiuni minime logo, ton de voce, aplicații
-- [ ] **Numele repo-ului nou** pentru temă
+- [x] **Numele repo-ului nou** pentru temă — `renee-wp`, decis 18 sept. 2026
 - [x] **Decizie** `--cream-2` și `--caramel` — vezi §5
 - [x] `renee_v2` — **se ignoră complet**, nu intră în producție (9 sept. 2026)
 
