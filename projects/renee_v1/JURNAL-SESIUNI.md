@@ -41,6 +41,8 @@ Adaugă o intrare nouă **sus**, imediat sub „Intrări". Format scurt:
 
 Arhitectura WordPress + WooCommerce e decisă: specul e în `docs/superpowers/specs/2026-09-18-renee-wp-tema-design.md`, planul Fazei 1 în `docs/superpowers/plans/2026-09-18-renee-wp-faza-1-schelet.md`. Codul se scrie în repo separat, `renee-wp`, branch `faza-1`. Prototipul de aici rămâne îngheţat ca referinţă de design, nu se mai dezvoltă funcţional.
 
+**Actualizare, sfârşitul zilei:** Faza 1 e în `main` din `renee-wp`; Faza 2 (pagini + SCF + seed, planul în `docs/superpowers/plans/2026-09-18-renee-wp-faza-2-pagini-seed.md`) e pe branch-ul `faza-2`, trecută prin review final — 6 corecţii Important înainte de merge. **Jurnalul proiectului s-a mutat în `renee-wp/docs/JURNAL-SESIUNI.md`**; intrarea „PREDARE” de acolo explică starea, motivele arhitecturii şi paşii următori pentru o sesiune nouă. Aici nu se mai scrie decât dacă se atinge prototipul. Comparaţia 1:1 se face servind acest folder cu `python3 -m http.server 8765`.
+
 ## 2026-09-17 · LOCAL (maşina de la birou) · catering (catalog + pagină de produs), dropdown în nav, cinci runde de mobil
 
 > ✏️ **Corecţie de etichetă (18 sept.):** intrarea era semnată „ACASĂ". Sergiu a lucrat de la

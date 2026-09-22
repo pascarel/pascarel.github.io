@@ -198,6 +198,8 @@ seed prin `wp renee seed`, catering = produse Woo în categoria-părinte Caterin
 WPML în subdirectoare, Hetzner cu OpenLiteSpeed + LiteSpeed Cache, WebP generat de WP. Autor temă: Sergiu Pascaru, `https://pascarel.github.io/`.
 **Prototipul de aici devine referinţă de design şi nu se mai modifică** după ce începe tema.
 
+**Stare la 18 sept. 2026, seara:** Faza 1 (schelet) e în `main`, Faza 2 (pagini, SCF, seed) e pe `faza-2`, la review final. **Tot ce ţine de temă — jurnal, decizii, mediu de test, ce urmează — e în `renee-wp/docs/`**, începând cu `JURNAL-SESIUNI.md`, intrarea „PREDARE”. Acest CLAUDE.md rămâne pentru regulile de brand şi conţinut, valabile în ambele repo-uri.
+
 ### Ghid tehnic existent
 `projects/renee_v1/MIGRARE-WP.md` — 254 linii, tabel de mapare pagină → WP/Woo, model de date produs, shipping zones. **De consultat înainte de a scrie cod.** Rămâne referință, dar precede brandbook-ul, deci partea de design e depășită.
 
