@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dinți ficși pe implanturi – Smile Dent</title>
 <meta name="description" content="Dantură fixă pe 4/6 implanturi la Smile Dent. Consultație, Digital Check-up, preț fix, plata în rate 0%.">
+<link rel="alternate" hreflang="ro" href="https://dintificsi.smiledent.md/">
+<link rel="alternate" hreflang="ru" href="https://dintificsi.smiledent.md/ru/">
+<link rel="alternate" hreflang="x-default" href="https://dintificsi.smiledent.md/">
 <link rel="preload" href="fonts/Switzer-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/AlverataIrregularSb.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -58,17 +61,36 @@ section{padding:clamp(56px,8vw,96px) 0}
 .hdr .wrap{display:flex;align-items:center;gap:24px;height:76px}
 .logo img{height:50px;width:auto}
 @media(max-width:720px){.logo img{height:42px}}
-.nav{display:flex;gap:22px;margin-left:auto;font-weight:500;color:var(--link);font-size:15px}
+.nav{display:flex;gap:20px;white-space:nowrap;margin-left:auto;font-weight:500;color:var(--link);font-size:15px}
 .nav a:hover{color:var(--accent)}
-.hdr-tel{font-weight:700;color:var(--link);display:flex;align-items:center;gap:8px}
-.hdr-tel svg{width:20px;color:var(--accent)}
-.burger{display:none;width:44px;height:44px;margin-left:auto}
-.burger span,.burger span::before,.burger span::after{display:block;width:24px;height:2px;background:var(--link);margin:auto;position:relative;transition:.3s}
-.burger span::before,.burger span::after{content:"";position:absolute}
-.burger span::before{top:-7px}.burger span::after{top:7px}
-@media(max-width:1080px){.nav{display:none}.hdr-tel{margin-left:auto}}
-@media(max-width:720px){.hdr .btn,.hdr-tel{display:none}.burger{display:block}
- .nav.open{display:flex;position:absolute;top:76px;left:0;right:0;flex-direction:column;background:#fff;padding:20px 16px;border-bottom:1px solid var(--soft)}}
+/* language switcher */
+.lang{display:flex;padding:3px;border-radius:99px;background:var(--soft);font-size:13px;font-weight:700;letter-spacing:.04em;flex:none}
+.lang a{position:relative;z-index:1;padding:6px 11px;border-radius:99px;color:var(--link);transition:color .4s var(--ease)}
+.lang a[aria-current=true]{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(0,128,128,.3)}
+.lang a:not([aria-current=true]):hover{color:var(--accent)}
+@media(max-width:1240px){.lang{margin-left:auto}}
+@media(max-width:720px){.hdr .burger{margin-left:4px}}
+.hdr-tel{white-space:nowrap;font-weight:700;color:var(--link);display:flex;align-items:center;gap:8px}
+.hdr-tel svg{width:20px;height:20px;flex:none;color:var(--accent)}
+.burger{display:none;position:relative;width:44px;height:44px;margin-left:auto;border-radius:50%;transition:background .4s var(--ease)}
+.burger span,.burger span::before,.burger span::after{display:block;width:24px;height:2px;border-radius:2px;background:var(--link);position:absolute;left:50%;top:50%;margin:-1px 0 0 -12px;transition:transform .45s var(--ease),opacity .3s var(--ease),background .3s}
+.burger span::before,.burger span::after{content:"";left:0;margin:0}
+.burger span::before{transform:translateY(-7px)}.burger span::after{transform:translateY(7px)}
+.burger[aria-expanded=true]{background:var(--soft)}
+.burger[aria-expanded=true] span{background:transparent}
+.burger[aria-expanded=true] span::before{transform:rotate(45deg);background:var(--link)}
+.burger[aria-expanded=true] span::after{transform:rotate(-45deg);background:var(--link)}
+@media(max-width:1240px){.nav{display:none}}
+@media(max-width:1240px){.burger{display:block}.hdr .burger{margin-left:4px}
+ .nav{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;margin:0;padding:8px 16px 24px;background:#fff;border-bottom:1px solid var(--soft);box-shadow:0 24px 40px rgba(0,80,80,.12);font-size:18px;
+  visibility:hidden;opacity:0;transform:translateY(-12px);clip-path:inset(0 0 100% 0);transition:clip-path .5s var(--ease),opacity .4s var(--ease),transform .5s var(--ease),visibility 0s .5s}
+ .nav a{padding:14px 0;border-bottom:1px solid var(--soft);opacity:0;transform:translateY(-8px);transition:opacity .35s var(--ease),transform .35s var(--ease),color .3s}
+ .nav.open{visibility:visible;opacity:1;transform:none;clip-path:inset(0 0 0 0);transition:clip-path .55s var(--ease),opacity .4s var(--ease),transform .55s var(--ease),visibility 0s}
+ .nav.open a{opacity:1;transform:none}
+ .nav.open a:nth-child(1){transition-delay:.08s}.nav.open a:nth-child(2){transition-delay:.12s}.nav.open a:nth-child(3){transition-delay:.16s}.nav.open a:nth-child(4){transition-delay:.2s}.nav.open a:nth-child(5){transition-delay:.24s}.nav.open a:nth-child(6){transition-delay:.28s}
+ .nav-bg{position:fixed;inset:0;z-index:49;background:rgba(6,48,47,.35);opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s .45s}
+ .menu-open .nav-bg{opacity:1;visibility:visible;transition:opacity .45s var(--ease),visibility 0s}}
+@media(max-width:720px){.hdr .btn,.hdr-tel{display:none}}
 /* hero */
 .hero{padding:clamp(40px,6vw,80px) 0;background:linear-gradient(180deg,var(--soft2),#fff)}
 .hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
@@ -406,11 +428,13 @@ section{padding:clamp(56px,8vw,96px) 0}
   <nav class="nav" id="nav">
    <a href="#avantaje">Dantură fixă</a><a href="#testimoniale">Testimoniale</a><a href="#cazuri">Cazuri clinice</a><a href="#servicii">Servicii</a><a href="#preturi">Prețuri</a><a href="#contacte">Contacte</a>
   </nav>
+  <nav class="lang" aria-label="Limba / Язык"><a href="./" hreflang="ro" lang="ro" aria-current="true" title="Română">RO</a><a href="ru/" hreflang="ru" lang="ru" title="Русский">RU</a></nav>
   <a class="hdr-tel" href="tel:022011061"><svg><use href="#i-tel"/></svg>022 011 061</a>
   <button class="btn" data-popup><svg><use href="#i-cal"/></svg>Programează-te</button>
-  <button class="burger" aria-label="Meniu" onclick="document.getElementById('nav').classList.toggle('open')"><span></span></button>
+  <button class="burger" aria-label="Meniu" aria-controls="nav" aria-expanded="false"><span></span></button>
  </div>
 </header>
+<div class="nav-bg"></div>
 
 <main>
 <!-- 02 HERO -->
@@ -840,6 +864,14 @@ document.addEventListener('click',e=>{const c=e.target.closest('[data-lb]');if(!
  idx=c.dataset.more?6:list.findIndex(x=>x.t===(c.textContent.trim()||c.dataset.lbset));if(idx<0)idx=0;show();open(lb)});
 $('.prev',lb).onclick=()=>{idx=(idx-1+list.length)%list.length;show()};$('.next',lb).onclick=()=>{idx=(idx+1)%list.length;show()};
 document.addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='ArrowLeft')$('.prev',lb).click();if(e.key==='ArrowRight')$('.next',lb).click()});
+
+// prototype: RU version is built in WordPress (Polylang) – just flip the active state here
+$$('.lang a').forEach(a=>a.onclick=e=>{e.preventDefault();$$('.lang a').forEach(x=>x.setAttribute('aria-current',x===a))});
+
+// mobile menu
+const nav=$('#nav'),bg=$('.burger'),setMenu=o=>{nav.classList.toggle('open',o);bg.setAttribute('aria-expanded',o);document.body.classList.toggle('menu-open',o);bg.setAttribute('aria-label',o?'Închide meniul':'Meniu')};
+bg.onclick=()=>setMenu(!nav.classList.contains('open'));$('.nav-bg').onclick=()=>setMenu(false);
+$$('a',nav).forEach(a=>a.addEventListener('click',()=>setMenu(false)));document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
 
 // contact bar shows after the hero
 const bar=$('.mbar'),hero=$('.hero');const tb=()=>bar.classList.toggle('show',scrollY>hero.offsetHeight*.6);addEventListener('scroll',tb,{passive:true});tb();
