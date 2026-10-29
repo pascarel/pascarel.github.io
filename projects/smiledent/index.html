@@ -105,6 +105,7 @@ section{padding:clamp(56px,8vw,96px) 0}
 /* form */
 .form-card{background:#fff;border-radius:var(--rc);padding:28px;box-shadow:0 20px 50px rgba(0,80,80,.12)}
 .form-card h3{margin-bottom:6px}
+.bg-dark .form-card h3,.cta-band .form-card h3{color:var(--link)}
 .form-card .sub{color:var(--muted);font-size:14px;margin-bottom:18px}
 .lead-form{display:grid;gap:14px}
 .lead-form label{display:grid;gap:6px;font-size:14px;font-weight:500;color:var(--link)}
@@ -231,9 +232,27 @@ section{padding:clamp(56px,8vw,96px) 0}
 .cert b{color:var(--link)}
 .prose p+p{margin-top:14px}
 /* brands */
-.brand{text-align:center;padding:28px 20px;border-radius:var(--rc);background:#fff;border:1px solid var(--soft)}
-.brand .logo-ph{height:48px;display:flex;align-items:center;justify-content:center;font-family:Alverata,serif;font-size:24px;color:var(--dark);margin-bottom:12px}
-.brand p{font-size:14px}
+.impl-intro{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center;margin-bottom:56px}
+.impl-media{aspect-ratio:4/5;height:100%;max-height:640px}
+.impl-intro h3{margin-bottom:14px}
+.impl-feats{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
+.impl-feats li{display:flex;gap:12px;align-items:flex-start}
+.impl-feats .ico{width:44px;height:44px;margin:0;flex:none}.impl-feats .ico svg{width:22px;height:22px}
+.impl-feats b{display:block;color:var(--link);font-size:15px}
+.impl-feats small{font-size:13px;color:var(--muted);line-height:1.4;display:block}
+@media(max-width:900px){.impl-intro{grid-template-columns:1fr;gap:28px}.impl-media{aspect-ratio:16/10}}
+@media(max-width:500px){.impl-feats{grid-template-columns:1fr}}
+/* brand card = product image + logo slot (works with a logo image, a photo, or both) */
+.brand{display:flex;flex-direction:column;border-radius:var(--rc);background:#fff;border:1px solid var(--soft);overflow:hidden}
+.brand-img{aspect-ratio:4/3;border-radius:0}
+.brand-img span{top:12px;bottom:auto}
+.brand-body{position:relative;padding:44px 22px 24px;flex:1;display:flex;flex-direction:column}
+.logo-slot{position:absolute;top:-32px;left:22px;right:22px;height:64px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,80,80,.12);font-family:Alverata,serif;font-size:22px;color:var(--dark)}
+.logo-slot img{max-height:36px;max-width:80%;width:auto}
+.origin{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.brand p{font-size:14px;margin-bottom:14px}
+.brand .checks{margin:auto 0 0;gap:6px;font-size:14px}
+.brand .checks li::before{width:18px;height:18px;background-size:11px}
 .pills{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}
 .pills span{padding:8px 14px;border-radius:99px;background:var(--soft);color:var(--dark);font-size:14px;font-weight:500}
 /* compare */
@@ -323,6 +342,21 @@ section{padding:clamp(56px,8vw,96px) 0}
 @media(max-width:900px){.gal{grid-template-columns:repeat(3,1fr)}.tour{grid-template-columns:1fr 1fr;grid-auto-rows:160px}}
 /* faq */
 .faq{max-width:860px;margin:0 auto}
+.faq-grid{display:grid;grid-template-columns:1fr 450px;gap:24px;align-items:stretch}
+.faq-grid .faq{max-width:none;background:#fff;border:1px solid var(--soft);border-radius:var(--rc);padding:8px 28px}
+.faq-grid .faq details:last-child{border-bottom:0}
+/* video block stretches to the FAQ height; the vertical player fills what is left */
+.shorts{display:flex;flex-direction:column;background:#fff;border:1px solid var(--soft);border-radius:var(--rc);padding:24px;min-width:0}
+.shorts .slider{flex:1;display:flex;flex-direction:column;min-height:0}
+.shorts .stage,.shorts .track{flex:1;min-height:0}
+.short{width:100%;display:flex;flex-direction:column;cursor:pointer}
+.short .ph{flex:1;min-height:420px;aspect-ratio:auto}
+.ph.gray{background:#e4e8e8}
+.ph.gray::before{display:none}
+.ph span:empty{display:none}
+.short p{margin-top:12px;font-size:15px;font-weight:500;color:var(--link);line-height:1.35}
+.shorts .s-ctrl{margin-top:16px}
+@media(max-width:1000px){.faq-grid{grid-template-columns:1fr}.shorts{padding:20px 0 0;border:0;background:none}.shorts .track{flex:none}.short{width:min(240px,62vw)}.short .ph{flex:none;min-height:0;aspect-ratio:9/16}}
 .faq details{border-bottom:1px solid var(--soft)}
 .faq summary{list-style:none;cursor:pointer;padding:22px 48px 22px 0;position:relative;font-weight:500;font-size:18px;color:var(--link)}
 .faq summary::-webkit-details-marker{display:none}
@@ -340,6 +374,31 @@ section{padding:clamp(56px,8vw,96px) 0}
 .contact-row small{display:block;color:var(--light)}
 .contact-row a{color:#fff;font-weight:500}
 @media(max-width:900px){.final .wrap{grid-template-columns:1fr}}
+/* map */
+.map-grid{display:grid;grid-template-columns:400px 1fr;gap:24px;align-items:stretch}
+.clinics{display:grid;gap:16px;align-content:start}
+.clinic{padding:24px;border-radius:var(--rc);border:1px solid var(--soft);background:#fff;cursor:pointer;transition:border-color .5s var(--ease),box-shadow .5s var(--ease)}
+.clinic.on{border-color:var(--accent);box-shadow:0 14px 34px rgba(0,80,80,.12)}
+.clinic .tag{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.clinic h3{margin:4px 0 12px;font-size:21px}
+.clinic .addr{display:flex;gap:10px;align-items:flex-start;margin-bottom:6px;color:var(--link)}
+.clinic .addr svg{width:18px;height:18px;flex:none;margin-top:3px;color:var(--accent)}
+.clinic .hours{font-size:14px;color:var(--muted);margin:8px 0 16px}
+.dir{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dir .btn{height:48px;padding:0 12px;font-size:15px}
+.map{position:relative;min-height:460px;border-radius:var(--rc);overflow:hidden;background:var(--soft);z-index:0}
+.map .leaflet-tile-pane{filter:grayscale(.55) contrast(.95) brightness(1.03)}
+.map-ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--accent);font-size:14px}
+.pin{width:44px;height:44px;border-radius:50% 50% 50% 0;background:var(--accent);transform:rotate(-45deg);display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,80,80,.4);border:3px solid #fff;transition:background .3s,transform .3s}
+.pin span{transform:rotate(45deg);color:#fff;font-weight:700;font-size:15px}
+.pin.on{background:var(--pink);transform:rotate(-45deg) scale(1.12)}
+.leaflet-popup-content{font:500 14px/1.4 Switzer,sans-serif;color:var(--link)}
+@media(max-width:900px){.map-grid{grid-template-columns:1fr}.map{min-height:340px;order:-1}}
+@media(max-width:420px){.dir{grid-template-columns:1fr}}
+/* video modal */
+.vmodal .vbox{position:relative;width:min(960px,100%);aspect-ratio:16/9;background:#000;border-radius:var(--rc);overflow:hidden}
+.vmodal .vbox.short{width:auto;height:min(86vh,760px);aspect-ratio:9/16}
+.vmodal iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 /* footer */
 .ftr{background:var(--darker);color:#b4babf;padding:64px 0 24px;font-size:15px}
 .ftr .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:32px}
@@ -361,6 +420,15 @@ section{padding:clamp(56px,8vw,96px) 0}
 .mbar .wa svg{color:#25D366}
 .mbar .main{background:var(--accent);color:#fff}.mbar .main svg{color:#fff}
 .mbar .main:hover{background:var(--dark)}
+/* icons animate in turn: phone → calendar → WhatsApp, 6s loop, each active ~1s */
+.mbar svg{transform-origin:50% 50%;animation:6s var(--ease) infinite both}
+.mbar a:first-child svg{animation-name:ring}
+.mbar .main svg{animation-name:hop;animation-delay:2s}
+.mbar .wa svg{animation-name:pop;animation-delay:4s}
+@keyframes ring{0%,18%,100%{transform:rotate(0)}3%{transform:rotate(-16deg)}6%{transform:rotate(14deg)}9%{transform:rotate(-12deg)}12%{transform:rotate(9deg)}15%{transform:rotate(-4deg)}}
+@keyframes hop{0%,16%,100%{transform:translateY(0) scale(1)}4%{transform:translateY(-6px) scale(1.06)}8%{transform:translateY(0) scale(.96,1.04)}11%{transform:translateY(-3px)}}
+@keyframes pop{0%,16%,100%{transform:scale(1) rotate(0)}5%{transform:scale(1.25) rotate(-10deg)}9%{transform:scale(.95) rotate(6deg)}13%{transform:scale(1.05) rotate(0)}}
+@media(prefers-reduced-motion:reduce){.mbar svg{animation:none}}
 @media(max-width:720px){.mbar{left:0;right:0;bottom:0;transform:none;opacity:1;border-radius:0;padding:0;gap:0;grid-template-columns:1fr 1fr 1fr;box-shadow:0 -4px 20px rgba(0,0,0,.08)}
  .mbar.show{transform:none}
  .mbar a,.mbar button{height:64px;border-radius:0;flex-direction:column;justify-content:center;gap:2px;padding:0 4px;font-size:12px}
@@ -393,6 +461,33 @@ section{padding:clamp(56px,8vw,96px) 0}
 @keyframes introImg{from{opacity:0;clip-path:inset(12% 12% 12% 12% round 14px);transform:scale(1.04)}to{clip-path:inset(0 0 0 0 round 14px)}}
 .js .hero .checks li{animation:introUp .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(.55s + var(--i)*.1s)}
 @media(prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}.js .intro > *,.js .hero-media,.js .hdr,.js .hero .checks li{animation:none}}
+/* ===== mobile refinements ===== */
+@media(max-width:900px){
+ .tour .ph:nth-child(6){grid-column:span 2}            /* 2-col grid: big tile + 5 → last tile fills the row */
+ .faq-grid .shorts{order:-1;padding:0 0 8px}            /* video first, then accordion */
+}
+@media(max-width:600px){
+ main .btn{width:100%}
+ .hero-actions{flex-direction:column;gap:10px}
+ .cta-band{padding:24px 16px;gap:20px}
+ .form-card{padding:20px 16px}
+ .lead-form{gap:12px}
+ .lead-form input,.lead-form .btn{height:52px}
+ .cmp{padding:16px 16px 22px}
+ .cmp .ph{margin-bottom:18px}
+ .cmp h3{font-size:20px;margin-bottom:14px}
+ .cmp .checks{gap:10px;font-size:15px}
+ /* horizontal-scroll card rows */
+ .hscroll{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:12px 16px 24px;scroll-padding:0 16px}
+ .hscroll::-webkit-scrollbar{display:none}
+ .hscroll > *{flex:0 0 78%;scroll-snap-align:start}
+ [data-gen=team] > *{flex-basis:62%}
+ .gal{grid-template-columns:repeat(2,1fr);gap:12px}
+ .gal .ph span{font-size:11px;padding:3px 9px;left:10px;bottom:10px}
+ .ftr{padding-top:44px}
+ .ftr-links{display:none}
+ .ftr .bottom{margin-top:24px;flex-direction:column;align-items:flex-start}
+}
 </style>
 </head>
 <body>
@@ -417,6 +512,8 @@ section{padding:clamp(56px,8vw,96px) 0}
  <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-3 5 3-1.5-7"/></symbol>
  <symbol id="i-google" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></symbol>
  <symbol id="i-fb" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#0866FF"/><path fill="#fff" d="M26.7 48V31h5.7l.9-6.6h-6.6v-4.2c0-1.9.5-3.2 3.3-3.2h3.5v-5.9c-.6-.1-2.7-.3-5.1-.3-5.1 0-8.5 3.1-8.5 8.7v4.9H14.2V31h5.7v17z"/></symbol>
+ <symbol id="i-gmaps" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.6" fill="#fff"/></symbol>
+ <symbol id="i-waze" viewBox="0 0 24 24"><path fill="#33CCFF" d="M12.2 3C7.4 3 3.6 6.6 3.6 10.9c0 1.2-.3 2.2-1.6 2.6.6 1.6 2 2.7 3.6 3.3a2 2 0 1 0 3.6 1.3h4.2a2 2 0 1 0 3.9-.4c2.2-1.4 3.7-3.8 3.7-6.6C21 6.6 17.1 3 12.2 3z"/><circle cx="9.5" cy="10" r="1.1" fill="#1f2a33"/><circle cx="15" cy="10" r="1.1" fill="#1f2a33"/><path d="M9.3 13c.8 1.2 4.6 1.2 5.6 0" stroke="#1f2a33" stroke-width="1.3" fill="none" stroke-linecap="round"/></symbol>
  <symbol id="i-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></symbol>
  <symbol id="i-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></symbol>
 </svg>
@@ -546,16 +643,27 @@ section{padding:clamp(56px,8vw,96px) 0}
 <!-- 11 IMPLANT BRANDS -->
 <section class="bg-soft">
  <div class="wrap">
-  <div class="grid2" style="margin-bottom:48px;align-items:start">
-   <h2>Implanturi dentare de la producători recunoscuți la nivel internațional</h2>
-   <div class="prose"><p>Utilizăm sisteme de implanturi precum Straumann, Bredent, JD Implants și Dentis, alese pentru standardele de calitate, biocompatibilitate și predictibilitatea rezultatelor pe termen lung.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sunt dezvoltate în colaborare cu universități de prestigiu și respectă cele mai noi standarde din implantologie.</p>
-    <div class="pills"><span>Standarde internaționale</span><span>Biocompatibilitate ridicată</span><span>Osteointegrare predictibilă</span><span>Garanție extinsă</span></div></div>
+  <div class="sec-head"><span class="eyebrow">Sisteme de implanturi</span><h2>Implanturi dentare de la producători recunoscuți la nivel internațional</h2><p>Utilizăm sisteme precum Straumann, Bredent, JD Implants și Dentis, alese pentru calitate, biocompatibilitate și predictibilitatea rezultatelor pe termen lung.</p></div>
+  <div class="impl-intro">
+   <div class="ph img impl-media"><img src="img/allon6.webp" alt="Dantură fixă All-on-6 pe implanturi" loading="lazy"><span>Lorem ipsum – foto implant / All-on-6</span></div>
+   <div class="prose">
+    <h3>De ce contează sistemul de implant ales?</h3>
+    <p>Implantul este fundația pe care se sprijină întreaga dantură fixă. De calitatea lui depind stabilitatea lucrării, felul în care osul se vindecă în jurul lui și cât timp vă va servi tratamentul. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+    <p>Folosim exclusiv sisteme validate clinic la nivel mondial, care îmbină designul modern cu materiale premium – titan de grad medical și suprafețe tratate special pentru o osteointegrare rapidă. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+    <p>Medicul alege tipul și numărul implanturilor după Digital Check-up (tomografie 3D și scanare intraorală), în funcție de volumul osos, mușcătură și așteptările dumneavoastră. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p>
+    <ul class="impl-feats">
+     <li><div class="ico"><svg><use href="#i-award"/></svg></div><div><b>Standarde internaționale</b><small>Certificări CE și FDA, studii clinice pe termen lung.</small></div></li>
+     <li><div class="ico"><svg><use href="#i-heart"/></svg></div><div><b>Biocompatibilitate ridicată</b><small>Titan pur, bine tolerat de organism.</small></div></li>
+     <li><div class="ico"><svg><use href="#i-tooth"/></svg></div><div><b>Osteointegrare predictibilă</b><small>Suprafețe care accelerează vindecarea.</small></div></li>
+     <li><div class="ico"><svg><use href="#i-shield"/></svg></div><div><b>Garanție extinsă</b><small>Garanția producătorului + garanția clinicii.</small></div></li>
+    </ul>
+   </div>
   </div>
-  <div class="grid4">
-   <div class="brand"><div class="logo-ph">Straumann</div><p>Standard elvețian premium, cea mai documentată osteointegrare din lume.</p></div>
-   <div class="brand"><div class="logo-ph">Bredent</div><p>Sistem german cu soluții fiabile pentru încărcare imediată.</p></div>
-   <div class="brand"><div class="logo-ph">JD Implants</div><p>Implanturi italiene din Titaniu de Grad 4, raport excelent calitate-preț.</p></div>
-   <div class="brand"><div class="logo-ph">Dentis</div><p>Sistem versatil, adaptat pentru o gamă largă de cazuri clinice.</p></div>
+  <div class="grid4 hscroll">
+   <div class="brand"><div class="ph brand-img"><span>Foto implant</span></div><div class="brand-body"><div class="logo-slot">Straumann</div><span class="origin">🇨🇭 Elveția</span><p>Standard elvețian premium, cea mai documentată osteointegrare din lume.</p><ul class="checks"><li>Suprafață SLActive</li><li>Lorem ipsum dolor</li></ul></div></div>
+   <div class="brand"><div class="ph brand-img"><span>Foto implant</span></div><div class="brand-body"><div class="logo-slot">Bredent</div><span class="origin">🇩🇪 Germania</span><p>Sistem german cu soluții fiabile pentru încărcare imediată.</p><ul class="checks"><li>Fast &amp; Fixed</li><li>Lorem ipsum dolor</li></ul></div></div>
+   <div class="brand"><div class="ph brand-img"><span>Foto implant</span></div><div class="brand-body"><div class="logo-slot">JD Implants</div><span class="origin">🇮🇹 Italia</span><p>Implanturi italiene din titan de grad 4, raport excelent calitate-preț.</p><ul class="checks"><li>Titan grad 4</li><li>Lorem ipsum dolor</li></ul></div></div>
+   <div class="brand"><div class="ph brand-img"><span>Foto implant</span></div><div class="brand-body"><div class="logo-slot">Dentis</div><span class="origin">🇰🇷 Coreea de Sud</span><p>Sistem versatil, adaptat pentru o gamă largă de cazuri clinice.</p><ul class="checks"><li>Cazuri complexe</li><li>Lorem ipsum dolor</li></ul></div></div>
   </div>
   <div class="center"><button class="btn" data-popup><svg><use href="#i-cal"/></svg>Vreau mai multe detalii</button></div>
  </div>
@@ -668,14 +776,14 @@ section{padding:clamp(56px,8vw,96px) 0}
  </div>
  <div class="marquee"><div class="mq-track" data-gen="reviews" data-from="0"></div></div>
  <div class="marquee rev"><div class="mq-track" data-gen="reviews" data-from="9"></div></div>
- <div class="center"><button class="btn" data-popup><svg><use href="#i-cal"/></svg>Vreau mai multe detalii</button></div>
+ <div class="center wrap"><button class="btn" data-popup><svg><use href="#i-cal"/></svg>Vreau mai multe detalii</button></div>
 </section>
 
 <!-- 21 TEAM -->
 <section>
  <div class="wrap">
   <div class="sec-head"><h2>Echipa de medici Smile Dent</h2><p>Ei sunt cei care vă redau zâmbetul și încrederea în fiecare zi.</p></div>
-  <div class="grid3" data-gen="team"></div>
+  <div class="grid3 hscroll" data-gen="team"></div>
  </div>
 </section>
 
@@ -721,7 +829,8 @@ section{padding:clamp(56px,8vw,96px) 0}
 <!-- 26 FAQ -->
 <section class="bg-soft">
  <div class="wrap">
-  <div class="sec-head"><h2>Răspundem la cele mai frecvente întrebări</h2></div>
+  <div class="sec-head"><h2>Răspundem la cele mai frecvente întrebări</h2><p>Citiți răspunsurile sau urmăriți-le direct de la medicii noștri.</p></div>
+  <div class="faq-grid">
   <div class="faq">
    <details open><summary>Cât durează tratamentul pentru dantura fixă?</summary><p>De la evaluare până la lucrarea finală trec în general 3–6 luni, necesari integrării implanturilor în os. În cazurile favorabile, pleci cu o lucrare fixă provizorie în doar 3 zile.</p></details>
    <details><summary>Doare procedura de implant?</summary><p>Intervenția se face sub anestezie locală sau sedare, așa că nu vei simți durere. Postoperator poate apărea un disconfort ușor, ținut sub control cu medicație obișnuită.</p></details>
@@ -729,6 +838,10 @@ section{padding:clamp(56px,8vw,96px) 0}
    <details><summary>Se poate face încărcare imediată?</summary><p>Da, în cazurile cu os suficient și stabilitate bună a implanturilor, aplicăm o dantură fixă provizorie la scurt timp după intervenție.</p></details>
    <details><summary>Ce presupune îngrijirea zilnică?</summary><p>Periaj de două ori pe zi, duș bucal, periuțe interdentare și igienizări profesionale periodice la clinică.</p></details>
    <details><summary>Se poate plăti în rate?</summary><p>Da, oferim posibilitatea de a achita tratamentul în rate cu 0% dobândă.</p></details>
+  </div>
+   <aside class="shorts">
+    <div class="slider"><div class="track" data-gen="shorts"></div></div>
+   </aside>
   </div>
  </div>
 </section>
@@ -740,10 +853,36 @@ section{padding:clamp(56px,8vw,96px) 0}
    <h2>Nu trebuie să iei astăzi decizia.</h2>
    <p style="margin-top:12px;font-size:18px;color:#fff">Trebuie doar să afli dacă această soluție este potrivită pentru tine.</p>
    <ul class="checks"><li>Dacă este, îți explicăm variantele.</li><li>Dacă nu este, îți spunem sincer ce opțiuni ai.</li></ul>
-   <div class="contact-row"><div class="ico"><svg><use href="#i-pin"/></svg></div><div><small>Adresă</small><a href="#">Str. Lorem Ipsum 12, Chișinău</a></div></div>
+   <div class="contact-row"><div class="ico"><svg><use href="#i-pin"/></svg></div><div><small>Adrese</small><a href="#harta">Bd. Moscova 17/A · Str. Ismail 88, Chișinău</a></div></div>
    <div class="contact-row"><div class="ico"><svg><use href="#i-tel"/></svg></div><div><small>Telefon</small><a href="tel:022011061">022 011 061</a></div></div>
   </div>
   <div class="form-card"><h3>Programează o consultație</h3><p class="sub">Te sunăm noi în cel mai scurt timp.</p><form class="lead-form" data-source="final"></form></div>
+ </div>
+</section>
+
+<!-- 27b MAP -->
+<section class="map-sec" id="harta">
+ <div class="wrap">
+  <div class="sec-head"><h2>Ne găsiți în 2 clinici din Chișinău</h2><p>Alegeți clinica cea mai apropiată și obțineți direcțiile cu un singur click.</p></div>
+  <div class="map-grid">
+   <div class="clinics">
+    <article class="clinic on" data-i="0">
+     <span class="tag">Clinica 1</span><h3>Smile Dent – Moscova</h3>
+     <p class="addr"><svg><use href="#i-pin"/></svg>Bulevardul Moscova 17/A, MD-2068, Chișinău</p>
+     <p class="addr"><svg><use href="#i-tel"/></svg><a href="tel:022011061">022 011 061</a></p>
+     <p class="hours">Luni – Vineri 09:00–19:00 · Sâmbătă 09:00–14:00</p>
+     <div class="dir"><a class="btn btn--ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=47.0550604,28.8650126"><svg viewBox="0 0 24 24"><use href="#i-gmaps"/></svg>Google Maps</a><a class="btn btn--ghost" target="_blank" rel="noopener" href="https://waze.com/ul?ll=47.0550604,28.8650126&amp;navigate=yes"><svg viewBox="0 0 24 24"><use href="#i-waze"/></svg>Waze</a></div>
+    </article>
+    <article class="clinic" data-i="1">
+     <span class="tag">Clinica 2</span><h3>Smile Dent – Centru</h3>
+     <p class="addr"><svg><use href="#i-pin"/></svg>Strada Ismail 88, MD-2001, Chișinău</p>
+     <p class="addr"><svg><use href="#i-tel"/></svg><a href="tel:022011061">022 011 061</a></p>
+     <p class="hours">Luni – Vineri 09:00–19:00 · Sâmbătă 09:00–14:00</p>
+     <div class="dir"><a class="btn btn--ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=47.017985,28.8498266"><svg viewBox="0 0 24 24"><use href="#i-gmaps"/></svg>Google Maps</a><a class="btn btn--ghost" target="_blank" rel="noopener" href="https://waze.com/ul?ll=47.017985,28.8498266&amp;navigate=yes"><svg viewBox="0 0 24 24"><use href="#i-waze"/></svg>Waze</a></div>
+    </article>
+   </div>
+   <div class="map" id="map" role="region" aria-label="Harta clinicilor Smile Dent"><div class="map-ph">Se încarcă harta…</div></div>
+  </div>
  </div>
 </section>
 </main>
@@ -753,9 +892,9 @@ section{padding:clamp(56px,8vw,96px) 0}
  <div class="wrap">
   <div class="cols">
    <div><a href="#" class="logo"><img src="logo.svg" alt="Smile Dent" width="140" height="38" loading="lazy"></a><p>Clinică de implantologie dentară specializată în cazuri complexe și reabilitări complete pe implanturi.</p></div>
-   <div><h4>Navigare</h4><ul><li><a href="#avantaje">Dantură fixă</a></li><li><a href="#testimoniale">Testimoniale</a></li><li><a href="#cazuri">Cazuri clinice</a></li><li><a href="#servicii">Servicii</a></li><li><a href="#preturi">Prețuri</a></li><li><a href="#contacte">Contacte</a></li></ul></div>
-   <div><h4>Servicii</h4><ul><li><a href="#">Dinți ficși</a></li><li><a href="#">Implanturi dentare</a></li><li><a href="#">Fațete dentare</a></li><li><a href="#">Ortodonție</a></li><li><a href="#">Albire profesională</a></li><li><a href="#">Igienizare</a></li></ul></div>
-   <div><h4>Contact</h4><ul><li>Str. Lorem Ipsum 12, Chișinău</li><li><a href="tel:022011061">022 011 061</a></li><li><a href="mailto:info@smiledent.md">info@smiledent.md</a></li><li>Luni – Vineri: 09:00 – 19:00</li><li>Sâmbătă: 09:00 – 14:00</li><li>Duminică: închis</li></ul></div>
+   <div class="ftr-links"><h4>Navigare</h4><ul><li><a href="#avantaje">Dantură fixă</a></li><li><a href="#testimoniale">Testimoniale</a></li><li><a href="#cazuri">Cazuri clinice</a></li><li><a href="#servicii">Servicii</a></li><li><a href="#preturi">Prețuri</a></li><li><a href="#contacte">Contacte</a></li></ul></div>
+   <div class="ftr-links"><h4>Servicii</h4><ul><li><a href="#">Dinți ficși</a></li><li><a href="#">Implanturi dentare</a></li><li><a href="#">Fațete dentare</a></li><li><a href="#">Ortodonție</a></li><li><a href="#">Albire profesională</a></li><li><a href="#">Igienizare</a></li></ul></div>
+   <div class="ftr-links"><h4>Contact</h4><ul><li>Bd. Moscova 17/A, Chișinău</li><li>Str. Ismail 88, Chișinău</li><li><a href="tel:022011061">022 011 061</a></li><li><a href="mailto:info@smiledent.md">info@smiledent.md</a></li><li>Luni – Vineri: 09:00 – 19:00</li><li>Sâmbătă: 09:00 – 14:00</li><li>Duminică: închis</li></ul></div>
   </div>
   <div class="bottom"><span>© 2026 Smile Dent · Toate drepturile rezervate</span><nav><a href="#">Termeni și condiții</a><a href="#">Confidențialitate</a><a href="#">Cookies</a></nav></div>
  </div>
@@ -771,6 +910,12 @@ section{padding:clamp(56px,8vw,96px) 0}
 <!-- 30 POPUP FORM -->
 <div class="modal" id="popup" role="dialog" aria-modal="true" aria-labelledby="pp-t">
  <div class="form-card"><button class="mclose" data-close aria-label="Închide">×</button><h3 id="pp-t">Află mai multe detalii</h3><p class="sub">Lasă-ne datele și te contactăm noi.</p><form class="lead-form" data-source="popup"></form></div>
+</div>
+
+<!-- 30b VIDEO -->
+<div class="modal vmodal" id="vm" role="dialog" aria-modal="true" aria-label="Video">
+ <button class="mclose" data-close aria-label="Închide" style="z-index:2;background:#fff">×</button>
+ <div class="vbox"></div>
 </div>
 
 <!-- 31 LIGHTBOX -->
@@ -792,6 +937,7 @@ const reviews=[["Andreea M.","acum 2 săptămâni","Profesionalism desăvârșit
 const ba=[["zinovia","Pacientă, dantură fixă completă pe implanturi."],["tudor-ginu","Pacient, reabilitare orală completă superior și inferior."],["ana-branza","Pacientă, All-on-6 superior."],["pascari-vladimir","Pacient, reabilitare completă cu dinți ficși în 3 zile."],["nadejda-dontu","Pacientă, All-on-4 inferior, încărcare imediată."],["cornelia-mereuta","Pacientă, reabilitare completă superior și inferior."]];
 const baAll=["zinovia","tudor-ginu","ana-branza","pascari-vladimir","nadejda-dontu","cornelia-mereuta","mora-nina","morea-ivan","pirlacas-ecaterina","sandu-mihail"];
 const pats=["p7-5","p7-6","p7-8","p7-10","p9-1","p9-2","p9-3","p9-4","p9-5"];
+const shorts=[["Doare implantul?","yt-11.webp","mTT-t0zs9oE"],["Cât durează tratamentul?","yt-12.webp","JFPJ1gcpDG0"],["Dinți ficși în 3 zile – cum?","yt-13.webp","axZDlUPhPvA"],["Cât rezistă dantura fixă?","yt-14.webp","QcsasjthT_s"],["Se poate plăti în rate?","yt-15.webp","PfznDFT39gU"]];
 const team=[["Fondator","Dr. Lorem Ipsum","Implantologie"],["Specialist","Dr. Dolor Sit","Ortodonție"],["Specialist","Dr. Amet Consectetur","Chirurgie orală"],["Specialist","Dr. Adipiscing Elit","Estetică dentară"],["Specialist","Dr. Sed Do","Protetică dentară"],["Specialist","Dr. Eiusmod Tempor","Parodontologie"]];
 const tour=[["Echipa Smile Dent","medici.webp"],["Sală operatorie","sala.webp"],["All-on-6","allon6.webp"],["Sală așteptare"],["Cabinet steril"],["Zonă digitală"],["Laborator"],["Cabinet consultații"],["Recepție"],["Hol"]];
 const gen={
@@ -801,6 +947,7 @@ const gen={
  ba:()=>ba.map(([f,t])=>`<div class="ba"><div class="ba-img">${ph('Înainte','','before','ba-'+f+'-before.webp')}${ph('După','','after','ba-'+f+'-after.webp')}<i class="ba-tag l">Înainte</i><i class="ba-tag r">După</i><div class="ba-handle"></div><input type="range" min="0" max="100" value="50" aria-label="Compară înainte și după"></div><p>${t}</p></div>`).join(''),
  cases:el=>{const f=+el.dataset.from,a=Array.from({length:7},(_,i)=>{const n=f+i-1,src=n<10?'ba-'+baAll[n]+'-after.webp':(pats[n-10]||pats[0])+'.webp';return `<div class="case" data-lb="${f+i}">${ph('Caz '+String(f+i).padStart(2,'0'),'','',src)}</div>`}).join('');return a+a},
  reviews:el=>{const f=+el.dataset.from,a=reviews.slice(f,f+9).map(([n,d,t],i)=>`<div class="review"><div class="top"><div class="av">${n[0]}</div><div><b>${n}</b><small>${d}</small></div><svg class="src" aria-label="${i%3==2?'Facebook':'Google'}"><use href="#i-${i%3==2?'fb':'google'}"/></svg></div><div class="stars">★★★★★</div><p>${t}</p></div>`).join('');return a+a},
+ shorts:()=>shorts.map(([t,,id])=>`<div class="short" data-yt="${id}" data-yt-short>${ph('',play,'gray')}<p>${t}</p></div>`).join(''),
  team:()=>team.map(([r,n,s])=>`<div class="doc reveal">${ph('Foto medic','<em>'+r+'</em>')}<b>${n}</b><small>${s}</small></div>`).join(''),
  diplomas:()=>Array.from({length:12},(_,i)=>`<div data-lb="${i+1}" data-lbset="Diplomă">${ph('Diplomă '+(i+1))}</div>`).join(''),
  tour:()=>tour.map(([t,src],i)=>ph(t,'',i===5&&tour.length>6?'more':'',src).replace('class="ph ','data-lb="'+(i+1)+'" data-lbset="Clinica"'+(i===5&&tour.length>6?' data-more="+'+(tour.length-6)+'"':'')+' class="ph ')).join('')
@@ -872,6 +1019,28 @@ $$('.lang a').forEach(a=>a.onclick=e=>{e.preventDefault();$$('.lang a').forEach(
 const nav=$('#nav'),bg=$('.burger'),setMenu=o=>{nav.classList.toggle('open',o);bg.setAttribute('aria-expanded',o);document.body.classList.toggle('menu-open',o);bg.setAttribute('aria-label',o?'Închide meniul':'Meniu')};
 bg.onclick=()=>setMenu(!nav.classList.contains('open'));$('.nav-bg').onclick=()=>setMenu(false);
 $$('a',nav).forEach(a=>a.addEventListener('click',()=>setMenu(false)));document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+
+// video modal – iframe only created on click (no YouTube weight on page load)
+const vm=$('#vm'),vbox=$('.vbox',vm);
+document.addEventListener('click',e=>{const c=e.target.closest('[data-yt]');if(!c)return;
+ vbox.classList.toggle('short',c.hasAttribute('data-yt-short'));
+ vbox.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${c.dataset.yt}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Video"></iframe>`;open(vm)});
+new MutationObserver(()=>{if(!vm.classList.contains('open'))vbox.innerHTML=''}).observe(vm,{attributes:true,attributeFilter:['class']});
+
+// map – Leaflet is lazy-loaded when the section approaches the viewport
+const clinics=[{n:'Smile Dent – Moscova',a:'Bd. Moscova 17/A',ll:[47.0550604,28.8650126]},{n:'Smile Dent – Centru',a:'Str. Ismail 88',ll:[47.017985,28.8498266]}];
+const loadMap=()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';document.head.append(css);
+ const js=document.createElement('script');js.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';js.onload=()=>{
+  $('.map-ph').remove();const m=L.map('map',{scrollWheelZoom:false,zoomControl:true});
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(m);
+  const icon=(i,on)=>L.divIcon({className:'',html:`<div class="pin ${on?'on':''}"><span>${i+1}</span></div>`,iconSize:[44,44],iconAnchor:[22,48],popupAnchor:[0,-44]});
+  const mk=clinics.map((c,i)=>L.marker(c.ll,{icon:icon(i,i===0)}).addTo(m).bindPopup(`<b>${c.n}</b><br>${c.a}`));
+  m.fitBounds(L.latLngBounds(clinics.map(c=>c.ll)),{padding:[60,60]});
+  const pick=i=>{$$('.clinic').forEach((c,k)=>c.classList.toggle('on',k===i));mk.forEach((x,k)=>x.setIcon(icon(k,k===i)));m.flyTo(clinics[i].ll,16,{duration:.8});mk[i].openPopup()};
+  $$('.clinic').forEach((c,i)=>c.addEventListener('click',e=>{if(!e.target.closest('a'))pick(i)}));
+  mk.forEach((x,i)=>x.on('click',()=>pick(i)));
+ };document.head.append(js)};
+const mo=new IntersectionObserver(es=>{if(es[0].isIntersecting){mo.disconnect();loadMap()}},{rootMargin:'400px'});mo.observe($('#map'));
 
 // contact bar shows after the hero
 const bar=$('.mbar'),hero=$('.hero');const tb=()=>bar.classList.toggle('show',scrollY>hero.offsetHeight*.6);addEventListener('scroll',tb,{passive:true});tb();
