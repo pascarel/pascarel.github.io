@@ -266,15 +266,16 @@ section{padding:clamp(56px,8vw,96px) 0}
 .cmp.good li b{color:#fff}
 @media(max-width:800px){.compare{grid-template-columns:1fr}}
 /* marquee */
-.marquee{overflow:hidden;padding:12px 0 28px;margin:-12px 0 -28px;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+/* JS-driven: native horizontal scroll (swipe/drag works) + rAF auto-scroll; see "marquees" in the script */
+.marquee{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding:12px 0 28px;margin:-12px 0 -28px;cursor:grab}
+.marquee::-webkit-scrollbar{display:none}
+.marquee.drag{cursor:grabbing;user-select:none}
+.marquee.drag img{pointer-events:none}
+@media(pointer:fine){.marquee{mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}}
 .marquee+.marquee{margin-top:-8px}
-.mq-track{display:flex;gap:20px;width:max-content;animation:mq 60s linear infinite}
-.marquee.rev .mq-track{animation-direction:reverse}
-.marquee:hover .mq-track{animation-play-state:paused}
-@keyframes mq{to{transform:translateX(-50%)}}
+.mq-track{display:flex;gap:20px;width:max-content}
 .case{width:260px;cursor:zoom-in}
 .case .ph{aspect-ratio:1}
-@media(prefers-reduced-motion:reduce){.mq-track{animation:none}}
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s}
 .step{position:relative;padding:28px;border-radius:var(--rc);background:#fff;border:1px solid var(--soft)}
@@ -482,7 +483,7 @@ section{padding:clamp(56px,8vw,96px) 0}
  .hscroll::-webkit-scrollbar{display:none}
  .hscroll > *{flex:0 0 78%;scroll-snap-align:start}
  [data-gen=team] > *{flex-basis:62%}
- .gal{grid-template-columns:repeat(2,1fr);gap:12px}
+ .gal.hscroll > *{flex-basis:44%}
  .gal .ph span{font-size:11px;padding:3px 9px;left:10px;bottom:10px}
  .ftr{padding-top:44px}
  .ftr-links{display:none}
@@ -547,8 +548,8 @@ section{padding:clamp(56px,8vw,96px) 0}
     <li>Protocoale moderne de recuperare, inclusiv tehnologie laser în indicații specifice.</li>
    </ul>
    <div class="hero-actions">
-    <button class="btn" data-popup><svg><use href="#i-cal"/></svg>Lasă-ne datele și te contactăm</button>
-    <a class="btn btn--ghost" href="#avantaje">Mai multe detalii</a>
+    <a class="btn" href="https://wa.me/37300000000?text=Bun%C4%83%20ziua!%20A%C8%99%20dori%20o%20consulta%C8%9Bie%20pentru%20din%C8%9Bi%20fic%C8%99i%20pe%20implanturi." target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Lasă-ne datele și te contactăm</a>
+    <button class="btn btn--ghost" data-popup>Mai multe detalii</button>
    </div>
    <p class="disclaimer">Consultația nu te obligă la tratament. Rolul ei este să afli dacă această soluție este potrivită pentru tine.</p>
   </div>
@@ -729,8 +730,8 @@ section{padding:clamp(56px,8vw,96px) 0}
 <!-- 17 EXPERTISE VIDEO -->
 <section>
  <div class="wrap">
-  <div class="sec-head"><h2>Expertiza medicilor noștri</h2></div>
-  <div class="ph media-169 img" style="max-width:960px;margin:0 auto"><img src="img/medici.webp" alt="Echipa de medici Smile Dent" loading="lazy"><div class="play"></div><span>Echipa Smile Dent</span></div>
+  <div class="sec-head"><h2>Expertiza medicilor noștri</h2><p>Medicii Smile Dent explică tratamentul cu dinți ficși pe implanturi.</p></div>
+  <div class="slider wide"><div class="track" data-gen="expert"></div></div>
  </div>
 </section>
 
@@ -791,7 +792,7 @@ section{padding:clamp(56px,8vw,96px) 0}
 <section class="bg-soft">
  <div class="wrap">
   <div class="sec-head"><h2>Experiență și perfecționare: cursuri și specializări ale echipei noastre</h2><p>Certificări și diplome care confirmă pregătirea și competența profesională a echipei noastre.</p></div>
-  <div class="gal" data-gen="diplomas"></div>
+  <div class="gal hscroll" data-gen="diplomas"></div>
  </div>
 </section>
 
@@ -938,6 +939,7 @@ const ba=[["zinovia","Pacientă, dantură fixă completă pe implanturi."],["tud
 const baAll=["zinovia","tudor-ginu","ana-branza","pascari-vladimir","nadejda-dontu","cornelia-mereuta","mora-nina","morea-ivan","pirlacas-ecaterina","sandu-mihail"];
 const pats=["p7-5","p7-6","p7-8","p7-10","p9-1","p9-2","p9-3","p9-4","p9-5"];
 const shorts=[["Doare implantul?","yt-11.webp","mTT-t0zs9oE"],["Cât durează tratamentul?","yt-12.webp","JFPJ1gcpDG0"],["Dinți ficși în 3 zile – cum?","yt-13.webp","axZDlUPhPvA"],["Cât rezistă dantura fixă?","yt-14.webp","QcsasjthT_s"],["Se poate plăti în rate?","yt-15.webp","PfznDFT39gU"]];
+const expert=[["A9Lis443yrc","Ce este tratamentul All-on-4?"],["CaMJXN4K_8Q","All-on-4 vs All-on-6"],["GjBtvBK20G0","Pentru cine este potrivit tratamentul"],["Uh_mz2amSqo","Dinți ficși în 3 zile – cum e posibil"],["Z2FHsmGpySE","Digital Check-up: primul pas"],["4spu2zyEwN0","Recuperarea după intervenție"]];
 const team=[["Fondator","Dr. Lorem Ipsum","Implantologie"],["Specialist","Dr. Dolor Sit","Ortodonție"],["Specialist","Dr. Amet Consectetur","Chirurgie orală"],["Specialist","Dr. Adipiscing Elit","Estetică dentară"],["Specialist","Dr. Sed Do","Protetică dentară"],["Specialist","Dr. Eiusmod Tempor","Parodontologie"]];
 const tour=[["Echipa Smile Dent","medici.webp"],["Sală operatorie","sala.webp"],["All-on-6","allon6.webp"],["Sală așteptare"],["Cabinet steril"],["Zonă digitală"],["Laborator"],["Cabinet consultații"],["Recepție"],["Hol"]];
 const gen={
@@ -948,6 +950,7 @@ const gen={
  cases:el=>{const f=+el.dataset.from,a=Array.from({length:7},(_,i)=>{const n=f+i-1,src=n<10?'ba-'+baAll[n]+'-after.webp':(pats[n-10]||pats[0])+'.webp';return `<div class="case" data-lb="${f+i}">${ph('Caz '+String(f+i).padStart(2,'0'),'','',src)}</div>`}).join('');return a+a},
  reviews:el=>{const f=+el.dataset.from,a=reviews.slice(f,f+9).map(([n,d,t],i)=>`<div class="review"><div class="top"><div class="av">${n[0]}</div><div><b>${n}</b><small>${d}</small></div><svg class="src" aria-label="${i%3==2?'Facebook':'Google'}"><use href="#i-${i%3==2?'fb':'google'}"/></svg></div><div class="stars">★★★★★</div><p>${t}</p></div>`).join('');return a+a},
  shorts:()=>shorts.map(([t,,id])=>`<div class="short" data-yt="${id}" data-yt-short>${ph('',play,'gray')}<p>${t}</p></div>`).join(''),
+ expert:()=>expert.map(([id,t])=>`<div class="vcard" data-yt="${id}" style="cursor:pointer"><div class="ph img"><img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="${t}" loading="lazy" decoding="async">${play}</div><b>${t}</b><small>Dr. Lorem Ipsum</small></div>`).join(''),
  team:()=>team.map(([r,n,s])=>`<div class="doc reveal">${ph('Foto medic','<em>'+r+'</em>')}<b>${n}</b><small>${s}</small></div>`).join(''),
  diplomas:()=>Array.from({length:12},(_,i)=>`<div data-lb="${i+1}" data-lbset="Diplomă">${ph('Diplomă '+(i+1))}</div>`).join(''),
  tour:()=>tour.map(([t,src],i)=>ph(t,'',i===5&&tour.length>6?'more':'',src).replace('class="ph ','data-lb="'+(i+1)+'" data-lbset="Clinica"'+(i===5&&tour.length>6?' data-more="+'+(tour.length-6)+'"':'')+' class="ph ')).join('')
@@ -1041,6 +1044,28 @@ const loadMap=()=>{const css=document.createElement('link');css.rel='stylesheet'
   mk.forEach((x,i)=>x.on('click',()=>pick(i)));
  };document.head.append(js)};
 const mo=new IntersectionObserver(es=>{if(es[0].isIntersecting){mo.disconnect();loadMap()}},{rootMargin:'400px'});mo.observe($('#map'));
+
+// marquees: auto-scroll via scrollLeft so touch swipe, mouse drag and wheel all work natively;
+// pauses while the user interacts, resumes after, loops seamlessly (track content is duplicated)
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+$$('.marquee').forEach(m=>{const tr=$('.mq-track',m),dir=m.classList.contains('rev')?-1:1,speed=32;
+ let pos=0,last=0,hold=0,vis=false,raf=0,resume;
+ const half=()=>tr.scrollWidth/2;
+ const wrap=()=>{const h=half();if(m.scrollLeft>=h)m.scrollLeft-=h;else if(m.scrollLeft<=0)m.scrollLeft+=h;pos=m.scrollLeft};
+ const tick=t=>{raf=0;if(!vis)return;const dt=last?Math.min(t-last,64):16;last=t;
+  if(!hold&&!reduce){pos+=dir*speed*dt/1000;const h=half();if(pos>=h)pos-=h;else if(pos<=0)pos+=h;m.scrollLeft=pos}
+  raf=requestAnimationFrame(tick)};
+ const pause=()=>{hold=1;clearTimeout(resume)},play=(ms=1600)=>{clearTimeout(resume);resume=setTimeout(()=>{wrap();hold=0;last=0},ms)};
+ m.addEventListener('touchstart',pause,{passive:true});m.addEventListener('touchend',()=>play(),{passive:true});
+ m.addEventListener('wheel',()=>{pause();play()},{passive:true});
+ m.addEventListener('scroll',()=>{if(hold)wrap()},{passive:true});
+ if(matchMedia('(pointer:fine)').matches){m.addEventListener('mouseenter',pause);m.addEventListener('mouseleave',()=>play(300));
+  let sx,sl,moved=0;m.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;sx=e.clientX;sl=m.scrollLeft;moved=0;m.classList.add('drag');m.setPointerCapture(e.pointerId)});
+  m.addEventListener('pointermove',e=>{if(sx==null)return;const d=e.clientX-sx;if(Math.abs(d)>4)moved=1;m.scrollLeft=sl-d});
+  const up=()=>{sx=null;m.classList.remove('drag')};m.addEventListener('pointerup',up);m.addEventListener('pointercancel',up);
+  m.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=0}},true)}
+ requestAnimationFrame(()=>{m.scrollLeft=pos=dir<0?half()-1:1});
+ new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis&&!raf){last=0;raf=requestAnimationFrame(tick)}}).observe(m)});
 
 // contact bar shows after the hero
 const bar=$('.mbar'),hero=$('.hero');const tb=()=>bar.classList.toggle('show',scrollY>hero.offsetHeight*.6);addEventListener('scroll',tb,{passive:true});tb();
