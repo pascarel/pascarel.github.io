@@ -276,6 +276,18 @@ section{padding:clamp(56px,8vw,96px) 0}
 .mq-track{display:flex;gap:20px;width:max-content}
 .case{width:260px;cursor:zoom-in}
 .case .ph{aspect-ratio:1}
+/* fade carousel (sedation): crossfade + slow zoom, label changes with the image */
+.fx{position:relative;aspect-ratio:5/4;border-radius:var(--rc);overflow:hidden;background:var(--soft);isolation:isolate;touch-action:pan-y}
+.fx-slide{position:absolute;inset:0;margin:0;opacity:0;transition:opacity 1.1s var(--ease)}
+.fx-slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 6.5s linear}
+.fx-slide.on{opacity:1;z-index:1}
+html:not(.js) .fx-slide:first-of-type{opacity:1}
+.fx-slide.on img{transform:scale(1)}
+.fx-label{position:absolute;left:12px;bottom:12px;z-index:2;display:inline-block;overflow:hidden;padding:4px 10px;border-radius:99px;background:rgba(255,254,254,.92);color:var(--link);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;transition:width .45s var(--ease)}
+.fx-label>span{display:block;white-space:nowrap;transition:transform .45s var(--ease),opacity .35s}
+.fx-label.out>span{transform:translateY(-120%);opacity:0}
+.fx-label.pre>span{transform:translateY(120%);opacity:0;transition:none}
+@media(prefers-reduced-motion:reduce){.fx-slide,.fx-slide img,.fx-label,.fx-label>span{transition:none!important}}
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s}
 .step{position:relative;padding:28px;border-radius:var(--rc);background:#fff;border:1px solid var(--soft)}
@@ -693,7 +705,13 @@ section{padding:clamp(56px,8vw,96px) 0}
 <!-- 14 SEDATION -->
 <section>
  <div class="wrap grid2">
-  <div class="ph media-45 img" style="aspect-ratio:5/4"><img src="img/sala.webp" alt="Sala operatorie Smile Dent" loading="lazy"><span>Sala operatorie</span></div>
+  <div class="fx" data-fx data-interval="5000" aria-roledescription="carusel" aria-label="Sedare conștientă – galerie">
+   <figure class="fx-slide" data-label="Sala operatorie"><img src="img/sala.webp" alt="Sala operatorie Smile Dent" loading="lazy"></figure>
+   <figure class="fx-slide" data-label="Echipa medicală"><img src="img/medici.webp" alt="Echipa medicală Smile Dent" loading="lazy"></figure>
+   <figure class="fx-slide" data-label="Consultația"><img src="img/hero.webp" alt="Medic Smile Dent explicând tratamentul" loading="lazy"></figure>
+   <figure class="fx-slide" data-label="All-on-6"><img src="img/allon6.webp" alt="Dantură fixă All-on-6" loading="lazy"></figure>
+   <span class="fx-label pre" aria-live="polite"><span>Sala operatorie</span></span>
+  </div>
   <div class="prose">
    <span class="eyebrow">Sedare conștientă</span>
    <h2>Tratament realizat cu atenție pentru confortul pacientului</h2>
@@ -1066,6 +1084,29 @@ $$('.marquee').forEach(m=>{const tr=$('.mq-track',m),dir=m.classList.contains('r
   m.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=0}},true)}
  requestAnimationFrame(()=>{m.scrollLeft=pos=dir<0?half()-1:1});
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis&&!raf){last=0;raf=requestAnimationFrame(tick)}}).observe(m)});
+
+// fade carousel: crossfade + slow zoom; the label slides out/in; pause on hover, swipe on touch.
+// The first slide also fades in (when the section scrolls into view), so the motion is visible from the start.
+$$('[data-fx]').forEach(fx=>{
+ const slides=$$('.fx-slide',fx),label=$('.fx-label',fx),txt=$('span',label),T=+fx.dataset.interval||5000;
+ let cur=-1,timer,paused=false;
+ const labelIn=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>label.classList.remove('pre')));
+ const setLabel=t=>{
+  if(cur<0){txt.textContent=t;labelIn();return}
+  const w0=label.offsetWidth;label.style.width=w0+'px';label.classList.add('out');
+  setTimeout(()=>{txt.textContent=t;label.classList.replace('out','pre');label.style.width='auto';const w1=label.offsetWidth;label.style.width=w0+'px';
+   requestAnimationFrame(()=>{label.style.width=w1+'px';label.classList.remove('pre')});
+   setTimeout(()=>label.style.width='',500)},300)};
+ const show=i=>{if(i===cur)return;slides.forEach((s,k)=>s.classList.toggle('on',k===i));setLabel(slides[i].dataset.label);cur=i;arm()};
+ const arm=()=>{clearTimeout(timer);if(!paused&&cur>=0)timer=setTimeout(()=>show((cur+1)%slides.length),T)};
+ if(matchMedia('(pointer:fine)').matches){fx.addEventListener('mouseenter',()=>{paused=true;clearTimeout(timer)});fx.addEventListener('mouseleave',()=>{paused=false;arm()})}
+ let sx=null;fx.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+ fx.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-(sx??0);sx=null;if(Math.abs(d)>40)show((cur+(d<0?1:-1)+slides.length)%slides.length)},{passive:true});
+ new IntersectionObserver(es=>{
+  if(!es[0].isIntersecting){clearTimeout(timer);return}
+  if(cur<0)show(0);else arm(); // First time in view: fade the first slide in, then autoplay.
+ },{threshold:.35}).observe(fx);
+});
 
 // contact bar shows after the hero
 const bar=$('.mbar'),hero=$('.hero');const tb=()=>bar.classList.toggle('show',scrollY>hero.offsetHeight*.6);addEventListener('scroll',tb,{passive:true});tb();
