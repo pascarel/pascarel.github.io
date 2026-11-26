@@ -249,10 +249,8 @@ input[type=range]{accent-color:var(--green-600);height:28px}
 
 /* responsive */
 @media (max-width:1080px){
-  .nav,.header__phone{display:none}
+  .header__phone{display:none}
   .burger{display:block}
-  .nav.is-open{display:flex;position:fixed;inset:70px 0 0;background:#fff;flex-direction:column;padding:32px 20px;gap:0;margin:0}
-  .nav.is-open a{color:var(--ink);font-size:1.3rem;padding:14px 0;border-bottom:1px solid var(--line)}
   .services{grid-template-columns:repeat(2,1fr)}
   .reviews{grid-template-columns:1fr 1fr}
   .review--video{grid-column:span 2}
@@ -373,3 +371,27 @@ input[type=range]{accent-color:var(--green-600);height:28px}
 .calc__split [hidden]{display:none}
 
 .ic--fill{fill:currentColor;stroke:none}
+
+/* fix: horizontal overflow from slide-in animations */
+main,footer{overflow-x:clip}
+
+/* mobile menu */
+@media (max-width:1080px){
+  .header__actions{margin-left:auto}
+  .menu-open .header{background:var(--green-900);backdrop-filter:none}
+  .menu-open{overflow:hidden}
+  .nav{position:absolute;top:100%;left:0;right:0;height:calc(100dvh - 100%);margin:0;flex-direction:column;gap:0;
+    padding:24px 20px 120px;background:var(--green-900);overflow-y:auto;
+    opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility 0s .3s}
+  .nav.is-open{opacity:1;visibility:visible;transform:none;transition:opacity .3s,transform .3s,visibility 0s}
+  .nav a{color:#fff;opacity:0;transform:translateX(-24px);font-size:1.5rem;font-weight:700;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.1);
+    transition:opacity .4s,transform .4s cubic-bezier(.2,.7,.2,1),color .2s}
+  .nav.is-open a{opacity:1;transform:none}
+  .nav.is-open a:nth-child(1){transition-delay:.08s}
+  .nav.is-open a:nth-child(2){transition-delay:.14s}
+  .nav.is-open a:nth-child(3){transition-delay:.20s}
+  .nav.is-open a:nth-child(4){transition-delay:.26s}
+  .nav.is-open a:nth-child(5){transition-delay:.32s}
+  .nav.is-open a:nth-child(6){transition-delay:.38s}
+  .nav a:hover{color:var(--accent-lt);text-decoration:none}
+}

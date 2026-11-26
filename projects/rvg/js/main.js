@@ -9,14 +9,16 @@
 
   // Mobile menu
   const burger = $('#burger'), nav = $('#nav');
-  burger.addEventListener('click', () => {
-    const open = nav.classList.toggle('is-open');
+  const setMenu = open => {
+    nav.classList.toggle('is-open', open);
+    document.documentElement.classList.toggle('menu-open', open);
     burger.setAttribute('aria-expanded', open);
-    header.classList.toggle('is-scrolled', open || scrollY > 40);
-  });
-  $$('a', nav).forEach(a => a.addEventListener('click', () => {
-    nav.classList.remove('is-open'); burger.setAttribute('aria-expanded', false);
-  }));
+    burger.setAttribute('aria-label', open ? 'Închide meniul' : 'Deschide meniul');
+  };
+  burger.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
+  $$('a', nav).forEach(a => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  matchMedia('(min-width: 1081px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
 
   // Calculator (prețuri de start placeholder, EUR)
   if ($('#c-area')) {
