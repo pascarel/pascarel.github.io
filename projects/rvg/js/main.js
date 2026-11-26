@@ -38,6 +38,11 @@
   calc();
   }
 
+  // Plan buttons → preselect package in contact form
+  $$('[data-plan]').forEach(b => b.addEventListener('click', () => {
+    const sel = $('#f-plan'); if (sel) sel.value = b.dataset.plan;
+  }));
+
   // Before / after
   const ba = $('#ba');
   if (ba) $('input', ba).addEventListener('input', e => ba.style.setProperty('--pos', e.target.value + '%'));

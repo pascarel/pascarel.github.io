@@ -152,7 +152,7 @@ input[type=range]{accent-color:var(--green-600);height:28px}
 .project--lg{grid-row:span 2}
 .project img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
 .project:hover img{transform:scale(1.05)}
-.project div{position:absolute;inset:auto 0 0;padding:20px;background:linear-gradient(transparent,rgba(0,0,0,.75))}
+
 .project h3{margin:0}
 .project p{margin:0;font-size:.9rem;opacity:.85}
 
@@ -331,3 +331,37 @@ input[type=range]{accent-color:var(--green-600);height:28px}
 .legal__body th{background:var(--sand)}
 .legal__note{background:var(--accent-xlt);border-left:3px solid var(--accent);padding:14px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:.9rem}
 @media (max-width:820px){.legal{grid-template-columns:1fr;gap:24px;padding-top:40px}.legal__toc{position:static}.legal__body table{display:block;overflow-x:auto}}
+
+/* icons */
+.ic{width:1.15em;height:1.15em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn .ic{margin-left:-.15em}
+.btn:hover .ic{transform:translateX(0)}
+.link-arrow{display:inline-flex;align-items:center;gap:.4em}
+.link-arrow::after{content:none}
+.link-arrow .ic{transition:transform .2s}
+.link-arrow:hover .ic{transform:translateX(4px)}
+.mobile-bar a{display:flex!important;align-items:center;justify-content:center;gap:8px}
+
+/* service: houses for sale */
+.service{position:relative}
+.service__tag{position:absolute;top:14px;left:14px;z-index:1;background:var(--accent);color:var(--on-accent);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:5px 11px;border-radius:999px}
+.service--sale{background:var(--accent-xlt)}
+
+/* pricing: labour + materials */
+.plan__prices{margin:.4em 0 1em;display:grid;gap:6px}
+.plan__prices div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 14px;border-radius:var(--radius-sm);background:var(--sand)}
+.plan--featured .plan__prices div{background:rgba(255,255,255,.07)}
+.plan__prices dt{font-size:.85rem;font-weight:600;color:var(--muted)}
+.plan--featured .plan__prices dt{color:#bcd4c7}
+.plan__prices dd{margin:0;font-size:1.6rem;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.plan__prices dd span,.plan__prices dd small{font-size:.78rem;font-weight:600;opacity:.7;letter-spacing:0}
+.plans__note{display:flex;gap:10px;align-items:flex-start;margin:28px auto 0;max-width:820px;color:var(--muted);font-size:.9rem;justify-content:center;text-align:left}
+.plans__note .ic{color:var(--green-600);margin-top:3px}
+
+/* projects with designer credit */
+.project .project__info{position:absolute;inset:auto 0 0;padding:20px;background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.project__link{text-decoration:none;color:#fff}
+.project__link::after{content:"";position:absolute;inset:0}
+.project__designer{position:relative;z-index:1;display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:.82rem;color:#fff;text-decoration:none;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);padding:6px 12px;border-radius:999px;transition:background .2s}
+.project__designer:hover{background:var(--accent);color:var(--on-accent)}
+.project__designer .ic{width:15px;height:15px}
