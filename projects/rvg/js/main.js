@@ -18,24 +18,26 @@
     nav.classList.remove('is-open'); burger.setAttribute('aria-expanded', false);
   }));
 
-  // Calculator (prețuri placeholder — de înlocuit cu cele reale)
-  if ($("#c-area")) {
-  const area = $('#c-area'), areaOut = $('#c-area-out'), type = $('#c-type'), mat = $('#c-mat');
-  const fmt = n => (Math.round(n / 1000) * 1000).toLocaleString('ro-RO');
-  function calc() {
-    const m2 = +area.value, base = +$('input[name=plan]:checked').value * +type.value;
-    const perM2 = mat.checked ? base * 2.1 : base;
-    areaOut.value = m2;
-    $('#c-min').textContent = fmt(perM2 * m2 * 0.9);
-    $('#c-max').textContent = fmt(perM2 * m2 * 1.2);
-    const weeks = Math.max(4, Math.round(m2 / 8));
-    $('#c-term').textContent = weeks < 9 ? `${weeks} săptămâni` : `${Math.round(weeks / 4.3)} luni`;
-  }
-  [area, type, mat, ...$$('input[name=plan]')].forEach(el => el.addEventListener('input', calc));
-  $$('[data-plan]').forEach(btn => btn.addEventListener('click', () => {
-    const r = $(`input[name=plan][value="${btn.dataset.plan}"]`); if (r) { r.checked = true; calc(); }
-  }));
-  calc();
+  // Calculator (prețuri de start placeholder, EUR)
+  if ($('#c-area')) {
+    const area = $('#c-area'), type = $('#c-type'), mat = $('#c-mat');
+    const eur = n => (Math.round(n / 100) * 100).toLocaleString('ro-RO');
+    const calc = () => {
+      const m2 = +area.value, k = +type.value, p = $('input[name=plan]:checked');
+      const lab = +p.dataset.m * k * m2, mats = mat.checked ? +p.dataset.mat * k * m2 : 0;
+      $('#c-area-out').value = m2;
+      $('#c-lab').textContent = eur(lab) + ' €';
+      $('#c-mats').textContent = eur(mats) + ' €';
+      $('#c-mat-row').hidden = !mat.checked;
+      $('#c-min').textContent = eur(lab + mats);
+      const weeks = Math.max(4, Math.round(m2 / 8));
+      $('#c-term').textContent = weeks < 9 ? `${weeks} săptămâni` : `${Math.round(weeks / 4.3)} luni`;
+    };
+    [area, type, mat, ...$$('input[name=plan]')].forEach(el => el.addEventListener('input', calc));
+    $$('[data-plan]').forEach(b => b.addEventListener('click', () => {
+      const r = $(`input[name=plan][value="${b.dataset.plan}"]`); if (r) { r.checked = true; calc(); }
+    }));
+    calc();
   }
 
   // Plan buttons → preselect package in contact form
@@ -64,7 +66,7 @@
     const to = +el.dataset.count, dur = 1800, t0 = performance.now();
     if (reduce) { el.textContent = to; return; }
     const tick = t => {
-      const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+      const p = Math.min(1, Math.max(0, (t - t0) / dur)), e = 1 - Math.pow(1 - p, 4);
       el.textContent = Math.round(to * e);
       if (p < 1) requestAnimationFrame(tick);
     };

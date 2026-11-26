@@ -365,3 +365,11 @@ input[type=range]{accent-color:var(--green-600);height:28px}
 .project__designer{position:relative;z-index:1;display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:.82rem;color:#fff;text-decoration:none;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);padding:6px 12px;border-radius:999px;transition:background .2s}
 .project__designer:hover{background:var(--accent);color:var(--on-accent)}
 .project__designer .ic{width:15px;height:15px}
+
+.calc__split{display:grid;gap:6px;margin:14px 0}
+.calc__split div{display:flex;justify-content:space-between;padding:8px 12px;border-radius:var(--radius-sm);background:rgba(255,255,255,.07)}
+.calc__split dt{color:#bcd4c7}
+.calc__split dd{margin:0;font-weight:700}
+.calc__split [hidden]{display:none}
+
+.ic--fill{fill:currentColor;stroke:none}
