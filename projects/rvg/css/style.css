@@ -48,13 +48,13 @@ p{margin:0 0 1em}
 .nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:6px}
 .header__actions{display:flex;align-items:center;gap:16px}
 .header__phone{color:#fff;font-weight:700;text-decoration:none;white-space:nowrap}
-.lang{display:flex;gap:6px;font-size:.85rem;font-weight:700}
-.lang a{color:#fff;text-decoration:none;opacity:.55}
-.lang a.is-active{opacity:1}
-.burger{display:none;width:44px;height:44px;border:0;background:transparent;cursor:pointer;position:relative}
-.burger span,.burger span::before,.burger span::after{position:absolute;left:11px;width:22px;height:2px;background:currentColor;content:"";transition:.2s}
-.burger{color:#fff}
-.burger span{top:21px}.burger span::before{left:0;top:-7px}.burger span::after{left:0;top:7px}
+.lang{display:flex;gap:2px;padding:4px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(6px)}
+.lang a{display:grid;place-items:center;min-width:40px;height:32px;padding:0 10px;border-radius:999px;color:#fff;text-decoration:none;font-size:.82rem;font-weight:800;letter-spacing:.02em;opacity:.8;transition:background .2s,color .2s,opacity .2s}
+.lang a:hover{opacity:1}
+.lang a.is-active{background:var(--accent);color:var(--on-accent);opacity:1;box-shadow:0 2px 8px -2px rgba(0,0,0,.3)}
+.burger{display:none;width:52px;height:52px;border:0;background:transparent;cursor:pointer;position:relative;color:#fff;margin-right:-8px}
+.burger span,.burger span::before,.burger span::after{position:absolute;left:12px;width:28px;height:2.5px;border-radius:2px;background:currentColor;content:"";transition:.25s}
+.burger span{top:25px}.burger span::before{left:0;top:-9px}.burger span::after{left:0;top:9px}
 .burger[aria-expanded=true] span{background:transparent}
 .burger[aria-expanded=true] span::before{top:0;transform:rotate(45deg)}
 .burger[aria-expanded=true] span::after{top:0;transform:rotate(-45deg)}
