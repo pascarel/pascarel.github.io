@@ -42,6 +42,70 @@
     calc();
   }
 
+  // Video testimonials: card → modal player (youtube-nocookie), prev/next, keys, swipe
+  {
+    const modal = $('#vmodal');
+    if (modal) {
+      const frame = $('.vmodal__frame', modal);
+      let list = [], i = 0, busy = false, lastFocus = null;
+      const esc = t => t.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+      const render = () => {
+        const v = list[i];
+        frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.id)}?autoplay=1&rel=0&playsinline=1&modestbranding=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="${esc(v.title)}"></iframe>`;
+        $('.vmodal__title', modal).textContent = v.title;
+        $('.vmodal__sub', modal).textContent = v.sub;
+        $('.vmodal__count', modal).textContent = list.length > 1 ? `${i + 1} / ${list.length}` : '';
+        $$('[data-vdir]', modal).forEach(b => b.hidden = list.length < 2);
+      };
+      const open = btn => {
+        const scope = btn.closest('section') || document;
+        const btns = $$('[data-yt]', scope);
+        list = btns.map(b => ({ id: b.dataset.yt, title: b.dataset.title || '', sub: b.dataset.sub || '' }));
+        i = Math.max(0, btns.indexOf(btn));
+        lastFocus = btn;
+        render();
+        modal.hidden = false;
+        document.documentElement.classList.add('vmodal-open');
+        $('.vmodal__close', modal).focus();
+      };
+      const close = () => {
+        modal.hidden = true; frame.innerHTML = '';
+        document.documentElement.classList.remove('vmodal-open');
+        lastFocus?.focus();
+      };
+      const go = d => {
+        if (list.length < 2 || busy) return;
+        i = (i + d + list.length) % list.length;
+        if (reduce) return render();
+        busy = true; frame.style.setProperty('--dir', d); frame.classList.add('is-out');
+        setTimeout(() => {
+          render(); frame.classList.replace('is-out', 'is-in');
+          requestAnimationFrame(() => requestAnimationFrame(() => { frame.classList.remove('is-in'); busy = false; }));
+        }, 300);
+      };
+      document.addEventListener('click', e => {
+        const b = e.target.closest('[data-yt]'); if (b) { e.preventDefault(); open(b); }
+      });
+      $$('[data-vdir]', modal).forEach(b => b.addEventListener('click', () => go(+b.dataset.vdir)));
+      $('[data-vclose]', modal).addEventListener('click', close);
+      modal.addEventListener('click', e => { if (e.target === modal) close(); });
+      addEventListener('keydown', e => {
+        if (modal.hidden) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') go(-1);
+        if (e.key === 'ArrowRight') go(1);
+      });
+      let x0 = null;
+      modal.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+      modal.addEventListener('touchend', e => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+        x0 = null;
+      }, { passive: true });
+    }
+  }
+
   // Plan buttons → preselect package in contact form
   $$('[data-plan]').forEach(b => b.addEventListener('click', () => {
     const sel = $('#f-plan'); if (sel) sel.value = b.dataset.plan;
@@ -91,7 +155,7 @@
     ['.service', 'reveal--zoom'],
     ['.plan', ''],
     ['.steps li', ''],
-    ['.review', ''],
+    ['.vcard', 'reveal--zoom'],
     ['.project', 'reveal--img'],
     ['.why__list li', 'reveal--right'],
     ['.why__media', 'reveal--left'],
