@@ -1,1541 +1,342 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ro">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>RVG Construct — Renovări premium la cheie</title>
-    <meta name="description" content="RVG Construct - renovări premium la cheie, proiecte executate cu garanție.">
-
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reparație apartamente la cheie în Chișinău — RVG Construct</title>
+<meta name="description" content="Reparație la cheie a apartamentelor, caselor și oficiilor în Chișinău. Preț fix în contract, diriginte de șantier personal, garanție până la 3 ani. 20+ ani, 100+ proiecte.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero-poster.jpg">
+<link rel="icon" href="img/favicon.png">
+<link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-<header class="header">
-
-    <div class="container header-inner">
-
-        <a href="#" class="logo">
-            <strong>RVG</strong>
-            <span>Construct</span>
-        </a>
-
-
-        <nav class="nav">
-            <a href="#">Despre noi</a>
-            <a href="#">Servicii</a>
-            <a href="#">Proiecte</a>
-            <a href="#">Contact</a>
-        </nav>
-
-
-        <a href="#" class="header-btn">
-            Solicită ofertă
-        </a>
-
-
+<header class="header" id="top">
+  <div class="container header__inner">
+    <a href="#top" class="logo" aria-label="RVG Construct — acasă">
+      <img src="img/logo.png" alt="RVG Construct" width="455" height="208">
+    </a>
+    <nav class="nav" id="nav" aria-label="Meniu principal">
+      <a href="#servicii">Servicii</a>
+      <a href="#preturi">Prețuri</a>
+      <a href="#proiecte">Proiecte</a>
+      <a href="#proces">Cum lucrăm</a>
+      <a href="#despre">Despre</a>
+      <a href="#contact">Contacte</a>
+    </nav>
+    <div class="header__actions">
+      <div class="lang"><a href="#" class="is-active">RO</a><a href="#">RU</a></div>
+      <a href="tel:+37368266226" class="header__phone">068 266 226</a>
+      <a href="#calculator" class="btn btn--accent btn--sm">Calculează costul</a>
+      <button class="burger" id="burger" aria-label="Deschide meniul" aria-expanded="false" aria-controls="nav"><span></span></button>
     </div>
-
-    <!-- mobile menu -->
-    <button class="rvg-menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
-
-	<span></span>
-	<span></span>
-
-	</button>
-
-
-	<div class="rvg-mobile-menu">
-
-
-	<nav>
-
-	<a href="#">
-	Despre noi
-	</a>
-
-	<a href="#">
-	Servicii
-	</a>
-
-	<a href="#">
-	Proiecte
-	</a>
-
-	<a href="#">
-	Contact
-	</a>
-
-
-	</nav>
-
-
-
-	<a class="mobile-phone">
-	+373 XX XXX XXX
-	</a>
-
-
-	</div>
-
+  </div>
 </header>
-
 
 <main>
 
-
+<!-- HERO -->
 <section class="hero">
-
-
-	<div class="hero-bg"></div>
-
-
-	<div class="container hero-grid">
-
-
-	<div class="hero-content">
-
-
-	<p class="eyebrow reveal">
-	    Renovări premium • Chișinău
-	</p>
-
-
-	<h1 class="reveal">
-
-	Construim spații
-
-	<span>
-	în care merită
-	</span>
-
-	să trăiești.
-
-	</h1>
-
-
-	<p class="hero-text reveal">
-
-	Renovări complete la cheie,
-	finisaje premium și control total
-	asupra fiecărui detaliu.
-
-	</p>
-
-
-
-	<div class="hero-actions reveal">
-
-
-	<a href="#" class="btn btn-primary">
-	Solicită ofertă
-	</a>
-
-
-	<a href="#" class="btn btn-outline">
-	Vezi proiectele
-	</a>
-
-
-	</div>
-
-
-
-	<div class="hero-stats reveal">
-
-
-	<div class="stat">
-	<strong>20+</strong>
-	<span>Ani experiență</span>
-	</div>
-
-
-	<div class="stat">
-	<strong>500+</strong>
-	<span>Proiecte</span>
-	</div>
-
-
-	<div class="stat">
-	<strong>3</strong>
-	<span>Ani garanție</span>
-	</div>
-
-
-	</div>
-
-
-
-	</div>
-
-
-
-
-	<div class="hero-image reveal-image">
-
-
-	<div class="image-wrapper">
-
-
-	<img src="assets/images/hero.jpg"
-	alt="Interior RVG Construct">
-
-
-	</div>
-
-
-
-	<div class="floating-card">
-
-
-	<div class="stars">
-	★★★★★
-	</div>
-
-
-	<p>
-	500+ proiecte finalizate
-	</p>
-
-
-	</div>
-
-
-
-	</div>
-
-
-
-	</div>
-
-
-
-	<div class="scroll-indicator">
-
-	<span>SCROLL</span>
-
-	<div></div>
-
-	</div>
+  <video class="hero__bg" autoplay muted loop playsinline preload="metadata" poster="img/hero-poster.jpg" aria-hidden="true">
+    <source src="https://videos.pexels.com/video-files/7578552/7578552-sd_960_540_30fps.mp4" type="video/mp4" media="(max-width: 820px)">
+    <source src="https://videos.pexels.com/video-files/7578552/7578552-hd_1280_720_30fps.mp4" type="video/mp4">
+  </video>
+  <div class="container hero__inner">
+    <p class="eyebrow eyebrow--light anim" style="--d:0">Reparație interioară la cheie · Chișinău</p>
+    <h1 class="anim" style="--d:1">Reparație la cheie cu <em>preț fix</em> în&nbsp;contract și termen garantat</h1>
+    <p class="hero__lead anim" style="--d:2">Apartamente, case și spații comerciale. Ne ocupăm de tot — de la demolare la ultima priză — iar tu primești cheile la data stabilită.</p>
+    <div class="hero__cta anim" style="--d:3">
+      <a href="#calculator" class="btn btn--accent">Calculează costul reparației</a>
+      <a href="https://wa.me/37368266226" class="btn btn--ghost" target="_blank" rel="noopener">Scrie pe WhatsApp</a>
+    </div>
+    <ul class="hero__trust anim" style="--d:4">
+      <li><strong><span data-count="20">0</span>+</strong> ani pe piață</li>
+      <li><strong><span data-count="100">0</span>+</strong> proiecte finalizate</li>
+      <li><strong><span data-count="3">0</span> ani</strong> garanție în contract</li>
+      <li><strong><span data-count="30">0</span></strong> parteneri cu reduceri</li>
+    </ul>
+  </div>
 </section>
 
-<section class="trust-section">
-
-
-<div class="container">
-
-
-<div class="trust-grid">
-
-
-<div class="trust-intro">
-
-
-<p class="eyebrow">
-Experiență demonstrată
-</p>
-
-
-<h2>
-
-Rezultatele
-<span>vorbesc.</span>
-
-</h2>
-
-
-<p>
-
-De peste două decenii transformăm apartamente
-și case în spații moderne, funcționale și
-confortabile.
-
-</p>
-
-
-<a href="#" class="text-link">
-
-Descoperă proiectele →
-
-</a>
-
-
-</div>
-
-
-
-
-<div class="stats-grid">
-
-
-<div class="big-stat">
-
-<strong data-count="20">
-0
-</strong>
-
-<span>
-Ani experiență
-</span>
-
-</div>
-
-
-
-<div class="big-stat">
-
-<strong data-count="500">
-0
-</strong>
-
-<span>
-Proiecte realizate
-</span>
-
-</div>
-
-
-
-<div class="big-stat">
-
-<strong data-count="60">
-0
-</strong>
-
-<span>
-Specialiști
-</span>
-
-</div>
-
-
-
-<div class="big-stat">
-
-<strong data-count="3">
-0
-</strong>
-
-<span>
-Ani garanție
-</span>
-
-</div>
-
-
-</div>
-
-</div>
-
-<div class="before-after-preview">
-
-
-<img src="assets/images/project-after.jpg"
-alt="Proiect RVG finalizat">
-
-
-<div class="before-after-label">
-
-Vezi transformările noastre
-
-</div>
-
-
-</div>
-
-
-
-
-</div>
-
-
+<!-- BENEFITS MARQUEE -->
+<section class="marquee" aria-label="Beneficii">
+  <div class="marquee__track">
+    <ul><li>Preț fix în contract</li><li>Diriginte de șantier personal</li><li>Garanție până la 3 ani</li><li>Plata în tranșe</li><li>Reduceri la materiale de la 30 parteneri</li><li>Vizită și deviz gratuit</li><li>Transport materiale și evacuare deșeuri</li><li>Curățenie la predare</li></ul>
+    <ul aria-hidden="true"><li>Preț fix în contract</li><li>Diriginte de șantier personal</li><li>Garanție până la 3 ani</li><li>Plata în tranșe</li><li>Reduceri la materiale de la 30 parteneri</li><li>Vizită și deviz gratuit</li><li>Transport materiale și evacuare deșeuri</li><li>Curățenie la predare</li></ul>
+  </div>
 </section>
 
-<section class="comparison-section">
+<!-- SERVICES -->
+<section class="section" id="servicii">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">Servicii</p>
+      <h2>Ce reparăm</h2>
+      <p>Lucrăm doar la interior — și o facem complet: proiect, materiale, execuție, curățenie finală.</p>
+    </div>
+    <div class="services">
+      <a class="service" href="#">
+        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=65&auto=format" alt="Apartament renovat" loading="lazy">
+        <div class="service__body"><h3>Apartamente la cheie</h3><p>Bloc nou (variantă albă/sură) sau fond secundar.</p><span class="service__price">de la 1 900 MDL/m²</span></div>
+      </a>
+      <a class="service" href="#">
+        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=65&auto=format" alt="Interior de casă" loading="lazy">
+        <div class="service__body"><h3>Case — interior</h3><p>Finisaje, instalații, încălzire, sisteme complete.</p><span class="service__price">de la 2 100 MDL/m²</span></div>
+      </a>
+      <a class="service" href="#">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=65&auto=format" alt="Oficiu modern" loading="lazy">
+        <div class="service__body"><h3>Oficii și spații comerciale</h3><p>Lucrăm pe etape, fără să oprim business-ul.</p><span class="service__price">ofertă individuală</span></div>
+      </a>
+      <a class="service" href="#">
+        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=65&auto=format" alt="Baie renovată" loading="lazy">
+        <div class="service__body"><h3>Băi și bucătării</h3><p>Hidroizolație, teracotă, instalații sanitare.</p><span class="service__price">de la 25 000 MDL</span></div>
+      </a>
+    </div>
+  </div>
+</section>
 
-    <div class="container">
+<!-- WHY -->
+<section class="section section--tint" id="despre">
+  <div class="container why">
+    <div class="why__media">
+      <img src="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=900&q=65&auto=format" alt="Meșter la lucru" loading="lazy">
+      <div class="why__badge"><strong>20</strong><span>meșteri în echipă, fiecare pe specializarea lui</span></div>
+    </div>
+    <div>
+      <p class="eyebrow">De ce RVG Construct</p>
+      <h2>Fără surprize la buget, fără stres pe șantier</h2>
+      <ul class="why__list">
+        <li><h3>Preț fix în contract</h3><p>Deviz detaliat înainte de start. Plata în tranșe, după graficul de execuție.</p></li>
+        <li><h3>Diriginte de șantier personal</h3><p>Un singur om de contact, care coordonează tot și îți trimite rapoarte foto.</p></li>
+        <li><h3>Reduceri la materiale</h3><p>30 de parteneri în Chișinău — prețuri mai mici decât în magazin, livrare inclusă.</p></li>
+        <li><h3>Garanție până la 3 ani</h3><p>Și deservire ulterioară a instalațiilor electrice și termice.</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-
-        <div class="section-heading">
-
-            <p class="eyebrow">
-                Transformări reale
-            </p>
-
-
-            <h2>
-                De la spații goale
-                <span>la locuințe complete.</span>
-            </h2>
-
-
-            <p>
-                Fiecare proiect RVG este o transformare
-                vizibilă a spațiului și a confortului.
-            </p>
-
-        </div>
-
-
-
-        <div class="comparison-slider" id="comparison">
-
-
-            <div class="comparison-image after">
-
-                <img src="assets/images/after.jpg"
-                     alt="Apartament renovat">
-
-                <span>
-                    DUPĂ
-                </span>
-
-            </div>
-
-
-
-            <div class="comparison-image before">
-
-                <img src="assets/images/before.jpg"
-                     alt="Apartament înainte renovare">
-
-
-                <span>
-                    ÎNAINTE
-                </span>
-
-            </div>
-
-
-
-            <div class="comparison-handle">
-
-                <div></div>
-
-            </div>
-
-
-        </div>
-
-
+<!-- PRICING + CALCULATOR -->
+<section class="section" id="preturi">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">Prețuri</p>
+      <h2>Prețuri transparente, pe m²</h2>
+      <p>Prețuri orientative pentru manoperă. Costul exact îl fixăm în deviz, după vizita gratuită a specialistului.</p>
+    </div>
+    <div class="plans">
+      <article class="plan">
+        <h3>Standard</h3>
+        <p class="plan__price"><span>de la</span> 1 900 <small>MDL/m²</small></p>
+        <p class="plan__desc">Reparație calitativă pentru locuit sau chirie.</p>
+        <ul><li>Tencuieli, șapă, gips-carton</li><li>Electrică și sanitare complet</li><li>Vopsea, laminat, teracotă</li><li>Garanție 1 an</li></ul>
+        <a href="#calculator" class="btn btn--outline" data-plan="1900">Calculează</a>
+      </article>
+      <article class="plan plan--featured">
+        <span class="plan__tag">Cel mai ales</span>
+        <h3>Confort</h3>
+        <p class="plan__price"><span>de la</span> 2 600 <small>MDL/m²</small></p>
+        <p class="plan__desc">Finisaje de calitate superioară și detalii decorative.</p>
+        <ul><li>Tot din Standard</li><li>Tavane pe mai multe niveluri, iluminat ascuns</li><li>Tencuieli decorative, parchet</li><li>Garanție 2 ani</li></ul>
+        <a href="#calculator" class="btn btn--accent" data-plan="2600">Calculează</a>
+      </article>
+      <article class="plan">
+        <h3>Premium</h3>
+        <p class="plan__price"><span>de la</span> 3 500 <small>MDL/m²</small></p>
+        <p class="plan__desc">Execuție după proiect de design, materiale premium.</p>
+        <ul><li>Tot din Confort</li><li>Lucrul după proiect de design</li><li>Smart home, încălzire în pardoseală</li><li>Garanție 3 ani</li></ul>
+        <a href="#calculator" class="btn btn--outline" data-plan="3500">Calculează</a>
+      </article>
     </div>
 
+    <div class="calc" id="calculator">
+      <div class="calc__form">
+        <h3>Calculator orientativ</h3>
+        <label class="field">Tip obiect
+          <select id="c-type">
+            <option value="1">Apartament</option>
+            <option value="1.1">Casă</option>
+            <option value="0.9">Oficiu / spațiu comercial</option>
+          </select>
+        </label>
+        <label class="field">Suprafață: <output id="c-area-out">65</output> m²
+          <input type="range" id="c-area" min="20" max="400" step="5" value="65">
+        </label>
+        <fieldset class="field">
+          <legend>Pachet</legend>
+          <div class="seg" id="c-plan">
+            <label><input type="radio" name="plan" value="1900"><span>Standard</span></label>
+            <label><input type="radio" name="plan" value="2600" checked><span>Confort</span></label>
+            <label><input type="radio" name="plan" value="3500"><span>Premium</span></label>
+          </div>
+        </fieldset>
+        <label class="check"><input type="checkbox" id="c-mat"> Includ și materialele (estimare)</label>
+      </div>
+      <div class="calc__result">
+        <p>Cost estimativ</p>
+        <p class="calc__sum"><span id="c-min">—</span> – <span id="c-max">—</span> MDL</p>
+        <p class="calc__term">Termen orientativ: <strong id="c-term">—</strong></p>
+        <form class="lead" data-source="calculator">
+          <input type="text" name="name" placeholder="Numele" required autocomplete="name">
+          <input type="tel" name="phone" placeholder="Telefon" required autocomplete="tel">
+          <button class="btn btn--accent" type="submit">Primește devizul exact</button>
+          <small>Te sunăm în 15 minute, în orele de lucru.</small>
+        </form>
+      </div>
+    </div>
+  </div>
 </section>
 
-
-<section class="projects-section">
-
-
-<div class="container">
-
-
-<div class="projects-heading">
-
-
-<div>
-
-<p class="eyebrow">
-Portofoliu
-</p>
-
-
-<h2>
-Proiecte care
-<span>vorbesc despre noi.</span>
-</h2>
-
-</div>
-
-
-
-<a href="#" class="text-link">
-Toate proiectele →
-</a>
-
-
-</div>
-
-
-
-
-
-<div class="projects-grid">
-
-
-
-<article class="project-card large">
-
-
-<div class="project-image">
-
-<img src="assets/images/project-1.jpg"
-alt="Apartament premium">
-
-</div>
-
-
-
-<div class="project-info">
-
-
-<div>
-
-<h3>
-Apartament Premium
-</h3>
-
-
-<p>
-120 m² • Chișinău
-</p>
-
-
-</div>
-
-
-<a href="#">
-Vezi proiect →
-</a>
-
-
-</div>
-
-
-</article>
-
-
-
-
-
-<article class="project-card">
-
-
-<div class="project-image">
-
-<img src="assets/images/project-2.jpg"
-alt="Casă renovată">
-
-</div>
-
-
-
-<div class="project-info">
-
-<div>
-
-<h3>
-Casă privată
-</h3>
-
-
-<p>
-250 m² • Moldova
-</p>
-
-
-</div>
-
-
-<a href="#">
-Vezi →
-</a>
-
-
-</div>
-
-
-</article>
-
-
-
-
-
-<article class="project-card">
-
-
-<div class="project-image">
-
-<img src="assets/images/project-3.jpg"
-alt="Spațiu comercial">
-
-</div>
-
-
-
-<div class="project-info">
-
-<div>
-
-<h3>
-Spațiu comercial
-</h3>
-
-
-<p>
-180 m² • Design interior
-</p>
-
-
-</div>
-
-
-<a href="#">
-Vezi →
-</a>
-
-
-</div>
-
-
-</article>
-
-
-
-</div>
-
-
-
-</div>
-
-
-</section>
-
-
-<section class="process-modern">
-
-<div class="container">
-
-
-<div class="process-title">
-
-<p class="eyebrow">
-Metoda RVG
-</p>
-
-<h2>
-Un proces simplu.
-<span>Un rezultat controlat.</span>
-</h2>
-
-</div>
-
-
-
-<div class="process-layout">
-
-
-<div class="process-tabs">
-
-
-<div class="process-tab active" data-image="consultation.jpg" role="button" tabindex="0">
-
-
-<span>
-01
-</span>
-
-<div>
-<h3>
-Consultație
-</h3>
-
-<p>
-Discutăm despre dorințe,
-buget și stil.
-</p>
-</div>
-
-</div>
-
-
-
-<div class="process-tab" data-image="estimate.jpg" role="button" tabindex="0">
-
-<span>
-02
-</span>
-
-<div>
-
-<h3>
-Evaluare & ofertă
-</h3>
-
-<p>
-Stabilim costurile
-și termenul.
-</p>
-
-</div>
-
-</div>
-
-
-
-
-<div class="process-tab" data-image="planning.jpg" role="button" tabindex="0">
-
-
-<span>
-03
-</span>
-
-<div>
-
-<h3>
-Planificare
-</h3>
-
-<p>
-Organizăm fiecare etapă.
-</p>
-
-</div>
-
-</div>
-
-
-
-
-<div class="process-tab" data-image="work.jpg" role="button" tabindex="0">
-
-
-<span>
-04
-</span>
-
-<div>
-
-<h3>
-Execuție
-</h3>
-
-<p>
-Echipa realizează lucrările.
-</p>
-
-</div>
-
-</div>
-
-
-
-
-<div class="process-tab" data-image="finish.jpg" role="button" tabindex="0">
-
-
-<span>
-05
-</span>
-
-<div>
-
-<h3>
-Predare
-</h3>
-
-<p>
-Primești spațiul finalizat.
-</p>
-
-</div>
-
-</div>
-
-
-</div>
-
-
-
-<div class="process-preview">
-
-
-<img 
-src="assets/images/consultation.jpg"
-alt="">
-
-
-<div class="preview-card">
-
-<span>
-ETAPA 01
-</span>
-
-<strong>
-Consultație personalizată
-</strong>
-
-
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-</section>
-
-<section class="reviews-section">
-
-
-<div class="container">
-
-
-<div class="reviews-header">
-
-<p class="eyebrow">
-Experiența clienților
-</p>
-
-
-<h2>
-Case reale.
-<span>Oameni mulțumiți.</span>
-</h2>
-
-
-</div>
-
-
-
-<div class="reviews-layout">
-
-
-<div class="review-content">
-
-
-<div class="rating">
-★★★★★
-</div>
-
-
-
-<blockquote>
-
-"RVG ne-a ajutat să transformăm
-apartamentul vechi într-un spațiu
-modern și exact cum ni l-am imaginat."
-
-</blockquote>
-
-
-
-<div class="client">
-
-<strong>
-Maria & Andrei
-</strong>
-
-<span>
-Apartament premium • 120 m²
-</span>
-
-</div>
-
-
-
-<div class="review-controls">
-
-
-<button class="review-prev">
-←
-</button>
-
-
-<button class="review-next">
-→
-</button>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-<div class="review-image">
-
-
-<img src="assets/images/review-1.jpg"
-alt="">
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-</section>
-
-<section class="faq-section">
-
-
-<div class="container">
-
-
-<div class="faq-layout">
-
-
-<div class="faq-intro">
-
-
-<p class="eyebrow">
-Întrebări frecvente
-</p>
-
-
-<h2>
-Totul clar.
-<span>Fără surprize.</span>
-</h2>
-
-
-<p>
-Un proiect de renovare trebuie să fie
-controlat de la început până la final.
-</p>
-
-
-<a href="#" class="btn btn-primary">
-Discută cu un specialist
-</a>
-
-
-</div>
-
-
-
-
-
-<div class="faq-list">
-
-
-
-<div class="faq-item active">
-
-
-<button type="button">
-
-Care este durata unei renovări?
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<p>
-
-Durata depinde de suprafață și complexitate,
-dar stabilim de la început un termen realist
-de execuție.
-
-</p>
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="faq-item">
-
-
-<button type="button">
-
-Primesc o ofertă înainte de începerea lucrărilor?
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<p>
-
-Da. Evaluăm proiectul, calculăm costurile
-și prezentăm oferta completă.
-
-</p>
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="faq-item">
-
-
-<button type="button">
-
-Oferiți garanție?
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<p>
-
-Da. Lucrările sunt realizate cu garanție,
-conform contractului.
-
-</p>
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="faq-item">
-
-
-<button type="button">
-
-Pot alege materialele?
-
-<span>
-+
-</span>
-
-</button>
-
-
-<div class="faq-answer">
-
-<p>
-
-Da. Vă putem consilia în alegerea materialelor
-potrivite pentru bugetul și stilul dorit.
-
-</p>
-
-</div>
-
-
-</div>
-
-
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-</section>
-
-
-<section class="rvg-cta">
-
-    <div class="rvg-cta-bg">
-        <img src="assets/images/cta.jpg" alt="Interior RVG">
+<!-- PROJECTS -->
+<section class="section section--dark" id="proiecte">
+  <div class="container">
+    <div class="section__head section__head--row">
+      <div><p class="eyebrow eyebrow--light">Proiecte</p><h2>Lucrări finalizate</h2></div>
+      <a href="#" class="link-arrow">Toate proiectele</a>
+    </div>
+    <div class="projects">
+      <a class="project project--lg" href="#"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=65&auto=format" alt="" loading="lazy"><div><h3>Apartament 3 odăi, 110 m²</h3><p>Centru · 3 luni · Confort</p></div></a>
+      <a class="project" href="#"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=65&auto=format" alt="" loading="lazy"><div><h3>Casă la cheie</h3><p>Durlești · 5 luni</p></div></a>
+      <a class="project" href="#"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=65&auto=format" alt="" loading="lazy"><div><h3>Oficiu 670 m²</h3><p>Botanica · 4 luni</p></div></a>
+      <a class="project" href="#"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=65&auto=format" alt="" loading="lazy"><div><h3>Apartament 135 m²</h3><p>Râșcani · Premium</p></div></a>
+      <a class="project" href="#"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=65&auto=format" alt="" loading="lazy"><div><h3>Magazin Chateau Vartely</h3><p>Spațiu comercial</p></div></a>
     </div>
 
-    <div class="rvg-cta-overlay"></div>
-
-
-    <div class="rvg-container">
-
-        <div class="rvg-cta-grid">
-
-
-            <!-- LEFT SIDE -->
-
-            <div class="rvg-cta-content">
-
-
-                <p class="rvg-cta-eyebrow">
-                    Începe proiectul tău
-                </p>
-
-
-                <h2>
-                    Hai să transformăm
-                    <span>ideea ta în realitate.</span>
-                </h2>
-
-
-                <p class="rvg-cta-description">
-                    Povestește-ne despre spațiul tău.
-                    Echipa RVG va analiza proiectul și îți va propune
-                    cea mai bună soluție.
-                </p>
-
-
-
-                <div class="rvg-cta-benefits">
-
-                    <div>
-                        <span>01</span>
-                        Consultație inițială gratuită
-                    </div>
-
-                    <div>
-                        <span>02</span>
-                        Deviz transparent
-                    </div>
-
-                    <div>
-                        <span>03</span>
-                        Garanție pentru lucrări
-                    </div>
-
-                </div>
-
-
-
-                <div class="rvg-cta-phone">
-
-                    <small>
-                        Discută direct cu noi
-                    </small>
-
-                    <strong>
-                        +373 XX XXX XXX
-                    </strong>
-
-                </div>
-
-
-            </div>
-
-
-
-
-
-            <!-- FORM CARD -->
-
-
-            <div class="rvg-form-card">
-
-
-                <div class="rvg-form-header">
-
-                    <h3>
-                        Solicită ofertă
-                    </h3>
-
-                    <p>
-                        Răspundem în maximum 24 ore.
-                    </p>
-
-
-                </div>
-
-
-
-                <!-- STEPS -->
-
-
-                <div class="rvg-form-steps">
-
-                    <span class="active">
-                        01 Contact
-                    </span>
-
-                    <span>
-                        02 Proiect
-                    </span>
-
-                    <span>
-                        03 Final
-                    </span>
-
-                </div>
-
-
-
-
-                <form id="rvgLeadForm">
-
-
-                    <!-- STEP 1 -->
-
-
-                    <div class="rvg-step active">
-
-
-                        <input 
-                        type="text"
-                        name="name"
-                        autocomplete="name"
-                        placeholder="Numele tău">
-
-
-                        <input 
-                        type="tel"
-                        name="phone"
-                        autocomplete="tel"
-                        placeholder="Telefon">
-
-
-                        <button 
-                        type="button"
-                        class="rvg-next">
-
-                            Continuă →
-
-                        </button>
-
-
-                    </div>
-
-
-
-
-                    <!-- STEP 2 -->
-
-
-                    <div class="rvg-step">
-
-
-                        <select name="project_type">
-
-                            <option>
-                                Tip proiect
-                            </option>
-
-                            <option>
-                                Apartament
-                            </option>
-
-                            <option>
-                                Casă
-                            </option>
-
-                            <option>
-                                Spațiu comercial
-                            </option>
-
-                        </select>
-
-
-
-                        <input
-                        type="text"
-                        name="surface"
-                        placeholder="Suprafață aproximativă">
-
-
-
-                        <textarea
-                        name="project_details"
-                        placeholder="Detalii proiect">
-                        </textarea>
-
-
-
-                        <div class="rvg-form-actions">
-
-
-                            <button
-                            type="button"
-                            class="rvg-back">
-
-                                ← Înapoi
-
-                            </button>
-
-
-
-                            <button
-                            type="button"
-                            class="rvg-next">
-
-                                Continuă →
-
-                            </button>
-
-
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-                    <!-- STEP 3 -->
-
-
-                    <div class="rvg-step rvg-success">
-
-
-                        <div class="rvg-success-icon">
-                            ✓
-                        </div>
-
-
-                        <h4>
-                            Mulțumim!
-                        </h4>
-
-
-                        <p>
-                            Datele au fost trimise.
-                            Un specialist RVG va reveni curând.
-                        </p>
-
-
-
-                        <button type="submit">
-
-                            Trimite solicitarea
-
-                        </button>
-
-
-
-                    </div>
-
-
-
-                </form>
-
-
-            </div>
-
-
-        </div>
-
-
+    <div class="ba">
+      <div class="ba__text">
+        <h3>Înainte și după</h3>
+        <p>Trage de bară ca să vezi diferența. Fiecare proiect are galerie completă și raport pe etape.</p>
+      </div>
+      <div class="ba__frame" id="ba" style="--pos:50%">
+        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=65&auto=format" alt="După reparație" loading="lazy">
+        <img class="ba__before" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=65&auto=format" alt="Înainte de reparație" loading="lazy">
+        <span class="ba__label ba__label--l">Înainte</span><span class="ba__label ba__label--r">După</span>
+        <input type="range" min="0" max="100" value="50" aria-label="Compară înainte și după">
+        <span class="ba__handle" aria-hidden="true"></span>
+      </div>
     </div>
-
+  </div>
 </section>
 
+<!-- PROCESS -->
+<section class="section" id="proces">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">Cum lucrăm</p>
+      <h2>6 pași de la cerere la chei</h2>
+    </div>
+    <ol class="steps">
+      <li><h3>Cerere</h3><p>Lași numărul sau ne scrii — te sunăm în aceeași zi.</p></li>
+      <li><h3>Vizită gratuită</h3><p>Specialistul face măsurări și discută cu tine dorințele.</p></li>
+      <li><h3>Deviz și contract</h3><p>Preț fix, termen fix, tranșe stabilite din start.</p></li>
+      <li><h3>Materiale</h3><p>Te ajutăm să alegi, procurăm cu reducere și livrăm.</p></li>
+      <li><h3>Execuție</h3><p>Dirigintele coordonează echipa și îți trimite rapoarte foto.</p></li>
+      <li><h3>Predare</h3><p>Curățenie, recepție pe listă, garanție în scris.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats" aria-label="RVG Construct în cifre">
+  <div class="container stats__inner">
+    <div><strong data-count="20">20</strong><span>ani de activitate</span></div>
+    <div><strong data-count="100">100</strong><span>proiecte finalizate</span></div>
+    <div><strong data-count="20">20</strong><span>meșteri calificați</span></div>
+    <div><strong data-count="30">30</strong><span>parteneri cu reduceri</span></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">Recenzii</p>
+      <h2>Ce spun clienții</h2>
+    </div>
+    <div class="reviews">
+      <figure class="review review--video">
+        <button class="review__play" aria-label="Pornește video"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=700&q=60&auto=format" alt="" loading="lazy"></button>
+        <figcaption><strong>Andrei G.</strong> · apartament 2 odăi</figcaption>
+      </figure>
+      <figure class="review">
+        <blockquote>„Ne-au predat apartamentul cu o săptămână mai devreme. Devizul nu s-a schimbat cu niciun leu.”</blockquote>
+        <figcaption><strong>Elena M.</strong> · apartament 3 odăi, Centru</figcaption>
+      </figure>
+      <figure class="review">
+        <blockquote>„Am lucrat cu ei la oficiu fără să închidem activitatea. Organizare foarte bună.”</blockquote>
+        <figcaption><strong>Director administrativ</strong> · oficiu 460 m²</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section--tint" id="faq">
+  <div class="container faq">
+    <div>
+      <p class="eyebrow">Întrebări frecvente</p>
+      <h2>Răspunsuri scurte la întrebări frecvente</h2>
+      <p>Nu ai găsit răspunsul? <a href="#contact">Scrie-ne</a>.</p>
+    </div>
+    <div class="faq__list">
+      <details open><summary>Prețul se poate schimba pe parcurs?</summary><p>Nu. Prețul din contract e fix. Se modifică doar dacă tu adaugi lucrări noi — și doar cu acordul tău scris.</p></details>
+      <details><summary>Cât durează o reparație la cheie?</summary><p>Un apartament de 60–70 m² durează de obicei 2–3 luni. Termenul exact îl trecem în contract.</p></details>
+      <details><summary>Cine cumpără materialele?</summary><p>Cum preferi: le procurăm noi, cu reducerile partenerilor, sau le cumperi tu cu ajutorul nostru la alegere.</p></details>
+      <details><summary>Cum se face plata?</summary><p>În tranșe, după graficul de execuție. Plătești pentru etapa începută, nu totul din avans.</p></details>
+      <details><summary>Lucrați și în afara Chișinăului?</summary><p>Da, în Chișinău și suburbii. Pentru alte localități — discutăm individual.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section cta" id="contact">
+  <div class="container cta__inner">
+    <div>
+      <p class="eyebrow eyebrow--light">Consultație gratuită</p>
+      <h2>Programează vizita gratuită a specialistului</h2>
+      <p>Venim, măsurăm și îți facem devizul. Fără obligații.</p>
+      <ul class="cta__contacts">
+        <li><a href="tel:+37368266226">068 266 226</a></li>
+        <li><a href="tel:022022406">022 022 406</a></li>
+        <li><a href="https://wa.me/37368266226" target="_blank" rel="noopener">WhatsApp</a> · <a href="viber://chat?number=%2B37368266226">Viber</a> · <a href="https://t.me/" target="_blank" rel="noopener">Telegram</a></li>
+      </ul>
+    </div>
+    <form class="lead lead--card" data-source="contact">
+      <input type="text" name="name" placeholder="Numele" required autocomplete="name">
+      <input type="tel" name="phone" placeholder="Telefon" required autocomplete="tel">
+      <select name="type"><option>Apartament</option><option>Casă</option><option>Oficiu / comercial</option><option>Baie / bucătărie</option></select>
+      <textarea name="msg" rows="3" placeholder="Câțiva m², ce vrei să faci (opțional)"></textarea>
+      <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn--accent" type="submit">Trimite cererea</button>
+      <small>Trimițând formularul, accepți <a href="confidentialitate.html">Politica de confidențialitate</a>.</small>
+    </form>
+  </div>
+</section>
 
 </main>
 
-<footer class="rvg-footer">
-
-
-<div class="rvg-footer-top">
-
-
-<div class="rvg-container">
-
-
-<div class="rvg-footer-brand">
-
-
-<a class="rvg-footer-logo">
-RVG<span>Construct</span>
-</a>
-
-
-<h2>
-Construim spații
-în care merită
-să trăiești.
-</h2>
-
-
-</div>
-
-
-
-
-<div class="rvg-footer-grid">
-
-
-
-<div>
-
-<h4>
-Servicii
-</h4>
-
-<a href="#">
-Renovări complete
-</a>
-
-<a href="#">
-Design interior
-</a>
-
-<a href="#">
-Finisaje premium
-</a>
-
-<a href="#">
-Construcții
-</a>
-
-</div>
-
-
-
-
-
-<div>
-
-<h4>
-Companie
-</h4>
-
-
-<a href="#">
-Despre noi
-</a>
-
-<a href="#">
-Proiecte
-</a>
-
-<a href="#">
-Proces
-</a>
-
-<a href="#">
-Contact
-</a>
-
-
-</div>
-
-
-
-
-
-<div>
-
-<h4>
-Contact
-</h4>
-
-
-<a href="#">
-+373 XX XXX XXX
-</a>
-
-
-<a href="#">
-office@rvgconstruct.md
-</a>
-
-
-<a href="#">
-Chișinău, Moldova
-</a>
-
-
-</div>
-
-
-
-
-
-<div>
-
-<h4>
-Social
-</h4>
-
-
-<a href="#">
-Instagram
-</a>
-
-
-<a href="#">
-Facebook
-</a>
-
-
-<a href="#">
-TikTok
-</a>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-<div class="rvg-footer-bottom">
-
-
-<div class="rvg-container">
-
-
-<p>
-© 2026 RVG Construct. Toate drepturile rezervate.
-</p>
-
-
-<div>
-
-<a href="#">
-Politica de confidențialitate
-</a>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
+<footer class="footer">
+  <div class="container footer__inner">
+    <div><a href="#top" class="logo logo--light"><img src="img/logo.png" alt="RVG Construct" width="455" height="208" loading="lazy"></a><p>Reparație interioară la cheie în Chișinău din 2005.</p></div>
+    <nav><a href="#servicii">Servicii</a><a href="#preturi">Prețuri</a><a href="#proiecte">Proiecte</a><a href="#faq">Întrebări</a></nav>
+    <div><a href="tel:+37368266226">068 266 226</a><br><a href="mailto:rvgconstruct.md@gmail.com">rvgconstruct.md@gmail.com</a><br>Chișinău, Moldova</div>
+  </div>
+  <div class="container footer__copy footer__legal">
+    <span>© 2026 RVG Construct SRL. Toate drepturile rezervate.</span>
+    <nav aria-label="Legal"><a href="termeni.html">Termeni și condiții</a><a href="confidentialitate.html">Politica de confidențialitate</a><button type="button" data-cookie-settings>Setări cookie</button></nav>
+  </div>
 </footer>
 
+<div class="mobile-bar">
+  <a href="tel:+37368266226">Sună</a>
+  <a href="https://wa.me/37368266226" target="_blank" rel="noopener">WhatsApp</a>
+  <a href="#calculator" class="is-accent">Calculează</a>
+</div>
 
-<script src="js/main.js"></script>
-
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="js/main.js" defer></script>
+<script src="js/cookies.js" defer></script>
 </body>
 </html>
