@@ -106,6 +106,40 @@
     }
   }
 
+  // Sliders (scroll-snap + arrows + dots)
+  $$('[data-slider]').forEach(sl => {
+    const track = $('[data-track]', sl), items = [...track.children], dots = $('[data-dots]', sl);
+    const btns = $$('[data-sdir]', sl);
+    const step = () => items[1] ? items[1].offsetLeft - items[0].offsetLeft : track.clientWidth;
+    const pages = () => Math.max(1, Math.round((track.scrollWidth - track.clientWidth) / step()) + 1);
+    const cur = () => Math.round(track.scrollLeft / step());
+    const buildDots = () => {
+      dots.innerHTML = '';
+      for (let k = 0; k < pages(); k++) {
+        const d = document.createElement('button');
+        d.type = 'button'; d.setAttribute('aria-label', `Slide ${k + 1}`);
+        d.addEventListener('click', () => track.scrollTo({ left: k * step() }));
+        dots.appendChild(d);
+      }
+      sync();
+    };
+    const sync = () => {
+      const c = cur(), max = track.scrollWidth - track.clientWidth - 2;
+      [...dots.children].forEach((d, k) => d.setAttribute('aria-current', k === c));
+      btns[0].disabled = track.scrollLeft <= 2;
+      btns[1].disabled = track.scrollLeft >= max;
+      sl.querySelector('.vslider__ctrl').hidden = pages() < 2;
+    };
+    btns.forEach(b => b.addEventListener('click', () => track.scrollBy({ left: +b.dataset.sdir * step() })));
+    track.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); track.scrollBy({ left: step() }); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); track.scrollBy({ left: -step() }); }
+    });
+    let t; track.addEventListener('scroll', () => { cancelAnimationFrame(t); t = requestAnimationFrame(sync); }, { passive: true });
+    addEventListener('resize', buildDots);
+    buildDots();
+  });
+
   // Plan buttons → preselect package in contact form
   $$('[data-plan]').forEach(b => b.addEventListener('click', () => {
     const sel = $('#f-plan'); if (sel) sel.value = b.dataset.plan;

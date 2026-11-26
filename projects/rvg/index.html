@@ -269,7 +269,8 @@
       <h2>Ce spun clienții noștri</h2>
       <p>Oameni reali, apartamente reale. Apasă pe video ca să-l vezi aici, fără să pleci de pe site.</p>
     </div>
-    <div class="vgrid">
+    <div class="vslider" data-slider>
+      <div class="vgrid" data-track tabindex="0" aria-label="Recenzii video, derulează orizontal">
       <figure class="vcard">
         <button type="button" class="vcard__media" data-yt="S_4MHE52t1c" data-title="Andrei Guzun" data-sub="Reparație apartament la cheie, Chișinău" aria-label="Pornește video: Andrei Guzun">
           <img src="img/yt-S_4MHE52t1c.jpg" alt="" width="800" height="450" loading="lazy" decoding="async">
@@ -302,6 +303,14 @@
         </button>
         <figcaption><strong>Prezentare RVG Construct</strong><span>Cum lucrăm, pe scurt</span></figcaption>
       </figure>
+      </div>
+      <div class="vslider__ctrl">
+        <div class="vslider__dots" data-dots></div>
+        <div class="vslider__arrows">
+          <button type="button" class="vslider__btn" data-sdir="-1" aria-label="Anterior"></button>
+          <button type="button" class="vslider__btn vslider__btn--next" data-sdir="1" aria-label="Următor"></button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
